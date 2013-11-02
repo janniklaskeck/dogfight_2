@@ -3,12 +3,22 @@ package com.solusgames.Dogfight_2;
 import org.lwjgl.util.Dimension;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
+import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.solusgames.entities.planes.Plane;
 
 public class Global {
+    
+    public static TileMapRenderer map_renderer;
+    public static TiledMap map;
+    public static SimpleTileAtlas atlas;
     // Players
     public static Plane player1;
     public static Plane player2;
+    public static OrthographicCamera camera_player1;
+    public static OrthographicCamera camera_player2;
     // Game options
     public static boolean paused = false;
     public static boolean fullscreen = false;
@@ -16,7 +26,7 @@ public class Global {
     public static boolean player_collision = false;
     public static boolean singlePlayer = false;
     public static boolean vertical_split = false;
-    public static Dimension dim_720 = new Dimension(1280, 720);
+    public static Dimension dim_720 = new Dimension(1920, 1080);
 
     // Scores
     public static int score_p1 = 0, score_p2 = 0;
