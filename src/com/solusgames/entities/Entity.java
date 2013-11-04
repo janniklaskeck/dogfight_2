@@ -8,18 +8,22 @@ public class Entity {
     protected float ypos;
     protected float angle;
     protected int hitpoints;
+    protected EntityType EType;
 
     /**
      * Create with angle zero
      * 
      * @param x
      * @param y
+     * @param hitpoints
+     * @param eType
      */
-    public Entity(float x, float y, int hitpoints) {
+    public Entity(float x, float y, int hitpoints, EntityType EType) {
 	this.xpos = x;
 	this.ypos = y;
 	this.angle = 0;
 	this.hitpoints = hitpoints;
+	this.EType = EType;
     }
 
     /**
@@ -28,12 +32,15 @@ public class Entity {
      * @param x
      * @param y
      * @param angle
+     * @param hitpoints
+     * @param eType
      */
-    public Entity(float x, float y, float angle, int hitpoints) {
+    public Entity(float x, float y, float angle, int hitpoints, EntityType EType) {
 	this.xpos = x;
 	this.ypos = y;
 	this.angle = angle;
 	this.hitpoints = hitpoints;
+	this.EType = EType;
     }
 
     /**
@@ -49,7 +56,6 @@ public class Entity {
      * Update Method
      */
     public void update() {
-
     }
 
     /**
@@ -104,10 +110,10 @@ public class Entity {
     public void addAngle(float angle) {
 	this.angle += angle;
 	if (this.angle >= 360) {
-	   // this.angle = 0;
+	    // this.angle = 0;
 	}
 	if (this.angle < 0) {
-	    //this.angle += 359;
+	    // this.angle += 359;
 	}
     }
 
@@ -125,5 +131,17 @@ public class Entity {
     public void setHitpoints(int hitpoints) {
 	this.hitpoints = hitpoints;
     }
+
+    public EntityType getEType() {
+	return EType;
+    }
+
+    public void setEType(EntityType EType) {
+	this.EType = EType;
+    }
+
+    public enum EntityType {
+	NONE, STRUCTURE, PLANE, HELICOPTER, TURRET, PLAYER1, PLAYER2, WEAPON;
+    };
 
 }
