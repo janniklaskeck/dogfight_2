@@ -1,8 +1,9 @@
 package com.solusgames.entities.planes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
+import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity;
 
 public class Plane extends Entity {
@@ -26,8 +27,8 @@ public class Plane extends Entity {
      * @param angle
      * @param type
      */
-    public Plane(float x, float y, float angle, Planetype type) {
-	super(x, y, angle, type.getHitpoints());
+    public Plane(float x, float y, float angle, Planetype type, EntityType eType) {
+	super(x, y, angle, type.getHitpoints(), eType);
 	this.setType(type);
 	this.alive = true;
     }
@@ -52,58 +53,8 @@ public class Plane extends Entity {
      * Update method
      */
     public void update() {
-	if (alive) {
-	    // Movement
-	    hspeed = Math.abs(acceleration)
-		    * (float) Math.cos(Math.toRadians(angle)
-			    * Gdx.graphics.getDeltaTime() * 60);
-	    vspeed = Math.abs(acceleration)
-		    * (float) Math.sin(Math.toRadians(angle)
-			    * Gdx.graphics.getDeltaTime() * 60);
-	    xpos += hspeed;
-	    ypos += vspeed;
+	checkCollision(Global.map);
 
-	    if (!isThrottleUp() && !isThrottleDown()) {
-		if (vspeed < 0) {
-		    // addVelocity(-0.08f);
-		} else {
-		    // addVelocity(-0.04f);
-		}
-	    }
-	    if (isTurnUp()) {
-		addAngle(type.getTurnSpeed() * Gdx.graphics.getDeltaTime() * 10);
-	    }
-	    if (isTurnDown()) {
-		addAngle(-type.getTurnSpeed() * Gdx.graphics.getDeltaTime()
-			* 10);
-	    }
-	    if (isThrottleUp()) {
-		if (vspeed < 0) {
-		    addAcceleration(1 / 2 * Gdx.graphics.getDeltaTime());
-		} else if (vspeed >= 0) {
-		    addAcceleration(1 * Gdx.graphics.getDeltaTime());
-		} else {
-		    addAcceleration(1 / 20 * Gdx.graphics.getDeltaTime());
-		}
-	    }
-	    if (isThrottleDown()) {
-		if (acceleration <= 0.3) {
-		    setAcceleration(0.3f);
-		} else {
-		    addAcceleration(-0.035f);
-		}
-	    }
-	} else {
-
-	}
-
-    }
-
-    /**
-     * experimental
-     */
-
-    public void update2() {
 	if (inertAngle <= angle) {
 	    if (inertAngle != angle) {
 		inertAngle += 1.5f;
@@ -114,7 +65,7 @@ public class Plane extends Entity {
 		inertAngle -= 1.5f;
 	    }
 	}
-	
+
 	if (isThrottleUp()) {
 	    addAcceleration(0.3f);
 	}
@@ -134,7 +85,15 @@ public class Plane extends Entity {
 	xpos += acceleration * Math.cos(Math.toRadians(inertAngle));
 	ypos += acceleration * Math.sin(Math.toRadians(inertAngle));
 
+    }
 
+    public void checkCollision(TiledMap map) {
+	if (getXpos() >= Global.map.width * Global.map.tileWidth
+		|| getYpos() >= Global.map.height * Global.map.tileHeight
+		|| getYpos() <= 0 || getXpos() <= 0) {
+	    setXpos(100);
+	    setYpos(100);
+	}
     }
 
     /**
