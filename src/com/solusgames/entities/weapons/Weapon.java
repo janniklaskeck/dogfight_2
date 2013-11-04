@@ -10,7 +10,7 @@ public class Weapon extends Entity {
     private boolean alive;
 
     public Weapon(float x, float y, float angle, Weapontype type) {
-	super(x, y, angle, 0);
+	super(x, y, angle, 0, EntityType.WEAPON);
 	alive = true;
     }
 
