@@ -46,24 +46,30 @@ public class Controls {
 	    if (Gdx.input.isKeyPressed(Keys.NUM_5)) {
 		// player 1 fire all weapon slots
 	    }
-	    
+
 	    /**
 	     * Player Two Controls
 	     */
-	    
-	    if (Gdx.input.isKeyPressed(Keys.W)) {
-		// player 1 accel true
+
+	    if (Gdx.input.isKeyPressed(Keys.UP)) {
+		Global.player2.setThrottleUp(true);
 	    } else {
-		// player 1 accel false
+		Global.player2.setThrottleUp(false);
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.S)) {
-		// player 1 throttle true
+	    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+		Global.player2.setThrottleDown(true);
 	    } else {
-		// player 1 throttle false
+		Global.player2.setThrottleDown(false);
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.A)) {
+	    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		Global.player2.setTurnUp(true);
+	    } else {
+		Global.player2.setTurnUp(false);
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.D)) {
+	    if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		Global.player2.setTurnDown(true);
+	    } else {
+		Global.player2.setTurnDown(false);
 	    }
 	    if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
 		// player 1 fire weapon slot 1
@@ -80,16 +86,16 @@ public class Controls {
 	    if (Gdx.input.isKeyPressed(Keys.NUM_5)) {
 		// player 1 fire all weapon slots
 	    }
-	    
+
 	    /**
 	     * Misc. Controls
 	     */
-	    
+
 	    if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 		Gdx.app.exit();
 		Global.paused = true;
 		// Enter Paused Mode
-		
+
 	    }
 	} else {
 	    if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
