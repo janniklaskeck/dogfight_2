@@ -8,10 +8,12 @@ public class Weapon extends Entity {
 
     private Weapontype type;
     private boolean alive;
+    
 
     public Weapon(float x, float y, float angle, Weapontype type) {
 	super(x, y, angle, 0, EntityType.WEAPON);
 	alive = true;
+	this.type = type;
     }
 
     public void render(SpriteBatch batch) {
@@ -21,7 +23,7 @@ public class Weapon extends Entity {
 		(int) xpos, (int) ypos, type.getTexture().getWidth(), type
 			.getTexture().getHeight(), false, false);
     }
-
+    
     public void update() {
 	if (alive) {
 
@@ -32,6 +34,34 @@ public class Weapon extends Entity {
 
     public void playSound() {
 	type.getSound().play(Global.sounds_volume);
+    }
+
+    /**
+     * @return the type
+     */
+    public Weapontype getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(Weapontype type) {
+        this.type = type;
+    }
+
+    /**
+     * @return the alive
+     */
+    public boolean isAlive() {
+        return alive;
+    }
+
+    /**
+     * @param alive the alive to set
+     */
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 
 }
