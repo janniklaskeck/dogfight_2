@@ -1,11 +1,16 @@
 package com.solusgames.entities.planes;
 
+import java.util.ArrayList;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity;
 import com.solusgames.entities.weapons.Weapon;
+import com.solusgames.entities.weapons.Weapontype;
+import com.solusgames.entities.weapons.Weapontype.WeaponTypes;
 
 public class Plane extends Entity {
 
@@ -21,11 +26,6 @@ public class Plane extends Entity {
     private float vspeed = 0;
     private float inertAngle = 0;
 
-    private boolean weapon_slot1;
-    private boolean weapon_slot2;
-    private boolean weapon_slot3;
-    private boolean weapon_slot4;
-
     private int ammo_slot1;
     private int ammo_slot2;
     private int ammo_slot3;
@@ -35,6 +35,13 @@ public class Plane extends Entity {
     private Weapon slot2;
     private Weapon slot3;
     private Weapon slot4;
+
+    private boolean slot1_fire;
+    private boolean slot2_fire;
+    private boolean slot3_fire;
+    private boolean slot4_fire;
+
+    public ArrayList<Weapon> weapons;
 
     /**
      * 
@@ -47,6 +54,11 @@ public class Plane extends Entity {
 	super(x, y, angle, type.getHitpoints(), eType);
 	this.setType(type);
 	this.alive = true;
+	weapons = new ArrayList<>();
+	// TEST
+	setSlot1(new Weapon(xpos, ypos, angle, new Weapontype(
+		WeaponTypes.GUN_30MM)));
+	ammo_slot1 = 1000;
     }
 
     /**
@@ -63,6 +75,12 @@ public class Plane extends Entity {
 	BitmapFont f = new BitmapFont();
 	f.draw(batch, "a:" + angle, 50, 50);
 	f.draw(batch, "i:" + inertAngle, 100, 50);
+
+	for (int i = 0; i < weapons.size(); i++) {
+	    weapons.get(i).render(batch);
+	}
+	BitmapFont font = new BitmapFont();
+	font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(),xpos, ypos);
     }
 
     /**
@@ -70,9 +88,8 @@ public class Plane extends Entity {
      */
     public void update() {
 	checkCollision(Global.map);
-
 	// movement
-	
+
 	// inertia emulation
 	if (inertAngle <= angle) {
 	    if (inertAngle != angle) {
@@ -105,39 +122,37 @@ public class Plane extends Entity {
 	ypos += acceleration * Math.sin(Math.toRadians(inertAngle));
 
 	// weapons
-	if (weapon_slot1) {
-	    // if slot is used
-	    if (type.isSlot_1()) {
-		// if ammo is greater zero
-		if (ammo_slot1 > 0) {
-		    // shoot slot weapon
-		    shoot(slot1);
-		    ammo_slot1--;
-		}
+
+	// if slot is used
+	if (isSlot1_fire()) {
+	    // shoot slot weapon
+	    shoot_slot1();
+	}
+
+	if (type.isSlot_2()) {
+	    if (ammo_slot2 > 0) {
+		shoot_slot2();
+		ammo_slot2--;
 	    }
 	}
-	if (weapon_slot2) {
-	    if (type.isSlot_2()) {
-		if (ammo_slot2 > 0) {
-		    shoot(slot2);
-		    ammo_slot2--;
-		}
+
+	if (type.isSlot_3()) {
+	    if (ammo_slot3 > 0) {
+		shoot_slot3();
+		ammo_slot3--;
 	    }
 	}
-	if (weapon_slot3) {
-	    if (type.isSlot_3()) {
-		if (ammo_slot3 > 0) {
-		    shoot(slot3);
-		    ammo_slot3--;
-		}
+
+	if (type.isSlot_4()) {
+	    if (ammo_slot4 > 0) {
+		shoot_slot4();
+		ammo_slot4--;
 	    }
 	}
-	if (weapon_slot4) {
-	    if (type.isSlot_4()) {
-		if (ammo_slot4 > 0) {
-		    shoot(slot4);
-		    ammo_slot4--;
-		}
+	for (int i = 0; i < weapons.size(); i++) {
+	    weapons.get(i).update();
+	    if (!weapons.get(i).isAlive()) {
+		weapons.remove(i);
 	    }
 	}
 
@@ -147,18 +162,69 @@ public class Plane extends Entity {
 	if (getXpos() >= Global.map.width * Global.map.tileWidth
 		|| getYpos() >= Global.map.height * Global.map.tileHeight
 		|| getYpos() <= 0 || getXpos() <= 0) {
-	    setXpos(100);
-	    setYpos(100);
+	    respawn();
 	}
     }
 
     /**
-     * Fires Weapon of given type
+     * Fires Weapon of slot1
      * 
      * @param weapon
      */
-    public Weapon shoot(Weapon weapon) {
-	return new Weapon(xpos, ypos, angle, weapon.getType());
+    public void shoot_slot1() {
+	if (type.isSlot_1()) {
+	    if (ammo_slot1 > 0) {
+		weapons.add(new Weapon(xpos, ypos, angle, slot1.getType()));
+		ammo_slot1--;
+	    }
+	}
+    }
+
+    /**
+     * Fires Weapon of slot2
+     * 
+     * @param weapon
+     */
+    public Weapon shoot_slot2() {
+	if (type.isSlot_2()) {
+	    return new Weapon(xpos, ypos, angle, slot2.getType());
+	} else {
+	    return null;
+	}
+    }
+
+    /**
+     * Fires Weapon of slot3
+     * 
+     * @param weapon
+     */
+    public Weapon shoot_slot3() {
+	if (type.isSlot_3()) {
+	    return new Weapon(xpos, ypos, angle, slot3.getType());
+	} else {
+	    return null;
+	}
+    }
+
+    /**
+     * Fires Weapon of slot4
+     * 
+     * @param weapon
+     */
+    public Weapon shoot_slot4() {
+	if (type.isSlot_4()) {
+	    return new Weapon(xpos, ypos, angle, slot4.getType());
+	} else {
+	    return null;
+	}
+    }
+
+    /**
+     * Respawn method
+     */
+    public void respawn() {
+	setXpos(100);
+	setYpos(100);
     }
 
     /**
@@ -317,66 +383,6 @@ public class Plane extends Entity {
     }
 
     /**
-     * @return the weapon_slot1
-     */
-    public boolean isWeapon_slot1() {
-	return weapon_slot1;
-    }
-
-    /**
-     * @param weapon_slot1
-     *            the weapon_slot1 to set
-     */
-    public void setWeapon_slot1(boolean weapon_slot1) {
-	this.weapon_slot1 = weapon_slot1;
-    }
-
-    /**
-     * @return the weapon_slot2
-     */
-    public boolean isWeapon_slot2() {
-	return weapon_slot2;
-    }
-
-    /**
-     * @param weapon_slot2
-     *            the weapon_slot2 to set
-     */
-    public void setWeapon_slot2(boolean weapon_slot2) {
-	this.weapon_slot2 = weapon_slot2;
-    }
-
-    /**
-     * @return the weapon_slot3
-     */
-    public boolean isWeapon_slot3() {
-	return weapon_slot3;
-    }
-
-    /**
-     * @param weapon_slot3
-     *            the weapon_slot3 to set
-     */
-    public void setWeapon_slot3(boolean weapon_slot3) {
-	this.weapon_slot3 = weapon_slot3;
-    }
-
-    /**
-     * @return the weapon_slot4
-     */
-    public boolean isWeapon_slot4() {
-	return weapon_slot4;
-    }
-
-    /**
-     * @param weapon_slot4
-     *            the weapon_slot4 to set
-     */
-    public void setWeapon_slot4(boolean weapon_slot4) {
-	this.weapon_slot4 = weapon_slot4;
-    }
-
-    /**
      * @return the ammo_slot1
      */
     public int getAmmo_slot1() {
@@ -494,5 +500,72 @@ public class Plane extends Entity {
      */
     public void setSlot4(Weapon slot4) {
 	this.slot4 = slot4;
+    }
+
+    /**
+     * @return the slot1_fire
+     */
+    public boolean isSlot1_fire() {
+	return slot1_fire;
+    }
+
+    /**
+     * @param slot1_fire
+     *            the slot1_fire to set
+     */
+    public void setSlot1_fire(boolean slot1_fire) {
+	this.slot1_fire = slot1_fire;
+    }
+
+    /**
+     * @return the slot2_fire
+     */
+    public boolean isSlot2_fire() {
+	return slot2_fire;
+    }
+
+    /**
+     * @param slot2_fire
+     *            the slot2_fire to set
+     */
+    public void setSlot2_fire(boolean slot2_fire) {
+	this.slot2_fire = slot2_fire;
+    }
+
+    /**
+     * @return the slot3_fire
+     */
+    public boolean isSlot3_fire() {
+	return slot3_fire;
+    }
+
+    /**
+     * @param slot3_fire
+     *            the slot3_fire to set
+     */
+    public void setSlot3_fire(boolean slot3_fire) {
+	this.slot3_fire = slot3_fire;
+    }
+
+    /**
+     * @return the slot4_fire
+     */
+    public boolean isSlot4_fire() {
+	return slot4_fire;
+    }
+
+    /**
+     * @param slot4_fire
+     *            the slot4_fire to set
+     */
+    public void setSlot4_fire(boolean slot4_fire) {
+	this.slot4_fire = slot4_fire;
+    }
+
+    /**
+     * @return the weapons
+     */
+    public ArrayList<Weapon> getWeapons() {
+	return weapons;
     }
 }

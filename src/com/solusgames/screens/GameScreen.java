@@ -18,6 +18,7 @@ import com.solusgames.render.Render;
 public class GameScreen implements Screen {
     Controls c = new Controls();
     Render r = new Render();
+    
 
     @Override
     public void dispose() {
@@ -46,7 +47,7 @@ public class GameScreen implements Screen {
 	Global.camera_player1.centerOn(Global.player1);
 	Global.player2.update();
 	Global.camera_player2.centerOn(Global.player2);
-
+System.out.println(Gdx.graphics.getFramesPerSecond());
 
     }
 

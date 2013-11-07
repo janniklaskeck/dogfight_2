@@ -31,21 +31,31 @@ public class Controls {
 	    } else {
 		Global.player1.setTurnDown(false);
 	    }
+	    //slot 1
 	    if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
-		// player 1 fire weapon slot 1
+		Global.player1.setSlot1_fire(true);
+	    } else {
+		Global.player1.setSlot1_fire(false);
 	    }
+	    //slot 2
 	    if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
-		// player 1 fire weapon slot 2
+		Global.player1.setSlot2_fire(true);
+	    } else {
+		Global.player1.setSlot2_fire(false);
 	    }
+	    //slot 3
 	    if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-		// player 1 fire weapon slot 3
+		Global.player1.setSlot3_fire(true);
+	    } else {
+		Global.player1.setSlot3_fire(false);
 	    }
+	    //slot4
 	    if (Gdx.input.isKeyPressed(Keys.NUM_4)) {
-		// player 1 fire weapon slot 4
+		Global.player1.setSlot4_fire(true);
+	    } else {
+		Global.player1.setSlot4_fire(false);
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.NUM_5)) {
-		// player 1 fire all weapon slots
-	    }
+
 
 	    /**
 	     * Player Two Controls
@@ -83,9 +93,7 @@ public class Controls {
 	    if (Gdx.input.isKeyPressed(Keys.NUM_4)) {
 		// player 1 fire weapon slot 4
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.NUM_5)) {
-		// player 1 fire all weapon slots
-	    }
+
 
 	    /**
 	     * Misc. Controls

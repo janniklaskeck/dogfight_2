@@ -32,8 +32,10 @@ public class Render {
 	a[0] = 1;
 	batch.begin();
 	
+	// clear screen
 	Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+	// set viewport player 1
 	Gdx.gl20.glViewport((int) viewportPlayer1.x, (int) viewportPlayer1.y,
 		(int) viewportPlayer1.width, (int) viewportPlayer1.height);
 	
@@ -45,9 +47,10 @@ public class Render {
 	Global.player2.render(batch);
 	
 	Global.map_renderer.render(Global.camera_player1.getCam(), a);
+	
 	batch.end();
 	batch1.begin();
-	//Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	
 	Gdx.gl20.glViewport((int) viewportPlayer2.x, (int) viewportPlayer2.y,
 		(int) viewportPlayer2.width, (int) viewportPlayer2.height);
 	
@@ -59,7 +62,8 @@ public class Render {
 	
 	Global.map_renderer.render(Global.camera_player2.getCam(), a);
 	// TODO: render loop
-
+	
+	
 	batch1.end();
     }
 }

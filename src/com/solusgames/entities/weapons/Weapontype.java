@@ -1,5 +1,6 @@
 package com.solusgames.entities.weapons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -482,15 +483,15 @@ public class Weapontype {
 	    this.sound = null;
 	}
 	if (type == WeaponTypes.GUN_30MM) {
-	    this.maxSpeed = 0;
-	    this.minSpeed = 0;
+	    this.maxSpeed = 10;
+	    this.minSpeed = 10;
 	    this.turnSpeed = 0;
 	    this.homing = false;
-	    this.maxAmmo = 0;
-	    this.reloadTime = 0;
-	    this.damage = 0;
-	    this.fireRate = 0;
-	    this.texture = null;
+	    this.maxAmmo = 30;
+	    this.reloadTime = 10;
+	    this.damage = 10;
+	    this.fireRate = 100;
+	    this.texture = new Texture(Gdx.files.internal("assets/data/weapons/30mms.png"));
 	    this.sound = null;
 	}
 	if (type == WeaponTypes.GUN_27MM) {
