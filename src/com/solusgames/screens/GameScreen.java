@@ -47,7 +47,6 @@ public class GameScreen implements Screen {
 	Global.camera_player1.centerOn(Global.player1);
 	Global.player2.update();
 	Global.camera_player2.centerOn(Global.player2);
-System.out.println(Gdx.graphics.getFramesPerSecond());
 
     }
 

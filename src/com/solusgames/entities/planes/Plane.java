@@ -41,6 +41,11 @@ public class Plane extends Entity {
     private boolean slot3_fire;
     private boolean slot4_fire;
 
+    private int reload_slot1;
+    private int reload_slot2;
+    private int reload_slot3;
+    private int reload_slot4;
+
     public ArrayList<Weapon> weapons;
 
     /**
@@ -58,7 +63,7 @@ public class Plane extends Entity {
 	// TEST
 	setSlot1(new Weapon(xpos, ypos, angle, new Weapontype(
 		WeaponTypes.GUN_30MM)));
-	ammo_slot1 = 1000;
+	ammo_slot1 = slot1.getType().getMaxAmmo();
     }
 
     /**
@@ -80,7 +85,7 @@ public class Plane extends Entity {
 	    weapons.get(i).render(batch);
 	}
 	BitmapFont font = new BitmapFont();
-	font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(),xpos, ypos);
+	font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), xpos, ypos);
     }
 
     /**
@@ -125,29 +130,19 @@ public class Plane extends Entity {
 
 	// if slot is used
 	if (isSlot1_fire()) {
-	    // shoot slot weapon
 	    shoot_slot1();
 	}
 
 	if (type.isSlot_2()) {
-	    if (ammo_slot2 > 0) {
-		shoot_slot2();
-		ammo_slot2--;
-	    }
+	    shoot_slot2();
 	}
 
 	if (type.isSlot_3()) {
-	    if (ammo_slot3 > 0) {
-		shoot_slot3();
-		ammo_slot3--;
-	    }
+	    shoot_slot3();
 	}
 
 	if (type.isSlot_4()) {
-	    if (ammo_slot4 > 0) {
-		shoot_slot4();
-		ammo_slot4--;
-	    }
+	    shoot_slot4();
 	}
 	for (int i = 0; i < weapons.size(); i++) {
 	    weapons.get(i).update();
@@ -155,6 +150,7 @@ public class Plane extends Entity {
 		weapons.remove(i);
 	    }
 	}
+	reloadWeapons();
 
     }
 
@@ -163,6 +159,53 @@ public class Plane extends Entity {
 		|| getYpos() >= Global.map.height * Global.map.tileHeight
 		|| getYpos() <= 0 || getXpos() <= 0) {
 	    respawn();
+	}
+    }
+
+    /**
+     * Respawn method
+     */
+    public void respawn() {
+	setXpos(100);
+	setYpos(100);
+    }
+
+    /**
+     * Reload method
+     */
+    public void reloadWeapons() {
+
+	if (ammo_slot1 <= 0) {
+	    reload_slot1--;
+	    if (reload_slot1 <= 0) {
+		ammo_slot1 = slot1.getType().getMaxAmmo();
+	    }
+	} else {
+	    reload_slot1 = slot1.getType().getReloadTime();
+	}
+	if (ammo_slot2 <= 0) {
+	    reload_slot2--;
+	    if (reload_slot2 <= 0) {
+		ammo_slot2 = slot2.getType().getMaxAmmo();
+	    }
+	} else {
+	    reload_slot2 = slot2.getType().getReloadTime();
+	}
+	if (ammo_slot3 <= 0) {
+	    reload_slot3--;
+	    if (reload_slot3 <= 0) {
+		ammo_slot3 = slot3.getType().getMaxAmmo();
+	    }
+	} else {
+	    reload_slot3 = slot3.getType().getReloadTime();
+	}
+	if (ammo_slot4 <= 0) {
+	    reload_slot4--;
+	    if (reload_slot4 <= 0) {
+		ammo_slot4 = slot4.getType().getMaxAmmo();
+	    }
+	} else {
+	    reload_slot4 = slot4.getType().getReloadTime();
 	}
     }
 
@@ -217,14 +260,6 @@ public class Plane extends Entity {
 	} else {
 	    return null;
 	}
-    }
-
-    /**
-     * Respawn method
-     */
-    public void respawn() {
-	setXpos(100);
-	setYpos(100);
     }
 
     /**

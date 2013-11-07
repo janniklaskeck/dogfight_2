@@ -483,12 +483,12 @@ public class Weapontype {
 	    this.sound = null;
 	}
 	if (type == WeaponTypes.GUN_30MM) {
-	    this.maxSpeed = 10;
-	    this.minSpeed = 10;
+	    this.maxSpeed = 20;
+	    this.minSpeed = 20;
 	    this.turnSpeed = 0;
 	    this.homing = false;
-	    this.maxAmmo = 30;
-	    this.reloadTime = 10;
+	    this.maxAmmo = 75;
+	    this.reloadTime = 300;
 	    this.damage = 10;
 	    this.fireRate = 100;
 	    this.texture = new Texture(Gdx.files.internal("assets/data/weapons/30mms.png"));
