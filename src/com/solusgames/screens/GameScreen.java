@@ -18,7 +18,6 @@ import com.solusgames.render.Render;
 public class GameScreen implements Screen {
     Controls c = new Controls();
     Render r = new Render();
-    
 
     @Override
     public void dispose() {
@@ -76,7 +75,7 @@ public class GameScreen implements Screen {
 		true, true, true, true, new Texture(
 			Gdx.files.internal("assets/data/planes/plane1.png"))),
 		EntityType.PLAYER1);
-	
+
 	Global.player2 = new Plane(200, 200, 0, new Planetype(100, 6, 1, 2,
 		true, true, true, true, new Texture(
 			Gdx.files.internal("assets/data/planes/plane1.png"))),
@@ -93,7 +92,7 @@ public class GameScreen implements Screen {
 	Global.camera_player1 = new Camera(new OrthographicCamera(
 		Global.dim_720.getWidth(), Global.dim_720.getHeight() / 2),
 		Global.map);
-	
+
 	Global.camera_player2 = new Camera(new OrthographicCamera(
 		Global.dim_720.getWidth(), Global.dim_720.getHeight() / 2),
 		Global.map);

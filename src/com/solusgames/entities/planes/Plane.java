@@ -2,8 +2,6 @@ package com.solusgames.entities.planes;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.solusgames.Dogfight_2.Global;
@@ -14,38 +12,47 @@ import com.solusgames.entities.weapons.Weapontype.WeaponTypes;
 
 public class Plane extends Entity {
 
+    // contains plane settings
     private Planetype type;
+    // is plane still alive
     private boolean alive;
+    // control booleans
     private boolean throttleUp;
     private boolean throttleDown;
     private boolean turnUp;
     private boolean turnDown;
     private boolean airBreak;
+    // movement variables
     private float acceleration = 0;
     private float hspeed = 0;
     private float vspeed = 0;
     private float inertAngle = 0;
 
+    // ammo count
     private int ammo_slot1;
     private int ammo_slot2;
     private int ammo_slot3;
     private int ammo_slot4;
 
+    // weapons
     private Weapon slot1;
     private Weapon slot2;
     private Weapon slot3;
     private Weapon slot4;
 
+    // shooting booleans
     private boolean slot1_fire;
     private boolean slot2_fire;
     private boolean slot3_fire;
     private boolean slot4_fire;
 
+    // reload timers
     private int reload_slot1;
     private int reload_slot2;
     private int reload_slot3;
     private int reload_slot4;
 
+    // weapon array
     public ArrayList<Weapon> weapons;
 
     /**
@@ -60,32 +67,55 @@ public class Plane extends Entity {
 	this.setType(type);
 	this.alive = true;
 	weapons = new ArrayList<>();
+
 	// TEST
 	setSlot1(new Weapon(xpos, ypos, angle, new Weapontype(
 		WeaponTypes.GUN_30MM)));
 	ammo_slot1 = slot1.getType().getMaxAmmo();
+	setSlot2(new Weapon(xpos, ypos, angle, new Weapontype(
+		WeaponTypes.GUN_30MM)));
+	ammo_slot2 = slot2.getType().getMaxAmmo();
+	setSlot3(new Weapon(xpos, ypos, angle, new Weapontype(
+		WeaponTypes.GUN_30MM)));
+	ammo_slot3 = slot3.getType().getMaxAmmo();
+	setSlot4(new Weapon(xpos, ypos, angle, new Weapontype(
+		WeaponTypes.GUN_30MM)));
+	ammo_slot4 = slot4.getType().getMaxAmmo();
     }
 
     /**
      * Render method
      */
     public void render(SpriteBatch batch) {
+	// Texture tex = type.getTexture();
+	// float texWidth = tex.getWidth();
+	// float texHeight = tex.getHeight();
 	float origx = type.getTexture().getWidth() / 2;
 	float origy = type.getTexture().getHeight() / 2;
+
+	// if (getEType() == EntityType.PLAYER1) {
+	// System.out.println("DRAW P1");
+	// batch.draw(tex, xpos, ypos, origx, origy, texWidth, texHeight, 1,
+	// 1, angle, 0, 0, (int) texWidth, (int) texHeight, false,
+	// false);
+	// } else if (getEType() == EntityType.PLAYER2) {
+	// System.out.println("DRAW P2");
+	// batch.draw(tex, xpos, ypos, origx, origy, texWidth, texHeight, 1,
+	// 1, angle, 0, 0, (int) texWidth, (int) texHeight, false,
+	// false);
+	// } else {
 
 	batch.draw(type.getTexture(), xpos, ypos, origx, origy, type
 		.getTexture().getWidth(), type.getTexture().getHeight(), 1, 1,
 		angle, 0, 0, type.getTexture().getWidth(), type.getTexture()
 			.getHeight(), false, false);
-	BitmapFont f = new BitmapFont();
-	f.draw(batch, "a:" + angle, 50, 50);
-	f.draw(batch, "i:" + inertAngle, 100, 50);
+	// }
 
+	// iterate through weapons and render them
 	for (int i = 0; i < weapons.size(); i++) {
 	    weapons.get(i).render(batch);
 	}
-	BitmapFont font = new BitmapFont();
-	font.draw(batch, "" + Gdx.graphics.getFramesPerSecond(), xpos, ypos);
+
     }
 
     /**
@@ -133,15 +163,15 @@ public class Plane extends Entity {
 	    shoot_slot1();
 	}
 
-	if (type.isSlot_2()) {
+	if (isSlot2_fire()) {
 	    shoot_slot2();
 	}
 
-	if (type.isSlot_3()) {
+	if (isSlot3_fire()) {
 	    shoot_slot3();
 	}
 
-	if (type.isSlot_4()) {
+	if (isSlot4_fire()) {
 	    shoot_slot4();
 	}
 	for (int i = 0; i < weapons.size(); i++) {
@@ -603,4 +633,5 @@ public class Plane extends Entity {
     public ArrayList<Weapon> getWeapons() {
 	return weapons;
     }
+
 }

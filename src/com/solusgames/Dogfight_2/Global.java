@@ -11,11 +11,12 @@ import com.solusgames.render.Camera;
 
 /**
  * Memory for all global variables
+ * 
  * @author keckjs
- *
+ * 
  */
 public class Global {
-    
+
     public static TileMapRenderer map_renderer;
     public static TiledMap map;
     public static SimpleTileAtlas atlas;
@@ -59,4 +60,6 @@ public class Global {
     public static int p2_key_prim2 = Keys.NUM_1;
     public static int p2_key_sec1 = Keys.NUM_2;
     public static int p2_key_sec2 = Keys.NUM_3;
+
+
 }
