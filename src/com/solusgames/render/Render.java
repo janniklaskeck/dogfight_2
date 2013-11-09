@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.solusgames.Dogfight_2.Global;
 
@@ -16,71 +15,80 @@ import com.solusgames.Dogfight_2.Global;
  */
 public class Render {
 
-    int[] layers = new int[1];
-    SpriteBatch player1_batch = new SpriteBatch();
-    SpriteBatch player2_batch = new SpriteBatch();
-    SpriteBatch ui_batch = new SpriteBatch();
+    BitmapFont font = new BitmapFont();
     Texture bg = new Texture(Gdx.files.internal("assets/data/img_bg.jpg"));
 
-    Rectangle viewportPlayer2 = new Rectangle(0, 0, Global.dim_720.getWidth(),
-	    Global.dim_720.getHeight() / 2);
-    Rectangle viewportPlayer1 = new Rectangle(0,
-	    Global.dim_720.getHeight() / 2, Global.dim_720.getWidth(),
-	    Global.dim_720.getHeight() / 2);
+    Rectangle viewportPlayer1 = new Rectangle();
+    Rectangle viewportPlayer2 = new Rectangle();
 
     /**
      * Render method
      */
     public void render() {
-	layers[0] = 1;
+	viewportPlayer2.set(0, 0, (float) Global.dim_720.getWidth(),
+		(float) Global.dim_720.getHeight() / 2);
+	viewportPlayer1.set(0, (float) Global.dim_720.getHeight() / 2,
+		(float) Global.dim_720.getWidth(),
+		(float) Global.dim_720.getHeight() / 2);
 
-	// player 1 stuff
-	player1_batch.begin();
+	int[] layers = new int[1];
+	layers[0] = 1;
 	// clear screen
 	Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+	// player 1 stuff
+	Global.batch.begin();
+
 	// set viewport player 1
 	Gdx.gl20.glViewport((int) viewportPlayer1.x, (int) viewportPlayer1.y,
 		(int) viewportPlayer1.width, (int) viewportPlayer1.height);
 
-	player1_batch
+	Global.batch
 		.setProjectionMatrix(Global.camera_player1.getCam().combined);
 	// basic bg img
-	player1_batch.draw(bg, 0, 0, Global.map.width * Global.map.tileWidth,
-		Global.map.height * Global.map.tileHeight);
+	Global.batch.draw(bg, 0, 0, Global.map_rows * Global.map_tileWidth,
+		Global.map_columns * Global.map_tileHeight);
 
-	Global.player1.render(player1_batch);
-	Global.player2.render(player1_batch);
+	Global.player1.render(Global.batch);
+	Global.player2.render(Global.batch);
 
-	Global.map_renderer.render(Global.camera_player1.getCam(), layers);
+	Global.map_renderer.setView(Global.camera_player1.getCam());
+	Global.map_renderer.render();
 
-	player1_batch.end();
-
+	Global.batch.end();
 	// player 2 stuff
-	player2_batch.begin();
+
+	Global.batch.begin();
 	// set viewport player 2
 	Gdx.gl20.glViewport((int) viewportPlayer2.x, (int) viewportPlayer2.y,
 		(int) viewportPlayer2.width, (int) viewportPlayer2.height);
 
-	player2_batch
+	Global.batch
 		.setProjectionMatrix(Global.camera_player2.getCam().combined);
 	// basic bg img
-	player2_batch.draw(bg, 0, 0, Global.map.width * Global.map.tileWidth,
-		Global.map.height * Global.map.tileHeight);
-	Global.player1.render(player2_batch);
-	Global.player2.render(player2_batch);
+	Global.batch.draw(bg, 0, 0, Global.map_rows * Global.map_tileWidth,
+		Global.map_columns * Global.map_tileHeight);
 
-	Global.map_renderer.render(Global.camera_player2.getCam(), layers);
-	player2_batch.end();
+	Global.player1.render(Global.batch);
+	Global.player2.render(Global.batch);
 
+	Global.map_renderer.setView(Global.camera_player2.getCam());
+	Global.map_renderer.render();
+	Global.batch.end();
 	// ui components
-	ui_batch.begin();
-	Gdx.gl20.glViewport(0, 0, Global.dim_720.getWidth(),
-		Global.dim_720.getHeight());
-	BitmapFont font = new BitmapFont();
+	Global.batch.begin();
+	Gdx.gl20.glViewport(0, 0, (int) Global.dim_720.getWidth(),
+		(int) Global.dim_720.getHeight());
 
-	font.draw(ui_batch, "" + Gdx.graphics.getFramesPerSecond(),
+	font.draw(Global.batch, "" + Gdx.graphics.getFramesPerSecond(),
 		Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - 50);
 
-	ui_batch.end();
+	Global.batch.end();
+    }
+
+    public void dispose() {
+	Global.batch.dispose();
+	font.dispose();
+	bg.dispose();
     }
 }

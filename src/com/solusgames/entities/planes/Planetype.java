@@ -1,6 +1,7 @@
 package com.solusgames.entities.planes;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * Class to create different Planetypes with every needed property
@@ -22,6 +23,7 @@ public class Planetype {
     private boolean slot_4 = true;
     // assets
     private Texture texture;
+    private Sprite sprite;
 
     /**
      * 
@@ -47,7 +49,8 @@ public class Planetype {
 	this.slot_3 = slot_3;
 	this.slot_4 = slot_4;
 	this.texture = texture;
-	
+	this.setSprite(new Sprite(texture));
+
     }
 
     /**
@@ -183,6 +186,21 @@ public class Planetype {
      */
     public void setTexture(Texture texture) {
 	this.texture = texture;
+    }
+
+    /**
+     * @return the sprite
+     */
+    public Sprite getSprite() {
+	return sprite;
+    }
+
+    /**
+     * @param sprite
+     *            the sprite to set
+     */
+    public void setSprite(Sprite sprite) {
+	this.sprite = sprite;
     }
 
 }

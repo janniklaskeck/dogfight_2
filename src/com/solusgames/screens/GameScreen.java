@@ -4,9 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
-import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.controls.Controls;
 import com.solusgames.entities.Entity.EntityType;
@@ -21,7 +22,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-	// TODO Auto-generated method stub
+	r.dispose();
+	Global.map_renderer.dispose();
 
     }
 
@@ -51,7 +53,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-	// System.out.println(Gdx.graphics.getFramesPerSecond());
+
 	update();
 	r.render();
 
@@ -71,31 +73,35 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-	Global.player1 = new Plane(100, 100, 0, new Planetype(100, 6, 1, 2,
-		true, true, true, true, new Texture(
-			Gdx.files.internal("assets/data/planes/plane1.png"))),
+	Global.batch = new SpriteBatch();
+
+	Global.player1 = new Plane(300, 300, 0,
+		new Planetype(100, 6, 1, 2, true, true, true, true,
+			new Texture(Gdx.files
+				.internal("assets/data/planes/gen5/f35.png"))),
 		EntityType.PLAYER1);
 
-	Global.player2 = new Plane(200, 200, 0, new Planetype(100, 6, 1, 2,
-		true, true, true, true, new Texture(
-			Gdx.files.internal("assets/data/planes/plane1.png"))),
-		EntityType.PLAYER2);
+	Texture tex_p2 = new Texture(
+		Gdx.files.internal("assets/data/planes/plane1.png"));
+	tex_p2 = new Texture(
+		Gdx.files.internal("assets/data/planes/plane1.png"));
+	Global.player2 = new Plane(300, 250, 0, new Planetype(100, 6, 1, 2,
+		true, true, true, true, tex_p2), EntityType.PLAYER2);
 
-	Global.map = TiledLoader.createMap(Gdx.files
-		.internal("assets/data/map/map_test/map2.tmx"));
-	Global.atlas = new SimpleTileAtlas(Global.map,
-		Gdx.files.internal("assets/data/map/map_test"));
-	Global.map_renderer = new TileMapRenderer(Global.map, Global.atlas,
-		Global.map.tileWidth, Global.map.tileHeight,
-		Global.map.tileWidth, Global.map.tileHeight);
+	Global.map = new TmxMapLoader().load("assets/data/map/map_test/map2.tmx");
+	Global.map_renderer = new OrthogonalTiledMapRenderer(Global.map, 1);
 
-	Global.camera_player1 = new Camera(new OrthographicCamera(
-		Global.dim_720.getWidth(), Global.dim_720.getHeight() / 2),
+	Global.camera_player1 = new Camera(new OrthographicCamera(),
 		Global.map);
+	
 
-	Global.camera_player2 = new Camera(new OrthographicCamera(
-		Global.dim_720.getWidth(), Global.dim_720.getHeight() / 2),
+	Global.camera_player2 = new Camera(new OrthographicCamera(),
 		Global.map);
+	TiledMapTileLayer l = (TiledMapTileLayer) Global.map.getLayers().get(0);
+	Global.map_columns = l.getHeight();
+	Global.map_rows = l.getWidth();
+	Global.map_tileHeight = l.getTileHeight();
+	Global.map_tileWidth = l.getTileWidth();
     }
 
 }

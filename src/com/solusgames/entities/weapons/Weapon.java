@@ -1,7 +1,7 @@
 package com.solusgames.entities.weapons;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity;
 
@@ -17,12 +17,17 @@ public class Weapon extends Entity {
     }
 
     public void render(SpriteBatch batch) {
+	batch.end();
+	batch.begin();
+	
 	batch.draw(type.getTexture(), xpos, ypos,
 		type.getTexture().getWidth() / 2,
 		type.getTexture().getHeight() / 2, (float) type.getTexture()
 			.getWidth(), (float) type.getTexture().getHeight(),
 		1f, 1f, angle, 0, 0, type.getTexture().getWidth(), type
 			.getTexture().getHeight(), false, false);
+	batch.end();
+	batch.begin();
     }
 
     public void update() {
@@ -36,8 +41,8 @@ public class Weapon extends Entity {
     }
 
     public void checkCollision(TiledMap map) {
-	if (getXpos() >= Global.map.width * Global.map.tileWidth
-		|| getYpos() >= Global.map.height * Global.map.tileHeight
+	if (getXpos() >= Global.map_rows * Global.map_tileWidth
+		|| getYpos() >= Global.map_columns * Global.map_tileHeight
 		|| getYpos() <= 0 || getXpos() <= 0) {
 	    alive = false;
 	}
@@ -45,6 +50,10 @@ public class Weapon extends Entity {
     
     public void playSound() {
 	type.getSound().play(Global.sounds_volume);
+    }
+    
+    public void dispose() {
+	getType().getTexture().dispose();
     }
 
     /**

@@ -1,7 +1,8 @@
 package com.solusgames.render;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity;
 import com.solusgames.entities.Entity.EntityType;
@@ -15,16 +16,15 @@ import com.solusgames.entities.Entity.EntityType;
 public class Camera {
 
     private OrthographicCamera cam;
-    private TiledMap map;
 
     /**
      * 
      * @param camera
      * @param map
      */
-    public Camera(OrthographicCamera camera, TiledMap map) {
+    public Camera(OrthographicCamera camera, TiledMap ma) {
 	this.cam = camera;
-	this.map = map;
+	cam.setToOrtho(false, Global.dim_720.width, Global.dim_720.height / 2);
     }
 
     /**
@@ -33,53 +33,51 @@ public class Camera {
      * @param entity
      */
     public void centerOn(Entity entity) {
-
+	
 	cam.position.set(entity.getXpos(), entity.getYpos(), 0);
 
-	if (map == null || cam == null) {
-	    System.out.println("WARNING! ERROR IN CAMERA");
+	if (cam == null) {
+	    Gdx.app.error("ERROR", "WARNING! ERROR IN CAMERA");
 	    return;
 	}
 	if (entity.getEType() == EntityType.PLAYER1) {
 	    // camera constraint left
-	    if (cam.position.x - Global.dim_720.getWidth() / 2 <= 0) {
-		cam.position.x = Global.dim_720.getWidth() / 2;
+	    if (cam.position.x - (Global.dim_720.getWidth() / 2) <= 0) {
+		cam.position.x = (float) (Global.dim_720.getWidth() / 2);
 	    }
 	    // camera constraint down
-	    if (cam.position.y - Global.dim_720.getHeight() / 4 <= 0) {
-		cam.position.y = Global.dim_720.getHeight() / 4;
+	    if (cam.position.y - (Global.dim_720.getHeight() / 4) <= 0) {
+		cam.position.y = (float) (Global.dim_720.getHeight() / 4);
 	    }
 	    // camera constraint up
-	    if (cam.position.y + Global.dim_720.getHeight() / 4 >= (map.height * map.tileHeight)) {
-		cam.position.y = (map.height * map.tileHeight)
-			- Global.dim_720.getHeight() / 4;
+	    if (cam.position.y + (Global.dim_720.getHeight() / 4) >= (Global.map_columns * Global.map_tileHeight)) {
+		cam.position.y = (Global.map_columns * Global.map_tileHeight)
+			- ((float) Global.dim_720.getHeight() / 4);
 	    }
 	    // camera constraint right
-	    if (cam.position.x + Global.dim_720.getWidth() / 2 >= (map.width * map.tileWidth)) {
-		cam.position.x = (map.width * map.tileWidth)
-			- Global.dim_720.getWidth() / 2;
+	    if (cam.position.x + (Global.dim_720.getWidth() / 2) >= (Global.map_rows * Global.map_tileWidth)) {
+		cam.position.x = (Global.map_rows * Global.map_tileWidth)
+			- ((float) Global.dim_720.getWidth() / 2);
 	    }
 	} else if (entity.getEType() == EntityType.PLAYER2) {
 	    // camera constraint left
-	    if (cam.position.x - Global.dim_720.getWidth() / 2 <= 0) {
-		cam.position.x = Global.dim_720.getWidth() / 2;
+	    if (cam.position.x - (Global.dim_720.getWidth() / 2) <= 0) {
+		cam.position.x = (float) (Global.dim_720.getWidth() / 2);
 	    }
 	    // camera constraint down
-	    if (cam.position.y - Global.dim_720.getHeight() / 4 <= 0) {
-		cam.position.y = Global.dim_720.getHeight() / 4;
+	    if (cam.position.y - (Global.dim_720.getHeight() / 4) <= 0) {
+		cam.position.y = (float) (Global.dim_720.getHeight() / 4);
 	    }
 	    // camera constraint up
-	    if (cam.position.y + Global.dim_720.getHeight() / 4 >= (map.height * map.tileHeight)) {
-		cam.position.y = (map.height * map.tileHeight)
-			- Global.dim_720.getHeight() / 4;
+	    if (cam.position.y + (Global.dim_720.getHeight() / 4) >= (Global.map_columns * Global.map_tileHeight)) {
+		cam.position.y = (Global.map_columns * Global.map_tileHeight)
+			- ((float) Global.dim_720.getHeight() / 4);
 	    }
 	    // camera constraint right
-	    if (cam.position.x + Global.dim_720.getWidth() / 2 >= (map.width * map.tileWidth)) {
-		cam.position.x = (map.width * map.tileWidth)
-			- Global.dim_720.getWidth() / 2;
+	    if (cam.position.x + (Global.dim_720.getWidth() / 2) >= (Global.map_rows * Global.map_tileWidth)) {
+		cam.position.x = (Global.map_rows * Global.map_tileWidth)
+			- ((float) Global.dim_720.getWidth() / 2);
 	    }
-	} else {
-
 	}
 	cam.update();
     }
@@ -100,24 +98,6 @@ public class Camera {
      */
     public void setCam(OrthographicCamera cam) {
 	this.cam = cam;
-    }
-
-    /**
-     * Returns tiled map
-     * 
-     * @return
-     */
-    public TiledMap getMap() {
-	return map;
-    }
-
-    /**
-     * Sets tiled map
-     * 
-     * @param map
-     */
-    public void setMap(TiledMap map) {
-	this.map = map;
     }
 
 }

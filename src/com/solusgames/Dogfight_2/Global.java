@@ -1,11 +1,11 @@
 package com.solusgames.Dogfight_2;
 
-import org.lwjgl.util.Dimension;
+import java.awt.Dimension;
 
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
-import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.solusgames.entities.planes.Plane;
 import com.solusgames.render.Camera;
 
@@ -17,9 +17,14 @@ import com.solusgames.render.Camera;
  */
 public class Global {
 
-    public static TileMapRenderer map_renderer;
+    public static OrthogonalTiledMapRenderer map_renderer;
     public static TiledMap map;
-    public static SimpleTileAtlas atlas;
+    public static int map_rows;
+    public static int map_columns;
+    public static float map_tileHeight;
+    public static float map_tileWidth;
+    public static SpriteBatch batch;
+
     // Players
     public static Plane player1;
     public static Plane player2;
@@ -60,6 +65,5 @@ public class Global {
     public static int p2_key_prim2 = Keys.NUM_1;
     public static int p2_key_sec1 = Keys.NUM_2;
     public static int p2_key_sec2 = Keys.NUM_3;
-
 
 }

@@ -14,11 +14,11 @@ public class Main implements ApplicationListener {
 
     public static void main(String[] args) {
 	LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-	cfg.width = Global.dim_720.getWidth();
-	cfg.height = Global.dim_720.getHeight();
+	cfg.width = (int) Global.dim_720.getWidth();
+	cfg.height = (int) Global.dim_720.getHeight();
 	cfg.fullscreen = Global.fullscreen;
 	cfg.vSyncEnabled = Global.vsync;
-	cfg.useCPUSynch = Global.vsync;
+	
 	cfg.resizable = false;
 	cfg.useGL20 = true; // 90% or more of your desktop users should support
 			    // GL20

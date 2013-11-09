@@ -2,8 +2,9 @@ package com.solusgames.entities.planes;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity;
 import com.solusgames.entities.weapons.Weapon;
@@ -87,35 +88,27 @@ public class Plane extends Entity {
      * Render method
      */
     public void render(SpriteBatch batch) {
-	// Texture tex = type.getTexture();
-	// float texWidth = tex.getWidth();
-	// float texHeight = tex.getHeight();
-	float origx = type.getTexture().getWidth() / 2;
-	float origy = type.getTexture().getHeight() / 2;
+	batch.end();
+	batch.begin();
+	
+	Sprite sprite = type.getSprite();
+	
+	float origx = sprite.getWidth() / 2;
+	float origy = sprite.getHeight() / 2;
 
-	// if (getEType() == EntityType.PLAYER1) {
-	// System.out.println("DRAW P1");
-	// batch.draw(tex, xpos, ypos, origx, origy, texWidth, texHeight, 1,
-	// 1, angle, 0, 0, (int) texWidth, (int) texHeight, false,
-	// false);
-	// } else if (getEType() == EntityType.PLAYER2) {
-	// System.out.println("DRAW P2");
-	// batch.draw(tex, xpos, ypos, origx, origy, texWidth, texHeight, 1,
-	// 1, angle, 0, 0, (int) texWidth, (int) texHeight, false,
-	// false);
-	// } else {
-
-	batch.draw(type.getTexture(), xpos, ypos, origx, origy, type
-		.getTexture().getWidth(), type.getTexture().getHeight(), 1, 1,
-		angle, 0, 0, type.getTexture().getWidth(), type.getTexture()
-			.getHeight(), false, false);
-	// }
-
+	sprite.setPosition(xpos, ypos);
+	sprite.setOrigin(origx, origy);
+	sprite.setRotation(angle);
+	
+	sprite.draw(batch);
+	
 	// iterate through weapons and render them
 	for (int i = 0; i < weapons.size(); i++) {
 	    weapons.get(i).render(batch);
 	}
-
+	
+	batch.end();
+	batch.begin();
     }
 
     /**
@@ -185,8 +178,8 @@ public class Plane extends Entity {
     }
 
     public void checkCollision(TiledMap map) {
-	if (getXpos() >= Global.map.width * Global.map.tileWidth
-		|| getYpos() >= Global.map.height * Global.map.tileHeight
+	if (getXpos() >= Global.map_rows * Global.map_tileWidth
+		|| getYpos() >= Global.map_columns * Global.map_tileHeight
 		|| getYpos() <= 0 || getXpos() <= 0) {
 	    respawn();
 	}
@@ -237,6 +230,10 @@ public class Plane extends Entity {
 	} else {
 	    reload_slot4 = slot4.getType().getReloadTime();
 	}
+    }
+    
+    public void dispose() {
+	type.getTexture().dispose();
     }
 
     /**
