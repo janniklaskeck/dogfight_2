@@ -1,5 +1,7 @@
 package com.solusgames.entities;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Entity {
@@ -9,6 +11,8 @@ public class Entity {
     protected float angle;
     protected int hitpoints;
     protected EntityType EType;
+    protected Texture texture;
+    protected Sprite sprite;
 
     /**
      * Create with angle zero
@@ -44,6 +48,27 @@ public class Entity {
     }
 
     /**
+     * Create with parameters
+     * 
+     * @param x
+     * @param y
+     * @param angle
+     * @param hitpoints
+     * @param texture
+     * @param EType
+     */
+    public Entity(float x, float y, float angle, int hitpoints,
+	    Texture texture, EntityType EType) {
+	this.xpos = x;
+	this.ypos = y;
+	this.angle = angle;
+	this.hitpoints = hitpoints;
+	this.texture = texture;
+	this.sprite = new Sprite(texture);
+	this.EType = EType;
+    }
+
+    /**
      * Render Method
      * 
      * @param batch
@@ -58,6 +83,10 @@ public class Entity {
     public void update() {
     }
 
+    public void dispose() {
+	getTexture().dispose();
+    }
+    
     /**
      * @return the xpos
      */
@@ -138,6 +167,36 @@ public class Entity {
 
     public void setEType(EntityType EType) {
 	this.EType = EType;
+    }
+
+    /**
+     * @return the texture
+     */
+    public Texture getTexture() {
+	return texture;
+    }
+
+    /**
+     * @param texture
+     *            the texture to set
+     */
+    public void setTexture(Texture texture) {
+	this.texture = texture;
+    }
+
+    /**
+     * @return the sprite
+     */
+    public Sprite getSprite() {
+	return sprite;
+    }
+
+    /**
+     * @param sprite
+     *            the sprite to set
+     */
+    public void setSprite(Sprite sprite) {
+	this.sprite = sprite;
     }
 
     public enum EntityType {

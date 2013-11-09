@@ -1,5 +1,6 @@
 package com.solusgames.entities.weapons;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.solusgames.Dogfight_2.Global;
@@ -9,23 +10,28 @@ public class Weapon extends Entity {
 
     private Weapontype type;
     private boolean alive;
+    private float originX;
+    private float originY;
 
-    public Weapon(float x, float y, float angle, Weapontype type) {
-	super(x, y, angle, 0, EntityType.WEAPON);
+    public Weapon(float x, float y, float angle, Texture texture,
+	    Weapontype type) {
+	super(x, y, angle, 0, texture, EntityType.WEAPON);
 	alive = true;
 	this.type = type;
+	originX = getSprite().getWidth() / 2;
+	originY = getSprite().getHeight() / 2;
+
     }
 
     public void render(SpriteBatch batch) {
 	batch.end();
 	batch.begin();
+
+	getSprite().setPosition(xpos, ypos);
+	getSprite().setOrigin(originX, originY);
+	getSprite().setRotation(angle);
+	getSprite().draw(batch);
 	
-	batch.draw(type.getTexture(), xpos, ypos,
-		type.getTexture().getWidth() / 2,
-		type.getTexture().getHeight() / 2, (float) type.getTexture()
-			.getWidth(), (float) type.getTexture().getHeight(),
-		1f, 1f, angle, 0, 0, type.getTexture().getWidth(), type
-			.getTexture().getHeight(), false, false);
 	batch.end();
 	batch.begin();
     }
@@ -47,12 +53,13 @@ public class Weapon extends Entity {
 	    alive = false;
 	}
     }
-    
+
     public void playSound() {
 	type.getSound().play(Global.sounds_volume);
     }
-    
+
     public void dispose() {
+	super.dispose();
 	getType().getTexture().dispose();
     }
 

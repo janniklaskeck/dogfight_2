@@ -28,6 +28,8 @@ public class Plane extends Entity {
     private float hspeed = 0;
     private float vspeed = 0;
     private float inertAngle = 0;
+    private float origx;
+    private float origy;
 
     // ammo count
     private int ammo_slot1;
@@ -64,24 +66,23 @@ public class Plane extends Entity {
      * @param type
      */
     public Plane(float x, float y, float angle, Planetype type, EntityType eType) {
-	super(x, y, angle, type.getHitpoints(), eType);
+	super(x, y, angle, type.getHitpoints(), type.getTexture(), eType);
 	this.setType(type);
 	this.alive = true;
 	weapons = new ArrayList<>();
+	origx = getSprite().getWidth() / 2;
+	origy = getSprite().getHeight() / 2;
 
 	// TEST
-	setSlot1(new Weapon(xpos, ypos, angle, new Weapontype(
-		WeaponTypes.GUN_30MM)));
-	ammo_slot1 = slot1.getType().getMaxAmmo();
-	setSlot2(new Weapon(xpos, ypos, angle, new Weapontype(
-		WeaponTypes.GUN_30MM)));
-	ammo_slot2 = slot2.getType().getMaxAmmo();
-	setSlot3(new Weapon(xpos, ypos, angle, new Weapontype(
-		WeaponTypes.GUN_30MM)));
-	ammo_slot3 = slot3.getType().getMaxAmmo();
-	setSlot4(new Weapon(xpos, ypos, angle, new Weapontype(
-		WeaponTypes.GUN_30MM)));
-	ammo_slot4 = slot4.getType().getMaxAmmo();
+	Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
+	setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t));
+	ammo_slot1 = t.getMaxAmmo();
+	setSlot2(new Weapon(xpos, ypos, angle, t.getTexture(), t));
+	ammo_slot2 = t.getMaxAmmo();
+	setSlot3(new Weapon(xpos, ypos, angle, t.getTexture(), t));
+	ammo_slot3 = t.getMaxAmmo();
+	setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t));
+	ammo_slot4 = t.getMaxAmmo();
     }
 
     /**
@@ -90,23 +91,20 @@ public class Plane extends Entity {
     public void render(SpriteBatch batch) {
 	batch.end();
 	batch.begin();
-	
-	Sprite sprite = type.getSprite();
-	
-	float origx = sprite.getWidth() / 2;
-	float origy = sprite.getHeight() / 2;
+
+	Sprite sprite = getSprite();
 
 	sprite.setPosition(xpos, ypos);
 	sprite.setOrigin(origx, origy);
 	sprite.setRotation(angle);
-	
+
 	sprite.draw(batch);
-	
+
 	// iterate through weapons and render them
 	for (int i = 0; i < weapons.size(); i++) {
 	    weapons.get(i).render(batch);
 	}
-	
+
 	batch.end();
 	batch.begin();
     }
@@ -231,7 +229,7 @@ public class Plane extends Entity {
 	    reload_slot4 = slot4.getType().getReloadTime();
 	}
     }
-    
+
     public void dispose() {
 	type.getTexture().dispose();
     }
@@ -244,7 +242,9 @@ public class Plane extends Entity {
     public void shoot_slot1() {
 	if (type.isSlot_1()) {
 	    if (ammo_slot1 > 0) {
-		weapons.add(new Weapon(xpos, ypos, angle, slot1.getType()));
+
+		weapons.add(new Weapon(xpos, ypos, angle, slot1.getTexture(),
+			slot1.getType()));
 		ammo_slot1--;
 	    }
 	}
@@ -257,7 +257,8 @@ public class Plane extends Entity {
      */
     public Weapon shoot_slot2() {
 	if (type.isSlot_2()) {
-	    return new Weapon(xpos, ypos, angle, slot2.getType());
+	    return new Weapon(xpos, ypos, angle, slot2.getTexture(),
+		    slot2.getType());
 	} else {
 	    return null;
 	}
@@ -270,7 +271,8 @@ public class Plane extends Entity {
      */
     public Weapon shoot_slot3() {
 	if (type.isSlot_3()) {
-	    return new Weapon(xpos, ypos, angle, slot3.getType());
+	    return new Weapon(xpos, ypos, angle, slot3.getTexture(),
+		    slot3.getType());
 	} else {
 	    return null;
 	}
@@ -283,7 +285,8 @@ public class Plane extends Entity {
      */
     public Weapon shoot_slot4() {
 	if (type.isSlot_4()) {
-	    return new Weapon(xpos, ypos, angle, slot4.getType());
+	    return new Weapon(xpos, ypos, angle, slot4.getTexture(),
+		    slot4.getType());
 	} else {
 	    return null;
 	}

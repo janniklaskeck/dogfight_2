@@ -1,7 +1,7 @@
 package com.solusgames.entities.planes;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+
 
 /**
  * Class to create different Planetypes with every needed property
@@ -23,7 +23,6 @@ public class Planetype {
     private boolean slot_4 = true;
     // assets
     private Texture texture;
-    private Sprite sprite;
 
     /**
      * 
@@ -38,8 +37,7 @@ public class Planetype {
      * @param texture
      */
     public Planetype(int hitpoints, float max, float min, float turn,
-	    boolean slot_1, boolean slot_2, boolean slot_3, boolean slot_4,
-	    Texture texture) {
+	    boolean slot_1, boolean slot_2, boolean slot_3, boolean slot_4, Texture texture) {
 	this.hitpoints = hitpoints;
 	this.maxSpeed = max;
 	this.minSpeed = min;
@@ -48,8 +46,7 @@ public class Planetype {
 	this.slot_2 = slot_2;
 	this.slot_3 = slot_3;
 	this.slot_4 = slot_4;
-	this.texture = texture;
-	this.setSprite(new Sprite(texture));
+	this.setTexture(texture);
 
     }
 
@@ -181,26 +178,10 @@ public class Planetype {
     }
 
     /**
-     * @param texture
-     *            the texture to set
+     * @param texture the texture to set
      */
     public void setTexture(Texture texture) {
 	this.texture = texture;
-    }
-
-    /**
-     * @return the sprite
-     */
-    public Sprite getSprite() {
-	return sprite;
-    }
-
-    /**
-     * @param sprite
-     *            the sprite to set
-     */
-    public void setSprite(Sprite sprite) {
-	this.sprite = sprite;
     }
 
 }
