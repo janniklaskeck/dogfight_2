@@ -6,10 +6,14 @@
 	<classpathentry kind="lib" path="lib/gdx-backend-lwjgl-natives.jar"/>
 	<classpathentry kind="lib" path="lib/gdx-backend-lwjgl.jar"/>
 	<classpathentry kind="lib" path="lib/gdx-natives.jar"/>
-	<classpathentry kind="lib" path="lib/gdx.jar" sourcepath="docs/api">
+	<classpathentry kind="lib" path="lib/gdx.jar" sourcepath="lib/sources/gdx-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/C:/Workspace/Dogfight_2/docs/api/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/gdx-audio.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-audio-natives.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-tiled-preprocessor.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-tools.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
