@@ -75,33 +75,32 @@ public class GameScreen implements Screen {
     public void show() {
 	Global.batch = new SpriteBatch();
 
-	Global.player1 = new Plane(300, 300, 0,
-		new Planetype(100, 6, 1, 2, true, true, true, true,
-			new Texture(Gdx.files
-				.internal("assets/data/planes/gen5/f35.png"))),
-		EntityType.PLAYER1);
-
-	Texture tex_p2 = new Texture(
-		Gdx.files.internal("assets/data/planes/plane1.png"));
-	tex_p2 = new Texture(
-		Gdx.files.internal("assets/data/planes/plane1.png"));
-	Global.player2 = new Plane(300, 250, 0, new Planetype(100, 6, 1, 2,
-		true, true, true, true, tex_p2), EntityType.PLAYER2);
-
-	Global.map = new TmxMapLoader().load("assets/data/map/map_test/map2.tmx");
+	Global.map = new TmxMapLoader()
+		.load("assets/data/map/map_test/map2.tmx");
 	Global.map_renderer = new OrthogonalTiledMapRenderer(Global.map, 1);
 
-	Global.camera_player1 = new Camera(new OrthographicCamera(),
-		Global.map);
-	
+	Global.camera_player1 = new Camera(new OrthographicCamera(), Global.map);
 
-	Global.camera_player2 = new Camera(new OrthographicCamera(),
-		Global.map);
+	Global.camera_player2 = new Camera(new OrthographicCamera(), Global.map);
 	TiledMapTileLayer l = (TiledMapTileLayer) Global.map.getLayers().get(0);
 	Global.map_columns = l.getHeight();
 	Global.map_rows = l.getWidth();
 	Global.map_tileHeight = l.getTileHeight();
 	Global.map_tileWidth = l.getTileWidth();
-    }
 
+	Global.player1 = new Plane(300,
+		(Global.map_columns * Global.map_tileHeight) / 2, 0,
+		new Planetype(100, 6, 1, 2, true, true, true, true,
+			new Texture(Gdx.files
+				.internal("assets/data/planes/gen5/f35.png"))),
+		EntityType.PLAYER1);
+
+	Global.player2 = new Plane(
+		(Global.map_rows * Global.map_tileWidth) - 300,
+		(Global.map_columns * Global.map_tileHeight) / 2, 0,
+		new Planetype(100, 6, 1, 2, true, true, true, true,
+			new Texture(Gdx.files
+				.internal("assets/data/planes/plane1.png"))),
+		EntityType.PLAYER2);
+    }
 }

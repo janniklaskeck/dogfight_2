@@ -72,6 +72,10 @@ public class Plane extends Entity {
 	weapons = new ArrayList<>();
 	origx = getSprite().getWidth() / 2;
 	origy = getSprite().getHeight() / 2;
+	if (eType == EntityType.PLAYER2) {
+	    setAngle(180);
+	    getSprite().flip(false, true);
+	}
 
 	// TEST
 	Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
@@ -94,9 +98,16 @@ public class Plane extends Entity {
 
 	Sprite sprite = getSprite();
 
-	sprite.setPosition(xpos, ypos);
-	sprite.setOrigin(origx, origy);
-	sprite.setRotation(angle);
+	if (getEType() == EntityType.PLAYER1) {
+	    sprite.setPosition(xpos, ypos);
+	    sprite.setOrigin(origx, origy);
+	    sprite.setRotation(angle);
+	} else if (getEType() == EntityType.PLAYER2) {
+	    sprite.setPosition(xpos, ypos);
+	    sprite.setOrigin(origx, origy);
+	    sprite.setRotation(angle);
+
+	}
 
 	sprite.draw(batch);
 
