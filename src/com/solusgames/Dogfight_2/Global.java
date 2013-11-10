@@ -3,6 +3,7 @@ package com.solusgames.Dogfight_2;
 import java.awt.Dimension;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -30,6 +31,7 @@ public class Global {
     public static Plane player2;
     public static Camera camera_player1;
     public static Camera camera_player2;
+    public static OrthographicCamera camera_ui;
     // Game options
     public static boolean paused = false;
     public static boolean fullscreen = false;
@@ -37,7 +39,7 @@ public class Global {
     public static boolean player_collision = false;
     public static boolean singlePlayer = false;
     public static boolean vertical_split = false;
-    public static Dimension dim_720 = new Dimension(1280, 720);
+    public static Dimension current_dim = new Dimension(1280, 720);
 
     // Scores
     public static int score_p1 = 0, score_p2 = 0;

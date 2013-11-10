@@ -14,8 +14,8 @@ public class Main implements ApplicationListener {
 
     public static void main(String[] args) {
 	LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-	cfg.width = (int) Global.dim_720.getWidth();
-	cfg.height = (int) Global.dim_720.getHeight();
+	cfg.width = (int) Global.current_dim.getWidth();
+	cfg.height = (int) Global.current_dim.getHeight();
 	cfg.fullscreen = Global.fullscreen;
 	cfg.vSyncEnabled = Global.vsync;
 	

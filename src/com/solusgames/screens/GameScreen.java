@@ -44,6 +44,9 @@ public class GameScreen implements Screen {
      */
     public void update() {
 	c.input();
+	Global.camera_ui.setToOrtho(false, Global.current_dim.width, Global.current_dim.height);
+	Global.camera_ui.position.set(0, 0, 0);
+	Global.camera_ui.update();
 	Global.player1.update();
 	Global.camera_player1.centerOn(Global.player1);
 	Global.player2.update();
@@ -79,9 +82,9 @@ public class GameScreen implements Screen {
 		.load("assets/data/map/map_test/map2.tmx");
 	Global.map_renderer = new OrthogonalTiledMapRenderer(Global.map, 1);
 
-	Global.camera_player1 = new Camera(new OrthographicCamera(), Global.map);
-
-	Global.camera_player2 = new Camera(new OrthographicCamera(), Global.map);
+	Global.camera_player1 = new Camera(new OrthographicCamera());
+	Global.camera_player2 = new Camera(new OrthographicCamera());
+	Global.camera_ui = new OrthographicCamera();
 	TiledMapTileLayer l = (TiledMapTileLayer) Global.map.getLayers().get(0);
 	Global.map_columns = l.getHeight();
 	Global.map_rows = l.getWidth();

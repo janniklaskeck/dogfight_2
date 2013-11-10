@@ -2,7 +2,6 @@ package com.solusgames.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity;
 import com.solusgames.entities.Entity.EntityType;
@@ -22,9 +21,9 @@ public class Camera {
      * @param camera
      * @param map
      */
-    public Camera(OrthographicCamera camera, TiledMap ma) {
+    public Camera(OrthographicCamera camera) {
 	this.cam = camera;
-	cam.setToOrtho(false, Global.dim_720.width, Global.dim_720.height / 2);
+	cam.setToOrtho(false, Global.current_dim.width, Global.current_dim.height / 2);
     }
 
     /**
@@ -42,41 +41,41 @@ public class Camera {
 	}
 	if (entity.getEType() == EntityType.PLAYER1) {
 	    // camera constraint left
-	    if (cam.position.x - (Global.dim_720.getWidth() / 2) <= 0) {
-		cam.position.x = (float) (Global.dim_720.getWidth() / 2);
+	    if (cam.position.x - (Global.current_dim.getWidth() / 2) <= 0) {
+		cam.position.x = (float) (Global.current_dim.getWidth() / 2);
 	    }
 	    // camera constraint down
-	    if (cam.position.y - (Global.dim_720.getHeight() / 4) <= 0) {
-		cam.position.y = (float) (Global.dim_720.getHeight() / 4);
+	    if (cam.position.y - (Global.current_dim.getHeight() / 4) <= 0) {
+		cam.position.y = (float) (Global.current_dim.getHeight() / 4);
 	    }
 	    // camera constraint up
-	    if (cam.position.y + (Global.dim_720.getHeight() / 4) >= (Global.map_columns * Global.map_tileHeight)) {
+	    if (cam.position.y + (Global.current_dim.getHeight() / 4) >= (Global.map_columns * Global.map_tileHeight)) {
 		cam.position.y = (Global.map_columns * Global.map_tileHeight)
-			- ((float) Global.dim_720.getHeight() / 4);
+			- ((float) Global.current_dim.getHeight() / 4);
 	    }
 	    // camera constraint right
-	    if (cam.position.x + (Global.dim_720.getWidth() / 2) >= (Global.map_rows * Global.map_tileWidth)) {
+	    if (cam.position.x + (Global.current_dim.getWidth() / 2) >= (Global.map_rows * Global.map_tileWidth)) {
 		cam.position.x = (Global.map_rows * Global.map_tileWidth)
-			- ((float) Global.dim_720.getWidth() / 2);
+			- ((float) Global.current_dim.getWidth() / 2);
 	    }
 	} else if (entity.getEType() == EntityType.PLAYER2) {
 	    // camera constraint left
-	    if (cam.position.x - (Global.dim_720.getWidth() / 2) <= 0) {
-		cam.position.x = (float) (Global.dim_720.getWidth() / 2);
+	    if (cam.position.x - (Global.current_dim.getWidth() / 2) <= 0) {
+		cam.position.x = (float) (Global.current_dim.getWidth() / 2);
 	    }
 	    // camera constraint down
-	    if (cam.position.y - (Global.dim_720.getHeight() / 4) <= 0) {
-		cam.position.y = (float) (Global.dim_720.getHeight() / 4);
+	    if (cam.position.y - (Global.current_dim.getHeight() / 4) <= 0) {
+		cam.position.y = (float) (Global.current_dim.getHeight() / 4);
 	    }
 	    // camera constraint up
-	    if (cam.position.y + (Global.dim_720.getHeight() / 4) >= (Global.map_columns * Global.map_tileHeight)) {
+	    if (cam.position.y + (Global.current_dim.getHeight() / 4) >= (Global.map_columns * Global.map_tileHeight)) {
 		cam.position.y = (Global.map_columns * Global.map_tileHeight)
-			- ((float) Global.dim_720.getHeight() / 4);
+			- ((float) Global.current_dim.getHeight() / 4);
 	    }
 	    // camera constraint right
-	    if (cam.position.x + (Global.dim_720.getWidth() / 2) >= (Global.map_rows * Global.map_tileWidth)) {
+	    if (cam.position.x + (Global.current_dim.getWidth() / 2) >= (Global.map_rows * Global.map_tileWidth)) {
 		cam.position.x = (Global.map_rows * Global.map_tileWidth)
-			- ((float) Global.dim_720.getWidth() / 2);
+			- ((float) Global.current_dim.getWidth() / 2);
 	    }
 	}
 	cam.update();
