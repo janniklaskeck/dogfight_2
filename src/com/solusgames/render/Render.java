@@ -21,7 +21,8 @@ public class Render {
 
     Rectangle viewportPlayer1 = new Rectangle();
     Rectangle viewportPlayer2 = new Rectangle();
-    Rectangle viewportCamera = new Rectangle();
+    Rectangle viewportCombined = new Rectangle();
+    Rectangle viewportUI = new Rectangle();
 
     /**
      * Render method
@@ -43,7 +44,7 @@ public class Render {
 	viewportPlayer1.set(0, (float) Global.current_dim.getHeight() / 2,
 		(float) Global.current_dim.getWidth(),
 		(float) Global.current_dim.getHeight() / 2);
-	viewportCamera.set(0, 0, (float) Global.current_dim.getWidth(),
+	viewportUI.set(0, 0, (float) Global.current_dim.getWidth(),
 		(float) Global.current_dim.getHeight());
 
 	int[] layers = new int[1];
@@ -75,8 +76,8 @@ public class Render {
 	Global.batch.begin();
 
 	Global.batch.setProjectionMatrix(Global.camera_ui.combined);
-	Gdx.gl20.glViewport(0, 0, (int) viewportCamera.width,
-		(int) viewportCamera.height);
+	Gdx.gl20.glViewport(0, 0, (int) viewportUI.width,
+		(int) viewportUI.height);
 
 	font.draw(Global.batch, "" + Gdx.graphics.getFramesPerSecond(), 300,
 		Gdx.graphics.getHeight() / 2);
@@ -95,14 +96,16 @@ public class Render {
 	viewportPlayer1.set(0, (float) Global.current_dim.getHeight() / 2,
 		(float) Global.current_dim.getWidth(),
 		(float) Global.current_dim.getHeight() / 2);
-	viewportCamera.set(0, 0, (float) Global.current_dim.getWidth(),
+	viewportUI.set(0, 0, (float) Global.current_dim.getWidth(),
+		(float) Global.current_dim.getHeight());
+	viewportCombined.set(0, 0, (float) Global.current_dim.getWidth(),
 		(float) Global.current_dim.getHeight());
 
 	int[] layers = new int[1];
 	layers[0] = 1;
 	// clear screen
 	Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+	
 	// player 1 stuff
 	Global.batch
 		.setProjectionMatrix(Global.camera_player1.getCam().combined);
@@ -146,8 +149,8 @@ public class Render {
 
 	Global.batch.setProjectionMatrix(Global.camera_ui.combined);
 	Global.batch.begin();
-	Gdx.gl20.glViewport(0, 0, (int) viewportCamera.width,
-		(int) viewportCamera.height);
+	Gdx.gl20.glViewport(0, 0, (int) viewportUI.width,
+		(int) viewportUI.height);
 
 	font.draw(Global.batch, "A" + Gdx.graphics.getFramesPerSecond(), -100,
 		-100);
