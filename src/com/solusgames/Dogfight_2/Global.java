@@ -25,6 +25,7 @@ public class Global {
     public static float map_tileHeight;
     public static float map_tileWidth;
     public static SpriteBatch batch;
+    public static boolean camCombined;
 
     // Players
     public static Plane player1;

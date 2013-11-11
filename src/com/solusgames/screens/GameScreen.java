@@ -44,13 +44,22 @@ public class GameScreen implements Screen {
      */
     public void update() {
 	c.input();
-	Global.camera_ui.setToOrtho(false, Global.current_dim.width, Global.current_dim.height);
+	Global.camera_ui.setToOrtho(false, Global.current_dim.width,
+		Global.current_dim.height);
 	Global.camera_ui.position.set(0, 0, 0);
 	Global.camera_ui.update();
 	Global.player1.update();
 	Global.camera_player1.centerOn(Global.player1);
 	Global.player2.update();
 	Global.camera_player2.centerOn(Global.player2);
+
+	if (getYDistance() < (Global.current_dim.getHeight() / 2)
+		* (Global.current_dim.getHeight() / 2) && getXDistance() < (Global.current_dim.getWidth() / 2)
+		* (Global.current_dim.getWidth() / 2)) {
+	    Global.camCombined = true;
+	} else {
+	    Global.camCombined = false;
+	}
 
     }
 
@@ -76,15 +85,23 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+
+	OnStartUp();
+    }
+
+    /**
+     * First initialisation
+     */
+    public void OnStartUp() {
 	Global.batch = new SpriteBatch();
 
 	Global.map = new TmxMapLoader()
 		.load("assets/data/map/map_test/map2.tmx");
 	Global.map_renderer = new OrthogonalTiledMapRenderer(Global.map, 1);
-
 	Global.camera_player1 = new Camera(new OrthographicCamera());
 	Global.camera_player2 = new Camera(new OrthographicCamera());
 	Global.camera_ui = new OrthographicCamera();
+
 	TiledMapTileLayer l = (TiledMapTileLayer) Global.map.getLayers().get(0);
 	Global.map_columns = l.getHeight();
 	Global.map_rows = l.getWidth();
@@ -105,5 +122,26 @@ public class GameScreen implements Screen {
 			new Texture(Gdx.files
 				.internal("assets/data/planes/plane1.png"))),
 		EntityType.PLAYER2);
+
+    }
+
+    /**
+     * Returns vertical distance between player 1 and player 2
+     * 
+     * @return distance
+     */
+    public float getYDistance() {
+	float d_y = (Global.player1.getYpos() - Global.player2.getYpos());
+	return (d_y * d_y);
+    }
+
+    /**
+     * Returns horizontal distance between player 1 and player 2
+     * 
+     * @return distance
+     */
+    public float getXDistance() {
+	float d_x = (Global.player1.getXpos() - Global.player2.getXpos());
+	return (d_x * d_x);
     }
 }

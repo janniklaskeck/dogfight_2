@@ -23,7 +23,8 @@ public class Camera {
      */
     public Camera(OrthographicCamera camera) {
 	this.cam = camera;
-	cam.setToOrtho(false, Global.current_dim.width, Global.current_dim.height / 2);
+	cam.setToOrtho(false, Global.current_dim.width,
+		Global.current_dim.height / 2);
     }
 
     /**
@@ -32,7 +33,14 @@ public class Camera {
      * @param entity
      */
     public void centerOn(Entity entity) {
-	
+	if (Global.camCombined) {
+	    cam.setToOrtho(false, Global.current_dim.width,
+		    Global.current_dim.height);
+	} else {
+	    cam.setToOrtho(false, Global.current_dim.width,
+		    Global.current_dim.height / 2);
+	}
+
 	cam.position.set(entity.getXpos(), entity.getYpos(), 0);
 
 	if (cam == null) {
