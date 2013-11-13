@@ -8,6 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.controls.Controls;
 import com.solusgames.entities.Entity.EntityType;
@@ -54,13 +59,22 @@ public class GameScreen implements Screen {
 	Global.camera_player2.centerOn(Global.player2);
 
 	if (getYDistance() < (Global.current_dim.getHeight() / 2)
-		* (Global.current_dim.getHeight() / 2) && getXDistance() < (Global.current_dim.getWidth() / 2)
-		* (Global.current_dim.getWidth() / 2)) {
+		* (Global.current_dim.getHeight() / 2)
+		&& getXDistance() < (Global.current_dim.getWidth() / 2)
+			* (Global.current_dim.getWidth() / 2)) {
 	    Global.camCombined = true;
 	} else {
 	    Global.camCombined = false;
 	}
 
+	Array<Body> bi = new Array<>();
+	Global.world.getBodies(bi);
+	
+	for (int i = 0; i < bi.size; i++) {
+	    Plane p = (Plane) bi.get(i).getUserData();
+	    p.setXpos(bi.get(i).getPosition().x - 31);
+	    p.setYpos(bi.get(i).getPosition().y - 8);
+	}
     }
 
     @Override
@@ -69,6 +83,9 @@ public class GameScreen implements Screen {
 	update();
 	r.render();
 
+	// temporal
+
+	Global.world.step(1 / 60f, 6, 2);
     }
 
     @Override
@@ -85,7 +102,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
 	OnStartUp();
     }
 
@@ -93,6 +109,10 @@ public class GameScreen implements Screen {
      * First initialisation
      */
     public void OnStartUp() {
+	Global.world = new World(new Vector2(0, -5), true);
+	Global.debug = new Box2DDebugRenderer();
+	
+	
 	Global.batch = new SpriteBatch();
 
 	Global.map = new TmxMapLoader()
@@ -123,7 +143,12 @@ public class GameScreen implements Screen {
 				.internal("assets/data/planes/plane1.png"))),
 		EntityType.PLAYER2);
 
+
+
+
     }
+
+
 
     /**
      * Returns vertical distance between player 1 and player 2

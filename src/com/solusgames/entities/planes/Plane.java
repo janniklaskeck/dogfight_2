@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity;
 import com.solusgames.entities.weapons.Weapon;
@@ -58,6 +65,15 @@ public class Plane extends Entity {
     // weapon array
     public ArrayList<Weapon> weapons;
 
+    private float x_respawn;
+    private float y_respawn;
+
+    // experimental physics
+    public Body body;
+    public BodyDef bodyDef;
+    public Fixture fixture;
+    public FixtureDef fixtureDef;
+
     /**
      * 
      * @param x
@@ -69,14 +85,17 @@ public class Plane extends Entity {
 	super(x, y, angle, type.getHitpoints(), type.getTexture(), eType);
 	this.setType(type);
 	this.alive = true;
+	x_respawn = x;
+	y_respawn = y;
 	weapons = new ArrayList<>();
 	origx = getSprite().getWidth() / 2;
 	origy = getSprite().getHeight() / 2;
 	if (eType == EntityType.PLAYER2) {
 	    setAngle(180);
 	    getSprite().flip(false, true);
-	}
 
+	}
+	getSprite().scale(Global.box2dmult);
 	// TEST
 	Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
 	setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t));
@@ -87,6 +106,21 @@ public class Plane extends Entity {
 	ammo_slot3 = t.getMaxAmmo();
 	setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t));
 	ammo_slot4 = t.getMaxAmmo();
+
+	// physics
+	bodyDef = new BodyDef();
+	bodyDef.type = BodyType.DynamicBody;
+	bodyDef.position.set(xpos, ypos);
+
+	body = Global.world.createBody(bodyDef);
+	// Create a polygon shape
+	PolygonShape groundBox = new PolygonShape();
+
+	groundBox.setAsBox(getSprite().getWidth(), getSprite().getHeight());
+	// Create a fixture from our polygon shape and add it to our ground body
+	body.createFixture(groundBox, 1f);
+	// Clean up after ourselves
+	groundBox.dispose();
     }
 
     /**
@@ -124,6 +158,8 @@ public class Plane extends Entity {
      * Update method
      */
     public void update() {
+	body.setUserData(this);
+
 	checkCollision(Global.map);
 	// movement
 
@@ -155,8 +191,25 @@ public class Plane extends Entity {
 	    addAngle(-type.getTurnSpeed());
 	}
 
-	xpos += acceleration * Math.cos(Math.toRadians(inertAngle));
-	ypos += acceleration * Math.sin(Math.toRadians(inertAngle));
+	// xpos += acceleration * Math.cos(Math.toRadians(inertAngle));
+	// ypos += acceleration * Math.sin(Math.toRadians(inertAngle));
+	Vector2 vel = body.getLinearVelocity();
+
+	float a;
+
+	if (vel.x == 0) {
+	    a = (float) (vel.y > 0 ? 0 : Math.PI);
+	} else if (vel.y == 0) {
+	    a = (float) (vel.x > 0 ? (Math.PI * 2) : 3 * Math.PI);
+	} else {
+	    a = (float) (Math.atan(vel.y / vel.x) + Math.PI);
+	}
+
+	if (vel.x > 0) {
+	    a += Math.PI;
+	}
+
+	body.setTransform(body.getPosition(), a);
 
 	// weapons
 
@@ -198,8 +251,9 @@ public class Plane extends Entity {
      * Respawn method
      */
     public void respawn() {
-	setXpos(100);
-	setYpos(100);
+	setXpos(x_respawn);
+	setYpos(y_respawn);
+	body.setTransform(x_respawn, y_respawn, 0);
     }
 
     /**

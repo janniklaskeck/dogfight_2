@@ -86,7 +86,7 @@ public class Entity {
     public void dispose() {
 	getTexture().dispose();
     }
-    
+
     /**
      * @return the xpos
      */
@@ -138,12 +138,7 @@ public class Entity {
      */
     public void addAngle(float angle) {
 	this.angle += angle;
-	if (this.angle >= 360) {
-	    // this.angle = 0;
-	}
-	if (this.angle < 0) {
-	    // this.angle += 359;
-	}
+
     }
 
     /**
