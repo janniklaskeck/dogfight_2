@@ -2,16 +2,13 @@ package com.solusgames.entities.planes;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.utils.Array;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity;
 import com.solusgames.entities.weapons.Weapon;
@@ -68,12 +65,6 @@ public class Plane extends Entity {
     private float x_respawn;
     private float y_respawn;
 
-    // experimental physics
-    public Body body;
-    public BodyDef bodyDef;
-    public Fixture fixture;
-    public FixtureDef fixtureDef;
-
     /**
      * 
      * @param x
@@ -95,7 +86,9 @@ public class Plane extends Entity {
 	    getSprite().flip(false, true);
 
 	}
-	getSprite().scale(Global.box2dmult);
+	getSprite().getTexture().setFilter(TextureFilter.Linear,
+		TextureFilter.Linear);
+	// getSprite().scale(Global.box2dmult);
 	// TEST
 	Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
 	setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t));
@@ -107,20 +100,6 @@ public class Plane extends Entity {
 	setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t));
 	ammo_slot4 = t.getMaxAmmo();
 
-	// physics
-	bodyDef = new BodyDef();
-	bodyDef.type = BodyType.DynamicBody;
-	bodyDef.position.set(xpos, ypos);
-
-	body = Global.world.createBody(bodyDef);
-	// Create a polygon shape
-	PolygonShape groundBox = new PolygonShape();
-
-	groundBox.setAsBox(getSprite().getWidth(), getSprite().getHeight());
-	// Create a fixture from our polygon shape and add it to our ground body
-	body.createFixture(groundBox, 1f);
-	// Clean up after ourselves
-	groundBox.dispose();
     }
 
     /**
@@ -152,13 +131,13 @@ public class Plane extends Entity {
 
 	batch.end();
 	batch.begin();
+
     }
 
     /**
      * Update method
      */
     public void update() {
-	body.setUserData(this);
 
 	checkCollision(Global.map);
 	// movement
@@ -191,25 +170,8 @@ public class Plane extends Entity {
 	    addAngle(-type.getTurnSpeed());
 	}
 
-	// xpos += acceleration * Math.cos(Math.toRadians(inertAngle));
-	// ypos += acceleration * Math.sin(Math.toRadians(inertAngle));
-	Vector2 vel = body.getLinearVelocity();
-
-	float a;
-
-	if (vel.x == 0) {
-	    a = (float) (vel.y > 0 ? 0 : Math.PI);
-	} else if (vel.y == 0) {
-	    a = (float) (vel.x > 0 ? (Math.PI * 2) : 3 * Math.PI);
-	} else {
-	    a = (float) (Math.atan(vel.y / vel.x) + Math.PI);
-	}
-
-	if (vel.x > 0) {
-	    a += Math.PI;
-	}
-
-	body.setTransform(body.getPosition(), a);
+	xpos += acceleration * Math.cos(Math.toRadians(inertAngle));
+	ypos += acceleration * Math.sin(Math.toRadians(inertAngle));
 
 	// weapons
 
@@ -240,11 +202,40 @@ public class Plane extends Entity {
     }
 
     public void checkCollision(TiledMap map) {
+	Vector2 minmin = new Vector2(getSprite().getVertices()[0], getSprite()
+		.getVertices()[1]);
+	Vector2 minmax = new Vector2(getSprite().getVertices()[5], getSprite()
+		.getVertices()[6]);
+	Vector2 maxmin = new Vector2(getSprite().getVertices()[15], getSprite()
+		.getVertices()[16]);
+	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
+		.getVertices()[11]);
+
+	for (ArrayList<Vector2> r : Global.col_map) {
+	    Array<Vector2> arr = toArray(r);
+	    if (Intersector.isPointInPolygon(arr, minmin)
+		    || Intersector.isPointInPolygon(arr, minmax)
+		    || Intersector.isPointInPolygon(arr, maxmin)
+		    || Intersector.isPointInPolygon(arr, maxmax)) {
+		respawn();
+	    }
+	}
+
 	if (getXpos() >= Global.map_rows * Global.map_tileWidth
 		|| getYpos() >= Global.map_columns * Global.map_tileHeight
 		|| getYpos() <= 0 || getXpos() <= 0) {
 	    respawn();
 	}
+    }
+
+    private Array<Vector2> toArray(ArrayList<Vector2> al) {
+	Array<Vector2> array = new Array<>();
+	for (int i = 0; i < al.size(); i++) {
+	    array.add(al.get(i));
+	}
+
+	return array;
+
     }
 
     /**
@@ -253,7 +244,6 @@ public class Plane extends Entity {
     public void respawn() {
 	setXpos(x_respawn);
 	setYpos(y_respawn);
-	body.setTransform(x_respawn, y_respawn, 0);
     }
 
     /**

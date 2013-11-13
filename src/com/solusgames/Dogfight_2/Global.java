@@ -1,14 +1,14 @@
 package com.solusgames.Dogfight_2;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
 import com.solusgames.entities.planes.Plane;
 import com.solusgames.render.Camera;
 
@@ -22,15 +22,13 @@ public class Global {
 
     public static OrthogonalTiledMapRenderer map_renderer;
     public static TiledMap map;
+    public static ArrayList<ArrayList<Vector2>> col_map;
     public static int map_rows;
     public static int map_columns;
     public static float map_tileHeight;
     public static float map_tileWidth;
     public static SpriteBatch batch;
     public static boolean camCombined;
-    public static World world;
-    public static Box2DDebugRenderer debug;
-    public static final float box2dmult = 1.05f;
 
     // Players
     public static Plane player1;

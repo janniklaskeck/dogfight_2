@@ -102,8 +102,6 @@ public class Render {
 	Global.map_renderer.setView(Global.camera_player1.getCam());
 	Global.map_renderer.render();
 
-	Global.debug.render(Global.world,
-		Global.camera_player1.getCam().combined);
 	Global.batch.end();
     }
 
@@ -128,10 +126,9 @@ public class Render {
 
 	Global.map_renderer.setView(Global.camera_player2.getCam());
 	Global.map_renderer.render();
-	
-	Global.debug.render(Global.world,
-		Global.camera_player2.getCam().combined);
+
 	Global.batch.end();
+
     }
 
     /**

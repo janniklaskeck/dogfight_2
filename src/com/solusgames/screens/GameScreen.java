@@ -1,5 +1,7 @@
 package com.solusgames.screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,10 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.controls.Controls;
 import com.solusgames.entities.Entity.EntityType;
@@ -67,14 +65,6 @@ public class GameScreen implements Screen {
 	    Global.camCombined = false;
 	}
 
-	Array<Body> bi = new Array<>();
-	Global.world.getBodies(bi);
-	
-	for (int i = 0; i < bi.size; i++) {
-	    Plane p = (Plane) bi.get(i).getUserData();
-	    p.setXpos(bi.get(i).getPosition().x - 31);
-	    p.setYpos(bi.get(i).getPosition().y - 8);
-	}
     }
 
     @Override
@@ -82,10 +72,6 @@ public class GameScreen implements Screen {
 
 	update();
 	r.render();
-
-	// temporal
-
-	Global.world.step(1 / 60f, 6, 2);
     }
 
     @Override
@@ -109,12 +95,9 @@ public class GameScreen implements Screen {
      * First initialisation
      */
     public void OnStartUp() {
-	Global.world = new World(new Vector2(0, -5), true);
-	Global.debug = new Box2DDebugRenderer();
-	
-	
-	Global.batch = new SpriteBatch();
 
+	Global.batch = new SpriteBatch();
+	Global.col_map = new ArrayList<>();
 	Global.map = new TmxMapLoader()
 		.load("assets/data/map/map_test/map2.tmx");
 	Global.map_renderer = new OrthogonalTiledMapRenderer(Global.map, 1);
@@ -128,6 +111,71 @@ public class GameScreen implements Screen {
 	Global.map_tileHeight = l.getTileHeight();
 	Global.map_tileWidth = l.getTileWidth();
 
+	for (int i = 0; i < Global.map_rows; i++) {
+	    for (int e = 0; e < Global.map_columns; e++) {
+		if (l.getCell(i, e) != null) {
+		    if (l.getCell(i, e).getTile().getProperties()
+			    .containsKey("half")) {
+			ArrayList<Vector2> list = new ArrayList<>();
+			list.add(new Vector2(i * Global.map_tileWidth + 0, e
+				* Global.map_tileHeight + 0));
+			list.add(new Vector2(i * Global.map_tileWidth + 0, e
+				* Global.map_tileHeight + Global.map_tileHeight
+				/ 2));
+			list.add(new Vector2(i * Global.map_tileWidth
+				+ Global.map_tileWidth, e
+				* Global.map_tileHeight + 0));
+			list.add(new Vector2(i * Global.map_tileWidth
+				+ Global.map_tileWidth, e
+				* Global.map_tileHeight + Global.map_tileHeight
+				/ 2));
+			Global.col_map.add(list);
+		    }
+		    if (l.getCell(i, e).getTile().getProperties()
+			    .containsKey("full")) {
+			ArrayList<Vector2> list = new ArrayList<>();
+			list.add(new Vector2(i * Global.map_tileWidth + 0, e
+				* Global.map_tileHeight + 0));
+			list.add(new Vector2(i * Global.map_tileWidth + 0, e
+				* Global.map_tileHeight + Global.map_tileHeight));
+			list.add(new Vector2(i * Global.map_tileWidth
+				+ Global.map_tileWidth, e
+				* Global.map_tileHeight + 0));
+			list.add(new Vector2(i * Global.map_tileWidth
+				+ Global.map_tileWidth, e
+				* Global.map_tileHeight + Global.map_tileHeight));
+			Global.col_map.add(list);
+		    }
+		    if (l.getCell(i, e).getTile().getProperties()
+			    .containsKey("triangle_l")) {
+			ArrayList<Vector2> list = new ArrayList<>();
+			list.add(new Vector2(i * Global.map_tileWidth + 0, e
+				* Global.map_tileHeight + 0));
+			list.add(new Vector2(i * Global.map_tileWidth
+				+ Global.map_tileWidth, e
+				* Global.map_tileHeight + 0));
+			list.add(new Vector2(i * Global.map_tileWidth + 0, e
+				* Global.map_tileHeight + Global.map_tileHeight));
+			Global.col_map.add(list);
+		    }
+		    if (l.getCell(i, e).getTile().getProperties()
+			    .containsKey("triangle_r")) {
+			ArrayList<Vector2> list = new ArrayList<>();
+			list.add(new Vector2(i * Global.map_tileWidth + 0, e
+				* Global.map_tileHeight));
+			list.add(new Vector2(i * Global.map_tileWidth
+				+ Global.map_tileWidth, e
+				* Global.map_tileHeight + 0));
+			list.add(new Vector2(i * Global.map_tileWidth
+				+ Global.map_tileWidth, e
+				* Global.map_tileHeight + Global.map_tileHeight));
+			Global.col_map.add(list);
+		    }
+		}
+	    }
+	}
+	
+	
 	Global.player1 = new Plane(300,
 		(Global.map_columns * Global.map_tileHeight) / 2, 0,
 		new Planetype(100, 6, 1, 2, true, true, true, true,
@@ -143,12 +191,7 @@ public class GameScreen implements Screen {
 				.internal("assets/data/planes/plane1.png"))),
 		EntityType.PLAYER2);
 
-
-
-
     }
-
-
 
     /**
      * Returns vertical distance between player 1 and player 2

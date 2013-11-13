@@ -5,10 +5,35 @@
  </tileset>
  <tileset firstgid="257" name="layer1_collision" tilewidth="32" tileheight="32">
   <image source="layer1_collision.png" width="512" height="512"/>
+  <tile id="0">
+   <properties>
+    <property name="full" value=""/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="half" value=""/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="half" value=""/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="triangle_r" value=""/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="triangle_l" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Collision" width="100" height="75" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3TQQ4BMRgG0BmJjZ3ZERfADZAQV+D+Z9EJjUkpw4xEeC/5dm2T/l9bFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQM6hvGaR5NgI17nEeUXH8jb1uknIrOXs6rXTkEHLrEM2P9jLvbc3T+4ZZ7V/M1VmbrGz+uzhJa/YN3pJ/9KjfNs/O5TPZ1xl1rwq7kvf87jRwTtdpOd3eSvzTD5lWZ6T66DNHbtonrMNWXXsoG+5ruo3tAsZ9ZR49z5n+0+6/r1cvskJKT6KBzB1AAA=
+   H4sIAAAAAAAAC+3Tuw7DIAwF0LB2g///2IoBlVqQiDRSX+dIHpAZ0DXeNgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYOaWHrXS+2cxkz6nvreSXb2Xw92UnqtXfnwuR/8yD3IZ5dT3mrKT22gOK87M5dP2rL1llHFVzyW9nlUv5pZ3ZnlG3KW9iu96lyvz/eY3RLO5tT90Zc12AKo7T0Um1DB1AAA=
   </data>
  </layer>
  <layer name="Ground" width="100" height="75">
