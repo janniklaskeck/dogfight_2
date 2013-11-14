@@ -27,6 +27,8 @@ public class GameScreen implements Screen {
     public void dispose() {
 	r.dispose();
 	Global.map_renderer.dispose();
+	Global.player1.dispose();
+	Global.player2.dispose();
 
     }
 
@@ -46,7 +48,6 @@ public class GameScreen implements Screen {
      * Update method
      */
     public void update() {
-	c.input();
 	Global.camera_ui.setToOrtho(false, Global.current_dim.width,
 		Global.current_dim.height);
 	Global.camera_ui.position.set(0, 0, 0);
@@ -55,7 +56,14 @@ public class GameScreen implements Screen {
 	Global.camera_player1.centerOn(Global.player1);
 	Global.player2.update();
 	Global.camera_player2.centerOn(Global.player2);
+	checkPlayerDistance();
 
+    }
+
+    /**
+     * Checks if players are close enough for a camera merge
+     */
+    private void checkPlayerDistance() {
 	if (getYDistance() < (Global.current_dim.getHeight() / 2)
 		* (Global.current_dim.getHeight() / 2)
 		&& getXDistance() < (Global.current_dim.getWidth() / 2)
@@ -64,12 +72,10 @@ public class GameScreen implements Screen {
 	} else {
 	    Global.camCombined = false;
 	}
-
     }
 
     @Override
     public void render(float delta) {
-
 	update();
 	r.render();
     }
@@ -97,13 +103,42 @@ public class GameScreen implements Screen {
     public void OnStartUp() {
 
 	Global.batch = new SpriteBatch();
+	createMap();
+	createPlayers();
+    }
+
+    /**
+     * Creates players and cameras
+     */
+    private void createPlayers() {
+	Global.camera_player1 = new Camera(new OrthographicCamera());
+	Global.camera_player2 = new Camera(new OrthographicCamera());
+	Global.camera_ui = new OrthographicCamera();
+
+	Global.player1 = new Plane(300,
+		(Global.map_columns * Global.map_tileHeight) / 2, 0,
+		new Planetype(100, 6, 1, 2, true, true, true, true,
+			new Texture(Gdx.files
+				.internal("assets/data/planes/gen5/f35.png"))),
+		EntityType.PLAYER1);
+
+	Global.player2 = new Plane(
+		(Global.map_rows * Global.map_tileWidth) - 300,
+		(Global.map_columns * Global.map_tileHeight) / 2, 0,
+		new Planetype(100, 6, 1, 2, true, true, true, true,
+			new Texture(Gdx.files
+				.internal("assets/data/planes/plane1.png"))),
+		EntityType.PLAYER2);
+    }
+
+    /**
+     * Creates the map with collision polygons
+     */
+    private void createMap() {
 	Global.col_map = new ArrayList<>();
 	Global.map = new TmxMapLoader()
 		.load("assets/data/map/map_test/map2.tmx");
 	Global.map_renderer = new OrthogonalTiledMapRenderer(Global.map, 1);
-	Global.camera_player1 = new Camera(new OrthographicCamera());
-	Global.camera_player2 = new Camera(new OrthographicCamera());
-	Global.camera_ui = new OrthographicCamera();
 
 	TiledMapTileLayer l = (TiledMapTileLayer) Global.map.getLayers().get(0);
 	Global.map_columns = l.getHeight();
@@ -174,23 +209,6 @@ public class GameScreen implements Screen {
 		}
 	    }
 	}
-	
-	
-	Global.player1 = new Plane(300,
-		(Global.map_columns * Global.map_tileHeight) / 2, 0,
-		new Planetype(100, 6, 1, 2, true, true, true, true,
-			new Texture(Gdx.files
-				.internal("assets/data/planes/gen5/f35.png"))),
-		EntityType.PLAYER1);
-
-	Global.player2 = new Plane(
-		(Global.map_rows * Global.map_tileWidth) - 300,
-		(Global.map_columns * Global.map_tileHeight) / 2, 0,
-		new Planetype(100, 6, 1, 2, true, true, true, true,
-			new Texture(Gdx.files
-				.internal("assets/data/planes/plane1.png"))),
-		EntityType.PLAYER2);
-
     }
 
     /**
