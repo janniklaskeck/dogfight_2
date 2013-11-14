@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -26,12 +25,13 @@ public class Plane extends Entity {
     private boolean throttleDown;
     private boolean turnUp;
     private boolean turnDown;
+    // extra break
     private boolean airBreak;
     // movement variables
     private float acceleration = 0;
-    private float hspeed = 0;
-    private float vspeed = 0;
+    // inertia angle
     private float inertAngle = 0;
+    // origin points to rotate around
     private float origx;
     private float origy;
 
@@ -62,9 +62,6 @@ public class Plane extends Entity {
     // weapon array
     public ArrayList<Weapon> weapons;
 
-    private float x_respawn;
-    private float y_respawn;
-
     /**
      * 
      * @param x
@@ -76,13 +73,13 @@ public class Plane extends Entity {
 	super(x, y, angle, type.getHitpoints(), type.getTexture(), eType);
 	this.setType(type);
 	this.alive = true;
-	x_respawn = x;
-	y_respawn = y;
+
 	weapons = new ArrayList<>();
 	origx = getSprite().getWidth() / 2;
 	origy = getSprite().getHeight() / 2;
 	if (eType == EntityType.PLAYER2) {
 	    setAngle(180);
+	    inertAngle = 180;
 	    getSprite().flip(false, true);
 
 	}
@@ -138,10 +135,64 @@ public class Plane extends Entity {
      * Update method
      */
     public void update() {
+	checkCollision();
+	updateMovement();
+	updateWeapons();
 
-	checkCollision(Global.map);
+    }
+
+    /**
+     * Check collision of 4 corner points with map collision polygons
+     */
+    private void checkCollision() {
+	Vector2 minmin = new Vector2(getSprite().getVertices()[0], getSprite()
+		.getVertices()[1]);
+	Vector2 minmax = new Vector2(getSprite().getVertices()[5], getSprite()
+		.getVertices()[6]);
+	Vector2 maxmin = new Vector2(getSprite().getVertices()[15], getSprite()
+		.getVertices()[16]);
+	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
+		.getVertices()[11]);
+
+	for (ArrayList<Vector2> r : Global.col_map) {
+	    Array<Vector2> arr = toArray(r);
+	    if (Intersector.isPointInPolygon(arr, minmin)
+		    || Intersector.isPointInPolygon(arr, minmax)
+		    || Intersector.isPointInPolygon(arr, maxmin)
+		    || Intersector.isPointInPolygon(arr, maxmax)) {
+		respawn();
+	    }
+	}
+
+	if (getXpos() >= Global.map_rows * Global.map_tileWidth
+		|| getYpos() >= Global.map_columns * Global.map_tileHeight
+		|| getYpos() <= 0 || getXpos() <= 0) {
+	    respawn();
+	}
+    }
+
+    /**
+     * Returns an {@link com.badlogic.gdx.utils.Array} Vector2 from an ArrayList
+     * Vector2
+     * 
+     * @param arrayList
+     * @return {@link com.badlogic.gdx.utils.Array}
+     */
+    private Array<Vector2> toArray(ArrayList<Vector2> arrayList) {
+	Array<Vector2> array = new Array<>();
+	for (int i = 0; i < arrayList.size(); i++) {
+	    array.add(arrayList.get(i));
+	}
+
+	return array;
+
+    }
+
+    /**
+     * Movement update method
+     */
+    private void updateMovement() {
 	// movement
-
 	// inertia emulation
 	if (inertAngle <= angle) {
 	    if (inertAngle != angle) {
@@ -172,7 +223,12 @@ public class Plane extends Entity {
 
 	xpos += acceleration * Math.cos(Math.toRadians(inertAngle));
 	ypos += acceleration * Math.sin(Math.toRadians(inertAngle));
+    }
 
+    /**
+     * Weapons update method
+     */
+    private void updateWeapons() {
 	// weapons
 
 	// if slot is used
@@ -198,59 +254,12 @@ public class Plane extends Entity {
 	    }
 	}
 	reloadWeapons();
-
-    }
-
-    public void checkCollision(TiledMap map) {
-	Vector2 minmin = new Vector2(getSprite().getVertices()[0], getSprite()
-		.getVertices()[1]);
-	Vector2 minmax = new Vector2(getSprite().getVertices()[5], getSprite()
-		.getVertices()[6]);
-	Vector2 maxmin = new Vector2(getSprite().getVertices()[15], getSprite()
-		.getVertices()[16]);
-	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
-		.getVertices()[11]);
-
-	for (ArrayList<Vector2> r : Global.col_map) {
-	    Array<Vector2> arr = toArray(r);
-	    if (Intersector.isPointInPolygon(arr, minmin)
-		    || Intersector.isPointInPolygon(arr, minmax)
-		    || Intersector.isPointInPolygon(arr, maxmin)
-		    || Intersector.isPointInPolygon(arr, maxmax)) {
-		respawn();
-	    }
-	}
-
-	if (getXpos() >= Global.map_rows * Global.map_tileWidth
-		|| getYpos() >= Global.map_columns * Global.map_tileHeight
-		|| getYpos() <= 0 || getXpos() <= 0) {
-	    respawn();
-	}
-    }
-
-    private Array<Vector2> toArray(ArrayList<Vector2> al) {
-	Array<Vector2> array = new Array<>();
-	for (int i = 0; i < al.size(); i++) {
-	    array.add(al.get(i));
-	}
-
-	return array;
-
-    }
-
-    /**
-     * Respawn method
-     */
-    public void respawn() {
-	setXpos(x_respawn);
-	setYpos(y_respawn);
     }
 
     /**
      * Reload method
      */
     public void reloadWeapons() {
-
 	if (ammo_slot1 <= 0) {
 	    reload_slot1--;
 	    if (reload_slot1 <= 0) {
@@ -285,7 +294,25 @@ public class Plane extends Entity {
 	}
     }
 
+    /**
+     * Respawn method
+     */
+    public void respawn() {
+	setXpos(x_respawn);
+	setYpos(y_respawn);
+	if (EType == EntityType.PLAYER1) {
+	    setAngle(0);
+	    inertAngle = 0;
+	    acceleration = 0;
+	} else if (EType == EntityType.PLAYER2) {
+	    setAngle(180);
+	    inertAngle = 180;
+	    acceleration = 0;
+	}
+    }
+
     public void dispose() {
+	super.dispose();
 	type.getTexture().dispose();
     }
 
@@ -297,7 +324,6 @@ public class Plane extends Entity {
     public void shoot_slot1() {
 	if (type.isSlot_1()) {
 	    if (ammo_slot1 > 0) {
-
 		weapons.add(new Weapon(xpos, ypos, angle, slot1.getTexture(),
 			slot1.getType()));
 		ammo_slot1--;
@@ -310,12 +336,13 @@ public class Plane extends Entity {
      * 
      * @param weapon
      */
-    public Weapon shoot_slot2() {
+    public void shoot_slot2() {
 	if (type.isSlot_2()) {
-	    return new Weapon(xpos, ypos, angle, slot2.getTexture(),
-		    slot2.getType());
-	} else {
-	    return null;
+	    if (ammo_slot2 > 0) {
+		weapons.add(new Weapon(xpos, ypos, angle, slot2.getTexture(),
+			slot2.getType()));
+		ammo_slot2--;
+	    }
 	}
     }
 
@@ -324,12 +351,13 @@ public class Plane extends Entity {
      * 
      * @param weapon
      */
-    public Weapon shoot_slot3() {
+    public void shoot_slot3() {
 	if (type.isSlot_3()) {
-	    return new Weapon(xpos, ypos, angle, slot3.getTexture(),
-		    slot3.getType());
-	} else {
-	    return null;
+	    if (ammo_slot3 > 0) {
+		weapons.add(new Weapon(xpos, ypos, angle, slot3.getTexture(),
+			slot3.getType()));
+		ammo_slot3--;
+	    }
 	}
     }
 
@@ -338,12 +366,13 @@ public class Plane extends Entity {
      * 
      * @param weapon
      */
-    public Weapon shoot_slot4() {
+    public void shoot_slot4() {
 	if (type.isSlot_4()) {
-	    return new Weapon(xpos, ypos, angle, slot4.getTexture(),
-		    slot4.getType());
-	} else {
-	    return null;
+	    if (ammo_slot4 > 0) {
+		weapons.add(new Weapon(xpos, ypos, angle, slot4.getTexture(),
+			slot4.getType()));
+		ammo_slot4--;
+	    }
 	}
     }
 
@@ -479,20 +508,6 @@ public class Plane extends Entity {
      */
     public void setAcceleration(float acceleration) {
 	this.acceleration = acceleration;
-    }
-
-    /**
-     * @return the hspeed
-     */
-    public float getHspeed() {
-	return hspeed;
-    }
-
-    /**
-     * @return the vspeed
-     */
-    public float getVspeed() {
-	return vspeed;
     }
 
     /**
