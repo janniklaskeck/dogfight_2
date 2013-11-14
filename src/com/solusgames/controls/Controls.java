@@ -1,115 +1,192 @@
 package com.solusgames.controls;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 import com.solusgames.Dogfight_2.Global;
 
-public class Controls {
+public class Controls implements InputProcessor {
 
-    public void input() {
+    @Override
+    public boolean keyDown(int keycode) {
 	if (!Global.paused) {
 	    /**
 	     * Player One Controls
 	     */
-	    if (Gdx.input.isKeyPressed(Keys.W)) {
+	    if (keycode == Keys.W) {
 		Global.player1.setThrottleUp(true);
-	    } else {
-		Global.player1.setThrottleUp(false);
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.S)) {
-		Global.player1.setThrottleDown(true);
-	    } else {
-		Global.player1.setThrottleDown(false);
-	    }
-	    if (Gdx.input.isKeyPressed(Keys.A)) {
+	    if (keycode == Keys.A) {
 		Global.player1.setTurnUp(true);
-	    } else {
-		Global.player1.setTurnUp(false);
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.D)) {
+	    if (keycode == Keys.S) {
+		Global.player1.setThrottleDown(true);
+	    }
+	    if (keycode == Keys.D) {
 		Global.player1.setTurnDown(true);
-	    } else {
-		Global.player1.setTurnDown(false);
 	    }
-	    //slot 1
-	    if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
+	    if (keycode == Keys.NUM_1) {
 		Global.player1.setSlot1_fire(true);
-	    } else {
-		Global.player1.setSlot1_fire(false);
 	    }
-	    //slot 2
-	    if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
+	    if (keycode == Keys.NUM_2) {
 		Global.player1.setSlot2_fire(true);
-	    } else {
-		Global.player1.setSlot2_fire(false);
 	    }
-	    //slot 3
-	    if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
+	    if (keycode == Keys.NUM_3) {
 		Global.player1.setSlot3_fire(true);
-	    } else {
-		Global.player1.setSlot3_fire(false);
 	    }
-	    //slot4
-	    if (Gdx.input.isKeyPressed(Keys.NUM_4)) {
+	    if (keycode == Keys.NUM_4) {
 		Global.player1.setSlot4_fire(true);
-	    } else {
-		Global.player1.setSlot4_fire(false);
 	    }
-
-
 	    /**
 	     * Player Two Controls
 	     */
-
-	    if (Gdx.input.isKeyPressed(Keys.UP)) {
+	    if (keycode == Keys.UP) {
 		Global.player2.setThrottleUp(true);
-	    } else {
-		Global.player2.setThrottleUp(false);
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-		Global.player2.setThrottleDown(true);
-	    } else {
-		Global.player2.setThrottleDown(false);
-	    }
-	    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+	    if (keycode == Keys.LEFT) {
 		Global.player2.setTurnUp(true);
-	    } else {
-		Global.player2.setTurnUp(false);
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+	    if (keycode == Keys.DOWN) {
+		Global.player2.setThrottleDown(true);
+	    }
+	    if (keycode == Keys.RIGHT) {
 		Global.player2.setTurnDown(true);
-	    } else {
-		Global.player2.setTurnDown(false);
 	    }
-	    if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
-		// player 1 fire weapon slot 1
-	    }
-	    if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
-		// player 1 fire weapon slot 2
-	    }
-	    if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-		// player 1 fire weapon slot 3
-	    }
-	    if (Gdx.input.isKeyPressed(Keys.NUM_4)) {
-		// player 1 fire weapon slot 4
-	    }
+	    if (keycode == Keys.NUM_1) {
 
+	    }
+	    if (keycode == Keys.NUM_2) {
 
-	    /**
-	     * Misc. Controls
-	     */
+	    }
+	    if (keycode == Keys.NUM_3) {
 
-	    if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+	    }
+	    if (keycode == Keys.NUM_4) {
+
+	    }
+	    if (keycode == Keys.ESCAPE) {
 		Gdx.app.exit();
 		Global.paused = true;
 		// Enter Paused Mode
 
 	    }
 	} else {
-	    if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-		Global.paused = false;
-		// Leave Paused Mode
+	    if (keycode == Keys.ESCAPE) {
+		Global.paused = true;
+		// Enter Paused Mode
+
 	    }
 	}
+	return true;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+	if (!Global.paused) {
+	    /**
+	     * Player One Controls
+	     */
+	    if (keycode == Keys.W) {
+		Global.player1.setThrottleUp(false);
+	    }
+	    if (keycode == Keys.A) {
+		Global.player1.setTurnUp(false);
+	    }
+	    if (keycode == Keys.S) {
+		Global.player1.setThrottleDown(false);
+	    }
+	    if (keycode == Keys.D) {
+		Global.player1.setTurnDown(false);
+	    }
+	    if (keycode == Keys.NUM_1) {
+		Global.player1.setSlot1_fire(false);
+	    }
+	    if (keycode == Keys.NUM_2) {
+		Global.player1.setSlot2_fire(false);
+	    }
+	    if (keycode == Keys.NUM_3) {
+		Global.player1.setSlot3_fire(false);
+	    }
+	    if (keycode == Keys.NUM_4) {
+		Global.player1.setSlot4_fire(false);
+	    }
+	    /**
+	     * Player Two Controls
+	     */
+	    if (keycode == Keys.UP) {
+		Global.player2.setThrottleUp(false);
+	    }
+	    if (keycode == Keys.LEFT) {
+		Global.player2.setTurnUp(false);
+	    }
+	    if (keycode == Keys.DOWN) {
+		Global.player2.setThrottleDown(false);
+	    }
+	    if (keycode == Keys.RIGHT) {
+		Global.player2.setTurnDown(false);
+	    }
+	    if (keycode == Keys.NUM_1) {
+
+	    }
+	    if (keycode == Keys.NUM_2) {
+
+	    }
+	    if (keycode == Keys.NUM_3) {
+
+	    }
+	    if (keycode == Keys.NUM_4) {
+
+	    }
+	    // pause
+	    if (keycode == Keys.ESCAPE) {
+		Gdx.app.exit();
+		Global.paused = true;
+		// Enter Paused Mode
+
+	    }
+	} else {
+	    if (keycode == Keys.ESCAPE) {
+		Global.paused = true;
+		// Enter Paused Mode
+
+	    }
+	}
+	return true;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+	// TODO Auto-generated method stub
+	return false;
     }
 }
