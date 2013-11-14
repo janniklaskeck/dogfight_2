@@ -182,6 +182,14 @@ public class Entity {
     public void setHitpoints(int hitpoints) {
 	this.hitpoints = hitpoints;
     }
+    
+    /**
+     * @param hitpoints
+     *            the hitpoints to add
+     */
+    public void addHitpoints(int hitpoints) {
+	this.hitpoints += hitpoints;
+    }
 
     public EntityType getEType() {
 	return EType;
@@ -238,7 +246,7 @@ public class Entity {
     }
 
     public enum EntityType {
-	NONE, STRUCTURE, PLANE, HELICOPTER, TURRET, PLAYER1, PLAYER2, WEAPON;
+	NONE, STRUCTURE, PLANE, HELICOPTER, TURRET, PLAYER1, PLAYER2, WEAPON_PLAYER1, WEAPON_PLAYER2;
     };
 
 }

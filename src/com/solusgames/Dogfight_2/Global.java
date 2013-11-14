@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.solusgames.entities.planes.Plane;
 import com.solusgames.render.Camera;
 
@@ -71,5 +72,22 @@ public class Global {
     public static int p2_key_prim2 = Keys.NUM_1;
     public static int p2_key_sec1 = Keys.NUM_2;
     public static int p2_key_sec2 = Keys.NUM_3;
+
+    /**
+     * Returns an {@link com.badlogic.gdx.utils.Array} Vector2 from an ArrayList
+     * Vector2
+     * 
+     * @param arrayList
+     * @return {@link com.badlogic.gdx.utils.Array}
+     */
+
+    public static Array<Vector2> toArray(ArrayList<Vector2> arrayList) {
+	Array<Vector2> array = new Array<>();
+	for (int i = 0; i < arrayList.size(); i++) {
+	    array.add(arrayList.get(i));
+	}
+
+	return array;
+    }
 
 }

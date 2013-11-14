@@ -87,15 +87,27 @@ public class Plane extends Entity {
 		TextureFilter.Linear);
 	// getSprite().scale(Global.box2dmult);
 	// TEST
-	Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
-	setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t));
-	ammo_slot1 = t.getMaxAmmo();
-	setSlot2(new Weapon(xpos, ypos, angle, t.getTexture(), t));
-	ammo_slot2 = t.getMaxAmmo();
-	setSlot3(new Weapon(xpos, ypos, angle, t.getTexture(), t));
-	ammo_slot3 = t.getMaxAmmo();
-	setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t));
-	ammo_slot4 = t.getMaxAmmo();
+	if (EType == EntityType.PLAYER1) {
+	    Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
+	    setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER1));
+	    ammo_slot1 = t.getMaxAmmo();
+	    setSlot2(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER1));
+	    ammo_slot2 = t.getMaxAmmo();
+	    setSlot3(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER1));
+	    ammo_slot3 = t.getMaxAmmo();
+	    setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER1));
+	    ammo_slot4 = t.getMaxAmmo();
+	} else if (EType == EntityType.PLAYER2) {
+	    Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
+	    setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER2));
+	    ammo_slot1 = t.getMaxAmmo();
+	    setSlot2(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER2));
+	    ammo_slot2 = t.getMaxAmmo();
+	    setSlot3(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER2));
+	    ammo_slot3 = t.getMaxAmmo();
+	    setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER2));
+	    ammo_slot4 = t.getMaxAmmo();
+	}
 
     }
 
@@ -153,38 +165,24 @@ public class Plane extends Entity {
 		.getVertices()[16]);
 	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
 		.getVertices()[11]);
-
+	// map collision
 	for (ArrayList<Vector2> r : Global.col_map) {
-	    Array<Vector2> arr = toArray(r);
+	    Array<Vector2> arr = Global.toArray(r);
 	    if (Intersector.isPointInPolygon(arr, minmin)
 		    || Intersector.isPointInPolygon(arr, minmax)
 		    || Intersector.isPointInPolygon(arr, maxmin)
 		    || Intersector.isPointInPolygon(arr, maxmax)) {
+		setAlive(false);
 		respawn();
 	    }
 	}
-
+	// bounds collision
 	if (getXpos() >= Global.map_rows * Global.map_tileWidth
 		|| getYpos() >= Global.map_columns * Global.map_tileHeight
 		|| getYpos() <= 0 || getXpos() <= 0) {
+	    setAlive(false);
 	    respawn();
 	}
-    }
-
-    /**
-     * Returns an {@link com.badlogic.gdx.utils.Array} Vector2 from an ArrayList
-     * Vector2
-     * 
-     * @param arrayList
-     * @return {@link com.badlogic.gdx.utils.Array}
-     */
-    private Array<Vector2> toArray(ArrayList<Vector2> arrayList) {
-	Array<Vector2> array = new Array<>();
-	for (int i = 0; i < arrayList.size(); i++) {
-	    array.add(arrayList.get(i));
-	}
-
-	return array;
 
     }
 
@@ -300,6 +298,7 @@ public class Plane extends Entity {
     public void respawn() {
 	setXpos(x_respawn);
 	setYpos(y_respawn);
+	setAlive(true);
 	if (EType == EntityType.PLAYER1) {
 	    setAngle(0);
 	    inertAngle = 0;
@@ -311,6 +310,28 @@ public class Plane extends Entity {
 	}
     }
 
+    /**
+     * Returns a array from the planes sprite corners
+     * @return
+     */
+    public Array<Vector2> returnSpriteCornerArray() {
+	Vector2 minmin = new Vector2(getSprite().getVertices()[0], getSprite()
+		.getVertices()[1]);
+	Vector2 minmax = new Vector2(getSprite().getVertices()[5], getSprite()
+		.getVertices()[6]);
+	Vector2 maxmin = new Vector2(getSprite().getVertices()[15], getSprite()
+		.getVertices()[16]);
+	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
+		.getVertices()[11]);
+	
+	Array<Vector2> poly = new Array<>();
+	poly.add(minmin);
+	poly.add(minmax);
+	poly.add(maxmin);
+	poly.add(maxmax);
+	return poly;
+    }
+    
     public void dispose() {
 	super.dispose();
 	type.getTexture().dispose();
@@ -324,8 +345,16 @@ public class Plane extends Entity {
     public void shoot_slot1() {
 	if (type.isSlot_1()) {
 	    if (ammo_slot1 > 0) {
-		weapons.add(new Weapon(xpos, ypos, angle, slot1.getTexture(),
-			slot1.getType()));
+		if (EType == EntityType.PLAYER1) {
+		    weapons.add(new Weapon(xpos, ypos, angle, slot1
+			    .getTexture(), slot1.getType(),
+			    EntityType.WEAPON_PLAYER1));
+		} else if (EType == EntityType.PLAYER2) {
+		    weapons.add(new Weapon(xpos, ypos, angle, slot1
+			    .getTexture(), slot1.getType(),
+			    EntityType.WEAPON_PLAYER2));
+		}
+
 		ammo_slot1--;
 	    }
 	}
@@ -339,8 +368,15 @@ public class Plane extends Entity {
     public void shoot_slot2() {
 	if (type.isSlot_2()) {
 	    if (ammo_slot2 > 0) {
-		weapons.add(new Weapon(xpos, ypos, angle, slot2.getTexture(),
-			slot2.getType()));
+		if (EType == EntityType.PLAYER1) {
+		    weapons.add(new Weapon(xpos, ypos, angle, slot2
+			    .getTexture(), slot2.getType(),
+			    EntityType.WEAPON_PLAYER1));
+		} else if (EType == EntityType.PLAYER2) {
+		    weapons.add(new Weapon(xpos, ypos, angle, slot2
+			    .getTexture(), slot2.getType(),
+			    EntityType.WEAPON_PLAYER2));
+		}
 		ammo_slot2--;
 	    }
 	}
@@ -354,8 +390,15 @@ public class Plane extends Entity {
     public void shoot_slot3() {
 	if (type.isSlot_3()) {
 	    if (ammo_slot3 > 0) {
-		weapons.add(new Weapon(xpos, ypos, angle, slot3.getTexture(),
-			slot3.getType()));
+		if (EType == EntityType.PLAYER1) {
+		    weapons.add(new Weapon(xpos, ypos, angle, slot3
+			    .getTexture(), slot3.getType(),
+			    EntityType.WEAPON_PLAYER1));
+		} else if (EType == EntityType.PLAYER2) {
+		    weapons.add(new Weapon(xpos, ypos, angle, slot3
+			    .getTexture(), slot3.getType(),
+			    EntityType.WEAPON_PLAYER2));
+		}
 		ammo_slot3--;
 	    }
 	}
@@ -369,8 +412,15 @@ public class Plane extends Entity {
     public void shoot_slot4() {
 	if (type.isSlot_4()) {
 	    if (ammo_slot4 > 0) {
-		weapons.add(new Weapon(xpos, ypos, angle, slot4.getTexture(),
-			slot4.getType()));
+		if (EType == EntityType.PLAYER1) {
+		    weapons.add(new Weapon(xpos, ypos, angle, slot4
+			    .getTexture(), slot4.getType(),
+			    EntityType.WEAPON_PLAYER1));
+		} else if (EType == EntityType.PLAYER2) {
+		    weapons.add(new Weapon(xpos, ypos, angle, slot4
+			    .getTexture(), slot4.getType(),
+			    EntityType.WEAPON_PLAYER2));
+		}
 		ammo_slot4--;
 	    }
 	}

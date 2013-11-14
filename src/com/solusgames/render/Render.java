@@ -143,6 +143,10 @@ public class Render {
 
 	font.draw(Global.batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0,
 		(Gdx.graphics.getHeight() / 2) - 25);
+	font.draw(Global.batch, "P1 Health: " + Global.player1.getHitpoints(), -100,
+		(Gdx.graphics.getHeight() / 2) - 25);
+	font.draw(Global.batch, "P2 Health: " + Global.player2.getHitpoints(), 100,
+		(Gdx.graphics.getHeight() / 2) - 25);
 
 	Global.batch.end();
     }
