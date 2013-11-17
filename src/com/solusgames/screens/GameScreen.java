@@ -12,7 +12,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.solusgames.Dogfight_2.Global;
-import com.solusgames.controls.Controls;
 import com.solusgames.entities.Entity.EntityType;
 import com.solusgames.entities.planes.Plane;
 import com.solusgames.entities.planes.Planetype;
@@ -20,8 +19,11 @@ import com.solusgames.render.Camera;
 import com.solusgames.render.Render;
 
 public class GameScreen implements Screen {
-    Controls c = new Controls();
     Render r = new Render();
+
+    public GameScreen() {
+
+    }
 
     @Override
     public void dispose() {

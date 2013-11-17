@@ -41,7 +41,7 @@ public class Weapon extends Entity {
     }
 
     public void update() {
-	
+
 	if (alive) {
 	    checkCollision();
 	    xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle));
@@ -70,10 +70,13 @@ public class Weapon extends Entity {
 	// map collision
 	for (ArrayList<Vector2> r : Global.col_map) {
 	    Array<Vector2> arr = Global.toArray(r);
-	    if (Intersector.isPointInPolygon(arr, minmin)
-		    || Intersector.isPointInPolygon(arr, minmax)
-		    || Intersector.isPointInPolygon(arr, maxmin)
-		    || Intersector.isPointInPolygon(arr, maxmax)) {
+	    if (Intersector.isPointInPolygon(arr, minmin)) {
+		setAlive(false);
+	    } else if (Intersector.isPointInPolygon(arr, minmax)) {
+		setAlive(false);
+	    } else if (Intersector.isPointInPolygon(arr, maxmin)) {
+		setAlive(false);
+	    } else if (Intersector.isPointInPolygon(arr, maxmax)) {
 		setAlive(false);
 	    }
 	}
@@ -83,25 +86,37 @@ public class Weapon extends Entity {
 		|| getYpos() <= 0 || getXpos() <= 0) {
 	    setAlive(false);
 	}
-	
+
 	if (EType == EntityType.WEAPON_PLAYER1) {
-	  
 	    Array<Vector2> poly = Global.player2.returnSpriteCornerArray();
-	    if (Intersector.isPointInPolygon(poly, minmin)
-		    || Intersector.isPointInPolygon(poly, minmax)
-		    || Intersector.isPointInPolygon(poly, maxmin)
-		    || Intersector.isPointInPolygon(poly, maxmax)) {
-		setAlive(false);
+	    if (Intersector.isPointInPolygon(poly, minmin)) {
 		Global.player2.addHitpoints(-type.getDamage());
+		setAlive(false);
+	    } else if (Intersector.isPointInPolygon(poly, minmax)) {
+		Global.player2.addHitpoints(-type.getDamage());
+		setAlive(false);
+	    } else if (Intersector.isPointInPolygon(poly, maxmin)) {
+		Global.player2.addHitpoints(-type.getDamage());
+		setAlive(false);
+	    } else if (Intersector.isPointInPolygon(poly, maxmax)) {
+		Global.player2.addHitpoints(-type.getDamage());
+		setAlive(false);
 	    }
+
 	} else if (EType == EntityType.WEAPON_PLAYER2) {
 	    Array<Vector2> poly = Global.player1.returnSpriteCornerArray();
-	    if (Intersector.isPointInPolygon(poly, minmin)
-		    || Intersector.isPointInPolygon(poly, minmax)
-		    || Intersector.isPointInPolygon(poly, maxmin)
-		    || Intersector.isPointInPolygon(poly, maxmax)) {
-		setAlive(false);
+	    if (Intersector.isPointInPolygon(poly, minmin)) {
 		Global.player1.addHitpoints(-type.getDamage());
+		setAlive(false);
+	    } else if (Intersector.isPointInPolygon(poly, minmax)) {
+		Global.player1.addHitpoints(-type.getDamage());
+		setAlive(false);
+	    } else if (Intersector.isPointInPolygon(poly, maxmin)) {
+		Global.player1.addHitpoints(-type.getDamage());
+		setAlive(false);
+	    } else if (Intersector.isPointInPolygon(poly, maxmax)) {
+		Global.player1.addHitpoints(-type.getDamage());
+		setAlive(false);
 	    }
 	}
     }

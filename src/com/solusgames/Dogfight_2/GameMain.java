@@ -1,20 +1,22 @@
 package com.solusgames.Dogfight_2;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.solusgames.screens.MainMenuScreen;
+import com.solusgames.screens.Screen;
+import com.solusgames.screens.ScreenManager;
 
 public class GameMain extends Game {
 
     @Override
     public void create() {
-	setScreen(new MainMenuScreen(this));
+	ScreenManager.getInstance().initialize(this);
+	ScreenManager.getInstance().show(Screen.MAIN_MENU);
 
     }
-    
+
     @Override
     public void dispose() {
-	Gdx.app.exit();
+	super.dispose();
+	ScreenManager.getInstance().dispose();
     }
 
 }
