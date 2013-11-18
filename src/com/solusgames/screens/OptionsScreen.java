@@ -1,40 +1,54 @@
 package com.solusgames.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.solusgames.Dogfight_2.GameMain;
-import com.solusgames.controls.Controls;
+import com.solusgames.Dogfight_2.Global;
+import com.solusgames.screens.handler.ScreenSwitchHandler;
+import com.solusgames.screens.parts.Button;
+import com.solusgames.screens.parts.Label;
 
-public class OptionsScreen implements Screen {
+public class OptionsScreen implements com.badlogic.gdx.Screen {
 
+    private Button backButton = null;
+    private OrthographicCamera camera = null;
+    private BitmapFont font = null;
+    private Label headingLabel = null;
+    private int lineHeight = 0;
+    
     @Override
     public void render(float delta) {
-	// TODO Auto-generated method stub
+	Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
+	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+	Global.batch.begin();
+	headingLabel.draw(Global.batch);
+	backButton.draw(Global.batch, camera);
+	Global.batch.end();
 	
     }
 
     @Override
     public void resize(int width, int height) {
-	// TODO Auto-generated method stub
+	camera = new OrthographicCamera();
+	camera.setToOrtho(false, width, height);
+	Global.batch.setProjectionMatrix(camera.combined);
+	int centerX = width / 2;
+	int centerY = height / 2;
+	headingLabel.setX(centerX - headingLabel.getWidth() / 2);
+	headingLabel.setY(centerY + 2 * lineHeight);
+	backButton.setX(centerX - backButton.getWidth() / 2);
+	backButton.setY(centerY - lineHeight*2);
 	
     }
 
     @Override
     public void show() {
-	// TODO Auto-generated method stub
+	font = new BitmapFont();
+	lineHeight = Math.round(2.5f * font.getCapHeight());
+	headingLabel = new Label("Screen Manager Demo", font);
+	backButton = new Button("Back", font, new ScreenSwitchHandler(
+		Screen.MAIN_MENU));
 	
     }
 
@@ -58,8 +72,7 @@ public class OptionsScreen implements Screen {
 
     @Override
     public void dispose() {
-	// TODO Auto-generated method stub
-	
+	font.dispose();
     }
 
     
