@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.solusgames.controls.Controls;
 import com.solusgames.entities.planes.Plane;
 import com.solusgames.render.Camera;
 
@@ -37,6 +38,7 @@ public class Global {
     public static Camera camera_player1;
     public static Camera camera_player2;
     public static OrthographicCamera camera_ui;
+    public static Controls control;
     // Game options
     public static boolean paused = false;
     public static boolean fullscreen = false;
