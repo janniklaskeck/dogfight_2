@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.solusgames.Dogfight_2.Global;
+import com.solusgames.controls.Controls;
 import com.solusgames.screens.handler.ScreenSwitchHandler;
 import com.solusgames.screens.parts.Button;
 import com.solusgames.screens.parts.Button.ButtonHandler;
@@ -12,7 +14,6 @@ import com.solusgames.screens.parts.Label;
 
 public class MainMenuScreen implements com.badlogic.gdx.Screen {
 
-    private SpriteBatch batch = null;
     private OrthographicCamera camera = null;
     private BitmapFont font = null;
     private Label headingLabel = null;
@@ -27,7 +28,9 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
     }
 
     public void create() {
-	batch = new SpriteBatch();
+	Global.control = new Controls();
+	
+	Global.batch = new SpriteBatch();
 	font = new BitmapFont();
 	lineHeight = Math.round(2.5f * font.getCapHeight());
 	headingLabel = new Label("Screen Manager Demo", font);
@@ -47,19 +50,19 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
     public void render(float delta) {
 	Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
 	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-	batch.begin();
-	headingLabel.draw(batch);
-	playButton.draw(batch, camera);
-	optionsButton.draw(batch, camera);
-	exitButton.draw(batch, camera);
-	batch.end();
+	Global.batch.begin();
+	headingLabel.draw(Global.batch);
+	playButton.draw(Global.batch, camera);
+	optionsButton.draw(Global.batch, camera);
+	exitButton.draw(Global.batch, camera);
+	Global.batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
 	camera = new OrthographicCamera();
 	camera.setToOrtho(false, width, height);
-	batch.setProjectionMatrix(camera.combined);
+	Global.batch.setProjectionMatrix(camera.combined);
 	int centerX = width / 2;
 	int centerY = height / 2;
 	headingLabel.setX(centerX - headingLabel.getWidth() / 2);
@@ -75,7 +78,7 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
     @Override
     public void dispose() {
 	font.dispose();
-	batch.dispose();
+	
     }
 
     @Override
