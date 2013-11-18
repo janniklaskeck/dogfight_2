@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 import com.solusgames.Dogfight_2.Global;
+import com.solusgames.screens.Screen;
+import com.solusgames.screens.ScreenManager;
 
 public class Controls implements InputProcessor {
 
@@ -65,7 +67,8 @@ public class Controls implements InputProcessor {
 
 	    }
 	    if (keycode == Keys.ESCAPE) {
-		Gdx.app.exit();
+		Gdx.input.setInputProcessor(null);
+		ScreenManager.getInstance().show(Screen.MAIN_MENU);
 		Global.paused = true;
 		// Enter Paused Mode
 
@@ -139,7 +142,6 @@ public class Controls implements InputProcessor {
 	    }
 	    // pause
 	    if (keycode == Keys.ESCAPE) {
-		Gdx.app.exit();
 		Global.paused = true;
 		// Enter Paused Mode
 
