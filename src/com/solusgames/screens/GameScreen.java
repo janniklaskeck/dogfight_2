@@ -48,14 +48,14 @@ public class GameScreen implements Screen {
     /**
      * Update method
      */
-    public void update() {
+    public void update(float delta) {
 	Global.camera_ui.setToOrtho(false, Global.current_dim.width,
 		Global.current_dim.height);
 	Global.camera_ui.position.set(0, 0, 0);
 	Global.camera_ui.update();
-	Global.player1.update();
+	Global.player1.update(delta);
 	Global.camera_player1.centerOn(Global.player1);
-	Global.player2.update();
+	Global.player2.update(delta);
 	Global.camera_player2.centerOn(Global.player2);
 	checkPlayerDistance();
 
@@ -77,8 +77,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-	update();
-	r.render();
+	update(delta * 100);
+	r.render(delta);
     }
 
     @Override

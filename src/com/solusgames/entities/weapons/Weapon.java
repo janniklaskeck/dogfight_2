@@ -40,12 +40,12 @@ public class Weapon extends Entity {
 	batch.begin();
     }
 
-    public void update() {
+    public void update(float delta) {
 
 	if (alive) {
 	    checkCollision();
-	    xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle));
-	    ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle));
+	    xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle)) * delta;
+	    ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle)) * delta;
 	} else {
 
 	}

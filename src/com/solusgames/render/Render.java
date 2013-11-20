@@ -39,7 +39,7 @@ public class Render {
     /**
      * Render method
      */
-    public void render() {
+    public void render(float delta) {
 	if (Global.singlePlayer) {
 	    renderSingleplayer(Global.batch);
 	} else if (!Global.singlePlayer) {
@@ -147,6 +147,8 @@ public class Render {
 		(Gdx.graphics.getHeight() / 2) - 25);
 	font.draw(Global.batch, "P2 Health: " + Global.player2.getHitpoints(), 100,
 		(Gdx.graphics.getHeight() / 2) - 25);
+	font.draw(Global.batch, "Delta: " + Gdx.graphics.getDeltaTime(), 0,
+		(Gdx.graphics.getHeight() / 2) - 50);
 
 	Global.batch.end();
     }

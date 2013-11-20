@@ -89,23 +89,31 @@ public class Plane extends Entity {
 	// TEST
 	if (EType == EntityType.PLAYER1) {
 	    Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
-	    setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER1));
+	    setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+		    EntityType.WEAPON_PLAYER1));
 	    ammo_slot1 = t.getMaxAmmo();
-	    setSlot2(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER1));
+	    setSlot2(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+		    EntityType.WEAPON_PLAYER1));
 	    ammo_slot2 = t.getMaxAmmo();
-	    setSlot3(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER1));
+	    setSlot3(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+		    EntityType.WEAPON_PLAYER1));
 	    ammo_slot3 = t.getMaxAmmo();
-	    setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER1));
+	    setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+		    EntityType.WEAPON_PLAYER1));
 	    ammo_slot4 = t.getMaxAmmo();
 	} else if (EType == EntityType.PLAYER2) {
 	    Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
-	    setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER2));
+	    setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+		    EntityType.WEAPON_PLAYER2));
 	    ammo_slot1 = t.getMaxAmmo();
-	    setSlot2(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER2));
+	    setSlot2(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+		    EntityType.WEAPON_PLAYER2));
 	    ammo_slot2 = t.getMaxAmmo();
-	    setSlot3(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER2));
+	    setSlot3(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+		    EntityType.WEAPON_PLAYER2));
 	    ammo_slot3 = t.getMaxAmmo();
-	    setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t, EntityType.WEAPON_PLAYER2));
+	    setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+		    EntityType.WEAPON_PLAYER2));
 	    ammo_slot4 = t.getMaxAmmo();
 	}
 
@@ -146,17 +154,17 @@ public class Plane extends Entity {
     /**
      * Update method
      */
-    public void update() {
-	checkCollision();
-	updateMovement();
-	updateWeapons();
+    public void update(float delta) {
+	checkCollision(delta);
+	updateMovement(delta);
+	updateWeapons(delta);
 
     }
 
     /**
      * Check collision of 4 corner points with map collision polygons
      */
-    private void checkCollision() {
+    private void checkCollision(float delta) {
 	Vector2 minmin = new Vector2(getSprite().getVertices()[0], getSprite()
 		.getVertices()[1]);
 	Vector2 minmax = new Vector2(getSprite().getVertices()[5], getSprite()
@@ -189,17 +197,17 @@ public class Plane extends Entity {
     /**
      * Movement update method
      */
-    private void updateMovement() {
+    private void updateMovement(float delta) {
 	// movement
 	// inertia emulation
 	if (inertAngle <= angle) {
 	    if (inertAngle != angle) {
-		inertAngle += 1.5f;
+		inertAngle += 1.5f *delta;
 	    }
 
 	} else if (inertAngle > angle) {
 	    if (inertAngle != angle) {
-		inertAngle -= 1.5f;
+		inertAngle -= 1.5f *delta;
 	    }
 	}
 
@@ -212,21 +220,22 @@ public class Plane extends Entity {
 	}
 
 	if (isTurnUp()) {
-	    addAngle(type.getTurnSpeed());
+	    addAngle(type.getTurnSpeed()*delta);
 	}
 
 	if (isTurnDown()) {
-	    addAngle(-type.getTurnSpeed());
+	    addAngle(-type.getTurnSpeed()*delta);
 	}
 
-	xpos += acceleration * Math.cos(Math.toRadians(inertAngle));
-	ypos += acceleration * Math.sin(Math.toRadians(inertAngle));
+	xpos += acceleration * Math.cos(Math.toRadians(inertAngle)) * delta;
+	ypos += acceleration * Math.sin(Math.toRadians(inertAngle)) * delta;
+
     }
 
     /**
      * Weapons update method
      */
-    private void updateWeapons() {
+    private void updateWeapons(float delta) {
 	// weapons
 
 	// if slot is used
@@ -246,7 +255,7 @@ public class Plane extends Entity {
 	    shoot_slot4();
 	}
 	for (int i = 0; i < weapons.size(); i++) {
-	    weapons.get(i).update();
+	    weapons.get(i).update(delta);
 	    if (!weapons.get(i).isAlive()) {
 		weapons.remove(i);
 	    }
@@ -312,6 +321,7 @@ public class Plane extends Entity {
 
     /**
      * Returns a array from the planes sprite corners
+     * 
      * @return
      */
     public Array<Vector2> returnSpriteCornerArray() {
@@ -323,7 +333,7 @@ public class Plane extends Entity {
 		.getVertices()[16]);
 	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
 		.getVertices()[11]);
-	
+
 	Array<Vector2> poly = new Array<>();
 	poly.add(minmin);
 	poly.add(minmax);
@@ -331,7 +341,7 @@ public class Plane extends Entity {
 	poly.add(maxmax);
 	return poly;
     }
-    
+
     public void dispose() {
 	super.dispose();
 	type.getTexture().dispose();

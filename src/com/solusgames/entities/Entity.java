@@ -104,7 +104,7 @@ public class Entity {
     /**
      * Update Method
      */
-    public void update() {
+    public void update(float delta) {
     }
 
     /**
