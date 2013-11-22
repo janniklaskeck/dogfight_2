@@ -93,13 +93,20 @@ public class Render {
 	setGL20Viewport(rect);
 
 	// basic bg img
-	Global.batch.draw(bg, 0, 0, Global.currentMap.getMap_rows() * Global.currentMap.getMap_tileWidth(),
-		Global.currentMap.getMap_columns() * Global.currentMap.getMap_tileHeight());
+	Global.batch.draw(
+		bg,
+		0,
+		0,
+		Global.currentMap.getMap_rows()
+			* Global.currentMap.getMap_tileWidth(),
+		Global.currentMap.getMap_columns()
+			* Global.currentMap.getMap_tileHeight());
 
 	Global.player1.render(Global.batch);
 	Global.player2.render(Global.batch);
 
-	Global.currentMap.getMap_renderer().setView(Global.camera_player1.getCam());
+	Global.currentMap.getMap_renderer().setView(
+		Global.camera_player1.getCam());
 	Global.currentMap.getMap_renderer().render();
 
 	Global.batch.end();
@@ -118,13 +125,20 @@ public class Render {
 	setGL20Viewport(viewportPlayer2);
 
 	// basic bg img
-	Global.batch.draw(bg, 0, 0, Global.currentMap.getMap_rows() * Global.currentMap.getMap_tileWidth(),
-		Global.currentMap.getMap_columns() * Global.currentMap.getMap_tileHeight());
+	Global.batch.draw(
+		bg,
+		0,
+		0,
+		Global.currentMap.getMap_rows()
+			* Global.currentMap.getMap_tileWidth(),
+		Global.currentMap.getMap_columns()
+			* Global.currentMap.getMap_tileHeight());
 
 	Global.player1.render(Global.batch);
 	Global.player2.render(Global.batch);
 
-	Global.currentMap.getMap_renderer().setView(Global.camera_player2.getCam());
+	Global.currentMap.getMap_renderer().setView(
+		Global.camera_player2.getCam());
 	Global.currentMap.getMap_renderer().render();
 
 	Global.batch.end();
@@ -143,10 +157,10 @@ public class Render {
 
 	font.draw(Global.batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0,
 		(Gdx.graphics.getHeight() / 2) - 25);
-	font.draw(Global.batch, "P1 Health: " + Global.player1.getHitpoints(), -100,
-		(Gdx.graphics.getHeight() / 2) - 25);
-	font.draw(Global.batch, "P2 Health: " + Global.player2.getHitpoints(), 100,
-		(Gdx.graphics.getHeight() / 2) - 25);
+	font.draw(Global.batch, "P1 Health: " + Global.player1.getHitpoints(),
+		-100, (Gdx.graphics.getHeight() / 2) - 25);
+	font.draw(Global.batch, "P2 Health: " + Global.player2.getHitpoints(),
+		100, (Gdx.graphics.getHeight() / 2) - 25);
 	font.draw(Global.batch, "Delta: " + Gdx.graphics.getDeltaTime(), 0,
 		(Gdx.graphics.getHeight() / 2) - 50);
 

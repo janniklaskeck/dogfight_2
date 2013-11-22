@@ -111,29 +111,29 @@ public class GameScreen implements Screen {
 	Global.camera_ui = new OrthographicCamera();
 
 	Global.player1 = new Plane(300,
-		(Global.currentMap.getMap_columns() * Global.currentMap.getMap_tileHeight()) / 2, 0,
-		new Planetype(100, 6, 1, 2, true, true, true, true,
+		(Global.currentMap.getMap_columns() * Global.currentMap
+			.getMap_tileHeight()) / 2, 0, new Planetype(100, 6, 1,
+			2, true, true, true, true,
 			new Texture(Gdx.files
 				.internal("assets/data/planes/gen5/f35.png"))),
 		EntityType.PLAYER1);
 
 	Global.player2 = new Plane(
-		(Global.currentMap.getMap_rows() * Global.currentMap.getMap_tileWidth()) - 300,
-		(Global.currentMap.getMap_columns() * Global.currentMap.getMap_tileHeight()) / 2, 0,
-		new Planetype(100, 6, 1, 2, true, true, true, true,
-			new Texture(Gdx.files
+		(Global.currentMap.getMap_rows() * Global.currentMap
+			.getMap_tileWidth()) - 300,
+		(Global.currentMap.getMap_columns() * Global.currentMap
+			.getMap_tileHeight()) / 2, 0, new Planetype(100, 6, 1,
+			2, true, true, true, true, new Texture(Gdx.files
 				.internal("assets/data/planes/plane1.png"))),
 		EntityType.PLAYER2);
     }
-
-
 
     /**
      * Returns vertical distance between player 1 and player 2
      * 
      * @return distance
      */
-    public float getYDistance() {
+    public static float getYDistance() {
 	float d_y = (Global.player1.getYpos() - Global.player2.getYpos());
 	return (d_y * d_y);
     }
@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
      * 
      * @return distance
      */
-    public float getXDistance() {
+    public static float getXDistance() {
 	float d_x = (Global.player1.getXpos() - Global.player2.getXpos());
 	return (d_x * d_x);
     }

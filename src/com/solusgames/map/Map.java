@@ -8,6 +8,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Class to combine TiledMap and OrthogonalTiledMapRenderer. Also creates an
+ * ArrayList of Polygons to use with collision checks.
+ * 
+ * @author Jan-Niklas
+ * 
+ */
 public class Map {
 
     private OrthogonalTiledMapRenderer map_renderer;
@@ -23,7 +30,7 @@ public class Map {
     }
 
     /**
-     * Creates the map with collision polygons
+     * Initialize variables and create the map with collision polygons
      */
     private void createMap(String mapName) {
 
