@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -24,7 +25,7 @@ public class Global {
     public static Map currentMap;
     public static SpriteBatch batch;
     public static boolean camCombined;
-
+    public static Sprite img_menu_bg;
     // Players
     public static Plane player1;
     public static Plane player2;

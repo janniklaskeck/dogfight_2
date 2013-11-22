@@ -9,14 +9,19 @@ import com.solusgames.screens.handler.ScreenSwitchHandler;
 import com.solusgames.screens.parts.Button;
 import com.solusgames.screens.parts.Label;
 
-public class OptionsScreen implements com.badlogic.gdx.Screen {
+public class PlaneScreen implements com.badlogic.gdx.Screen {
 
     private Button backButton = null;
     private OrthographicCamera camera = null;
     private BitmapFont font = null;
     private Label headingLabel = null;
     private int lineHeight = 0;
-    
+    private boolean isPlayer1 = false;
+
+    public PlaneScreen(boolean isPlayer1) {
+	this.isPlayer1 = isPlayer1;
+    }
+
     @Override
     public void render(float delta) {
 	Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
@@ -26,7 +31,7 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 	headingLabel.draw(Global.batch);
 	backButton.draw(Global.batch, camera);
 	Global.batch.end();
-	
+
     }
 
     @Override
@@ -39,42 +44,42 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 	headingLabel.setX(centerX - headingLabel.getWidth() / 2);
 	headingLabel.setY(centerY + 2 * lineHeight);
 	backButton.setX(centerX - backButton.getWidth() / 2);
-	backButton.setY(centerY - lineHeight*2);
-	
+	backButton.setY(centerY - lineHeight * 2);
+
     }
 
     @Override
     public void show() {
 	font = new BitmapFont();
 	lineHeight = Math.round(2.5f * font.getCapHeight());
-	headingLabel = new Label("Options", font);
+	headingLabel = new Label(isPlayer1 ? "Player 1 Plane" : "Player 2 Plane", font);
 	backButton = new Button("Back", font, new ScreenSwitchHandler(
 		Screen.MAIN_MENU));
-	
+
     }
 
     @Override
     public void hide() {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void pause() {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void resume() {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void dispose() {
 	font.dispose();
+
     }
 
-    
 }

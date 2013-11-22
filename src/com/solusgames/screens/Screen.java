@@ -23,6 +23,20 @@ public enum Screen {
 	}
     },
 
+    PLANE_P1 {
+	@Override
+	protected com.badlogic.gdx.Screen getScreenInstance() {
+	    return new PlaneScreen(true);
+	}
+    },
+
+    PLANE_P2 {
+	@Override
+	protected com.badlogic.gdx.Screen getScreenInstance() {
+	    return new PlaneScreen(false);
+	}
+    },
+
     OPTIONS {
 	@Override
 	protected com.badlogic.gdx.Screen getScreenInstance() {
