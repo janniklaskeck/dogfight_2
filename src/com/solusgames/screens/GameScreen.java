@@ -1,19 +1,14 @@
 package com.solusgames.screens;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity.EntityType;
 import com.solusgames.entities.planes.Plane;
 import com.solusgames.entities.planes.Planetype;
+import com.solusgames.map.Map;
 import com.solusgames.render.Camera;
 import com.solusgames.render.Render;
 
@@ -27,7 +22,7 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
 	r.dispose();
-	Global.map_renderer.dispose();
+	Global.currentMap.dispose();
 	Global.player1.dispose();
 	Global.player2.dispose();
 
@@ -103,7 +98,7 @@ public class GameScreen implements Screen {
      */
     public void OnStartUp() {
 
-	createMap();
+	Global.currentMap = new Map("map2.tmx");
 	createPlayers();
     }
 
@@ -116,100 +111,22 @@ public class GameScreen implements Screen {
 	Global.camera_ui = new OrthographicCamera();
 
 	Global.player1 = new Plane(300,
-		(Global.map_columns * Global.map_tileHeight) / 2, 0,
+		(Global.currentMap.getMap_columns() * Global.currentMap.getMap_tileHeight()) / 2, 0,
 		new Planetype(100, 6, 1, 2, true, true, true, true,
 			new Texture(Gdx.files
 				.internal("assets/data/planes/gen5/f35.png"))),
 		EntityType.PLAYER1);
 
 	Global.player2 = new Plane(
-		(Global.map_rows * Global.map_tileWidth) - 300,
-		(Global.map_columns * Global.map_tileHeight) / 2, 0,
+		(Global.currentMap.getMap_rows() * Global.currentMap.getMap_tileWidth()) - 300,
+		(Global.currentMap.getMap_columns() * Global.currentMap.getMap_tileHeight()) / 2, 0,
 		new Planetype(100, 6, 1, 2, true, true, true, true,
 			new Texture(Gdx.files
 				.internal("assets/data/planes/plane1.png"))),
 		EntityType.PLAYER2);
     }
 
-    /**
-     * Creates the map with collision polygons
-     */
-    private void createMap() {
-	Global.col_map = new ArrayList<>();
-	Global.map = new TmxMapLoader()
-		.load("assets/data/map/map_test/map2.tmx");
-	Global.map_renderer = new OrthogonalTiledMapRenderer(Global.map, 1);
 
-	TiledMapTileLayer l = (TiledMapTileLayer) Global.map.getLayers().get(0);
-	Global.map_columns = l.getHeight();
-	Global.map_rows = l.getWidth();
-	Global.map_tileHeight = l.getTileHeight();
-	Global.map_tileWidth = l.getTileWidth();
-
-	for (int i = 0; i < Global.map_rows; i++) {
-	    for (int e = 0; e < Global.map_columns; e++) {
-		if (l.getCell(i, e) != null) {
-		    if (l.getCell(i, e).getTile().getProperties()
-			    .containsKey("half")) {
-			ArrayList<Vector2> list = new ArrayList<>();
-			list.add(new Vector2(i * Global.map_tileWidth + 0, e
-				* Global.map_tileHeight + 0));
-			list.add(new Vector2(i * Global.map_tileWidth + 0, e
-				* Global.map_tileHeight + Global.map_tileHeight
-				/ 2));
-			list.add(new Vector2(i * Global.map_tileWidth
-				+ Global.map_tileWidth, e
-				* Global.map_tileHeight + 0));
-			list.add(new Vector2(i * Global.map_tileWidth
-				+ Global.map_tileWidth, e
-				* Global.map_tileHeight + Global.map_tileHeight
-				/ 2));
-			Global.col_map.add(list);
-		    }
-		    if (l.getCell(i, e).getTile().getProperties()
-			    .containsKey("full")) {
-			ArrayList<Vector2> list = new ArrayList<>();
-			list.add(new Vector2(i * Global.map_tileWidth + 0, e
-				* Global.map_tileHeight + 0));
-			list.add(new Vector2(i * Global.map_tileWidth + 0, e
-				* Global.map_tileHeight + Global.map_tileHeight));
-			list.add(new Vector2(i * Global.map_tileWidth
-				+ Global.map_tileWidth, e
-				* Global.map_tileHeight + 0));
-			list.add(new Vector2(i * Global.map_tileWidth
-				+ Global.map_tileWidth, e
-				* Global.map_tileHeight + Global.map_tileHeight));
-			Global.col_map.add(list);
-		    }
-		    if (l.getCell(i, e).getTile().getProperties()
-			    .containsKey("triangle_l")) {
-			ArrayList<Vector2> list = new ArrayList<>();
-			list.add(new Vector2(i * Global.map_tileWidth + 0, e
-				* Global.map_tileHeight + 0));
-			list.add(new Vector2(i * Global.map_tileWidth
-				+ Global.map_tileWidth, e
-				* Global.map_tileHeight + 0));
-			list.add(new Vector2(i * Global.map_tileWidth + 0, e
-				* Global.map_tileHeight + Global.map_tileHeight));
-			Global.col_map.add(list);
-		    }
-		    if (l.getCell(i, e).getTile().getProperties()
-			    .containsKey("triangle_r")) {
-			ArrayList<Vector2> list = new ArrayList<>();
-			list.add(new Vector2(i * Global.map_tileWidth + 0, e
-				* Global.map_tileHeight));
-			list.add(new Vector2(i * Global.map_tileWidth
-				+ Global.map_tileWidth, e
-				* Global.map_tileHeight + 0));
-			list.add(new Vector2(i * Global.map_tileWidth
-				+ Global.map_tileWidth, e
-				* Global.map_tileHeight + Global.map_tileHeight));
-			Global.col_map.add(list);
-		    }
-		}
-	    }
-	}
-    }
 
     /**
      * Returns vertical distance between player 1 and player 2

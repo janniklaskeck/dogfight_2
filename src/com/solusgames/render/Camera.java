@@ -57,13 +57,17 @@ public class Camera {
 		cam.position.y = (float) (Global.current_dim.getHeight() / 4);
 	    }
 	    // camera constraint up
-	    if (cam.position.y + (Global.current_dim.getHeight() / 4) >= (Global.map_columns * Global.map_tileHeight)) {
-		cam.position.y = (Global.map_columns * Global.map_tileHeight)
+	    if (cam.position.y + (Global.current_dim.getHeight() / 4) >= (Global.currentMap
+		    .getMap_columns() * Global.currentMap.getMap_tileHeight())) {
+		cam.position.y = (Global.currentMap.getMap_columns() * Global.currentMap
+			.getMap_tileHeight())
 			- ((float) Global.current_dim.getHeight() / 4);
 	    }
 	    // camera constraint right
-	    if (cam.position.x + (Global.current_dim.getWidth() / 2) >= (Global.map_rows * Global.map_tileWidth)) {
-		cam.position.x = (Global.map_rows * Global.map_tileWidth)
+	    if (cam.position.x + (Global.current_dim.getWidth() / 2) >= (Global.currentMap
+		    .getMap_rows() * Global.currentMap.getMap_tileWidth())) {
+		cam.position.x = (Global.currentMap.getMap_rows() * Global.currentMap
+			.getMap_tileWidth())
 			- ((float) Global.current_dim.getWidth() / 2);
 	    }
 	} else if (entity.getEType() == EntityType.PLAYER2) {
@@ -76,13 +80,17 @@ public class Camera {
 		cam.position.y = (float) (Global.current_dim.getHeight() / 4);
 	    }
 	    // camera constraint up
-	    if (cam.position.y + (Global.current_dim.getHeight() / 4) >= (Global.map_columns * Global.map_tileHeight)) {
-		cam.position.y = (Global.map_columns * Global.map_tileHeight)
+	    if (cam.position.y + (Global.current_dim.getHeight() / 4) >= (Global.currentMap
+		    .getMap_columns() * Global.currentMap.getMap_tileHeight())) {
+		cam.position.y = (Global.currentMap.getMap_columns() * Global.currentMap
+			.getMap_tileHeight())
 			- ((float) Global.current_dim.getHeight() / 4);
 	    }
 	    // camera constraint right
-	    if (cam.position.x + (Global.current_dim.getWidth() / 2) >= (Global.map_rows * Global.map_tileWidth)) {
-		cam.position.x = (Global.map_rows * Global.map_tileWidth)
+	    if (cam.position.x + (Global.current_dim.getWidth() / 2) >= (Global.currentMap
+		    .getMap_rows() * Global.currentMap.getMap_tileWidth())) {
+		cam.position.x = (Global.currentMap.getMap_rows() * Global.currentMap
+			.getMap_tileWidth())
 			- ((float) Global.current_dim.getWidth() / 2);
 	    }
 	}

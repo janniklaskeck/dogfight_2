@@ -6,12 +6,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.solusgames.controls.Controls;
 import com.solusgames.entities.planes.Plane;
+import com.solusgames.map.Map;
 import com.solusgames.render.Camera;
 
 /**
@@ -22,13 +21,7 @@ import com.solusgames.render.Camera;
  */
 public class Global {
 
-    public static OrthogonalTiledMapRenderer map_renderer;
-    public static TiledMap map;
-    public static ArrayList<ArrayList<Vector2>> col_map;
-    public static int map_rows;
-    public static int map_columns;
-    public static float map_tileHeight;
-    public static float map_tileWidth;
+    public static Map currentMap;
     public static SpriteBatch batch;
     public static boolean camCombined;
 

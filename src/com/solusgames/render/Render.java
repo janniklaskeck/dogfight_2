@@ -93,14 +93,14 @@ public class Render {
 	setGL20Viewport(rect);
 
 	// basic bg img
-	Global.batch.draw(bg, 0, 0, Global.map_rows * Global.map_tileWidth,
-		Global.map_columns * Global.map_tileHeight);
+	Global.batch.draw(bg, 0, 0, Global.currentMap.getMap_rows() * Global.currentMap.getMap_tileWidth(),
+		Global.currentMap.getMap_columns() * Global.currentMap.getMap_tileHeight());
 
 	Global.player1.render(Global.batch);
 	Global.player2.render(Global.batch);
 
-	Global.map_renderer.setView(Global.camera_player1.getCam());
-	Global.map_renderer.render();
+	Global.currentMap.getMap_renderer().setView(Global.camera_player1.getCam());
+	Global.currentMap.getMap_renderer().render();
 
 	Global.batch.end();
     }
@@ -118,14 +118,14 @@ public class Render {
 	setGL20Viewport(viewportPlayer2);
 
 	// basic bg img
-	Global.batch.draw(bg, 0, 0, Global.map_rows * Global.map_tileWidth,
-		Global.map_columns * Global.map_tileHeight);
+	Global.batch.draw(bg, 0, 0, Global.currentMap.getMap_rows() * Global.currentMap.getMap_tileWidth(),
+		Global.currentMap.getMap_columns() * Global.currentMap.getMap_tileHeight());
 
 	Global.player1.render(Global.batch);
 	Global.player2.render(Global.batch);
 
-	Global.map_renderer.setView(Global.camera_player2.getCam());
-	Global.map_renderer.render();
+	Global.currentMap.getMap_renderer().setView(Global.camera_player2.getCam());
+	Global.currentMap.getMap_renderer().render();
 
 	Global.batch.end();
 

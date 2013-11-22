@@ -44,8 +44,10 @@ public class Weapon extends Entity {
 
 	if (alive) {
 	    checkCollision();
-	    xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle)) * delta;
-	    ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle)) * delta;
+	    xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle))
+		    * delta;
+	    ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle))
+		    * delta;
 	} else {
 
 	}
@@ -68,7 +70,7 @@ public class Weapon extends Entity {
 	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
 		.getVertices()[11]);
 	// map collision
-	for (ArrayList<Vector2> r : Global.col_map) {
+	for (ArrayList<Vector2> r : Global.currentMap.getCol_map()) {
 	    Array<Vector2> arr = Global.toArray(r);
 	    if (Intersector.isPointInPolygon(arr, minmin)) {
 		setAlive(false);
@@ -81,8 +83,10 @@ public class Weapon extends Entity {
 	    }
 	}
 	// bounds collision
-	if (getXpos() >= Global.map_rows * Global.map_tileWidth
-		|| getYpos() >= Global.map_columns * Global.map_tileHeight
+	if (getXpos() >= Global.currentMap.getMap_rows()
+		* Global.currentMap.getMap_tileWidth()
+		|| getYpos() >= Global.currentMap.getMap_columns()
+			* Global.currentMap.getMap_tileHeight()
 		|| getYpos() <= 0 || getXpos() <= 0) {
 	    setAlive(false);
 	}

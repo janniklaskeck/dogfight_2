@@ -174,7 +174,7 @@ public class Plane extends Entity {
 	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
 		.getVertices()[11]);
 	// map collision
-	for (ArrayList<Vector2> r : Global.col_map) {
+	for (ArrayList<Vector2> r : Global.currentMap.getCol_map()) {
 	    Array<Vector2> arr = Global.toArray(r);
 	    if (Intersector.isPointInPolygon(arr, minmin)
 		    || Intersector.isPointInPolygon(arr, minmax)
@@ -185,8 +185,10 @@ public class Plane extends Entity {
 	    }
 	}
 	// bounds collision
-	if (getXpos() >= Global.map_rows * Global.map_tileWidth
-		|| getYpos() >= Global.map_columns * Global.map_tileHeight
+	if (getXpos() >= Global.currentMap.getMap_rows()
+		* Global.currentMap.getMap_tileWidth()
+		|| getYpos() >= Global.currentMap.getMap_columns()
+			* Global.currentMap.getMap_tileHeight()
 		|| getYpos() <= 0 || getXpos() <= 0) {
 	    setAlive(false);
 	    respawn();
@@ -202,12 +204,12 @@ public class Plane extends Entity {
 	// inertia emulation
 	if (inertAngle <= angle) {
 	    if (inertAngle != angle) {
-		inertAngle += 1.5f *delta;
+		inertAngle += 1.5f * delta;
 	    }
 
 	} else if (inertAngle > angle) {
 	    if (inertAngle != angle) {
-		inertAngle -= 1.5f *delta;
+		inertAngle -= 1.5f * delta;
 	    }
 	}
 
@@ -220,11 +222,11 @@ public class Plane extends Entity {
 	}
 
 	if (isTurnUp()) {
-	    addAngle(type.getTurnSpeed()*delta);
+	    addAngle(type.getTurnSpeed() * delta);
 	}
 
 	if (isTurnDown()) {
-	    addAngle(-type.getTurnSpeed()*delta);
+	    addAngle(-type.getTurnSpeed() * delta);
 	}
 
 	xpos += acceleration * Math.cos(Math.toRadians(inertAngle)) * delta;
