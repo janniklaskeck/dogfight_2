@@ -65,6 +65,19 @@ public class Button {
 	bounds.y = y - height;
     }
 
+    /**
+     * Sets Position and Bounds
+     * 
+     * @param x
+     * @param y
+     */
+    public void setPos(int x, int y) {
+	this.y = y;
+	this.x = x;
+	bounds.y = y - height;
+	bounds.x = x;
+    }
+
     public int getWidth() {
 	return width;
     }
@@ -93,6 +106,10 @@ public class Button {
 	width = Math.round(dimensions.width);
 	height = Math.round(dimensions.height);
 	bounds = new Rectangle(x, y - height, width, height);
+    }
+
+    public ButtonHandler getHandler() {
+        return handler;
     }
 
     public static interface ButtonHandler {
