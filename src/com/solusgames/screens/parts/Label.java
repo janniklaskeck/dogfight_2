@@ -53,6 +53,17 @@ public class Label {
 	this.y = y;
     }
 
+    /**
+     * Sets the position
+     * 
+     * @param x
+     * @param y
+     */
+    public void setPos(int x, int y) {
+	this.x = x;
+	this.y = y;
+    }
+
     public int getWidth() {
 	return width;
     }
