@@ -1,7 +1,7 @@
 package com.solusgames.entities.planes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-
 
 /**
  * Class to create different Planetypes with every needed property
@@ -24,7 +24,11 @@ public class Planetype {
     // assets
     private Texture texture;
 
+    private String name;
+    private PlaneTypes type;
+
     /**
+     * Creats Plane given on parameters
      * 
      * @param hitpoints
      * @param max
@@ -37,7 +41,9 @@ public class Planetype {
      * @param texture
      */
     public Planetype(int hitpoints, float max, float min, float turn,
-	    boolean slot_1, boolean slot_2, boolean slot_3, boolean slot_4, Texture texture) {
+	    boolean slot_1, boolean slot_2, boolean slot_3, boolean slot_4,
+	    Texture texture) {
+	this.setName("Standard");
 	this.hitpoints = hitpoints;
 	this.maxSpeed = max;
 	this.minSpeed = min;
@@ -47,6 +53,42 @@ public class Planetype {
 	this.slot_3 = slot_3;
 	this.slot_4 = slot_4;
 	this.setTexture(texture);
+
+    }
+
+    /**
+     * Creats Plane given on Type
+     * 
+     * @param type
+     */
+    public Planetype(PlaneTypes type) {
+	if (type == PlaneTypes.F35) {
+	    this.setType(type);
+	    this.setName("F35");
+	    this.hitpoints = 100;
+	    this.maxSpeed = 7;
+	    this.minSpeed = 1;
+	    this.turnSpeed = 2;
+	    this.slot_1 = true;
+	    this.slot_2 = true;
+	    this.slot_3 = true;
+	    this.slot_4 = true;
+	    this.setTexture(new Texture(Gdx.files
+		    .internal("assets/data/planes/gen5/f35.png")));
+	} else if (type == PlaneTypes.MIG) {
+	    this.setType(type);
+	    this.setName("MIG");
+	    this.hitpoints = 100;
+	    this.maxSpeed = 7;
+	    this.minSpeed = 1;
+	    this.turnSpeed = 2;
+	    this.slot_1 = true;
+	    this.slot_2 = true;
+	    this.slot_3 = true;
+	    this.slot_4 = true;
+	    this.setTexture(new Texture(Gdx.files
+		    .internal("assets/data/planes/plane1.png")));
+	}
 
     }
 
@@ -178,10 +220,31 @@ public class Planetype {
     }
 
     /**
-     * @param texture the texture to set
+     * @param texture
+     *            the texture to set
      */
     public void setTexture(Texture texture) {
 	this.texture = texture;
+    }
+
+    public String getName() {
+	return name;
+    }
+
+    public void setName(String name) {
+	this.name = name;
+    }
+
+    public PlaneTypes getType() {
+	return type;
+    }
+
+    public void setType(PlaneTypes type) {
+	this.type = type;
+    }
+
+    public enum PlaneTypes {
+	F35, MIG;
     }
 
 }
