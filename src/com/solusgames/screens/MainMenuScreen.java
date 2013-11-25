@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.controls.Controls;
+import com.solusgames.entities.Entity.EntityType;
+import com.solusgames.entities.planes.Plane;
+import com.solusgames.entities.planes.Planetype;
+import com.solusgames.entities.planes.Planetype.PlaneTypes;
 import com.solusgames.screens.handler.ScreenSwitchHandler;
 import com.solusgames.screens.parts.Button;
 import com.solusgames.screens.parts.Button.ButtonHandler;
@@ -34,7 +38,8 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
     public void create() {
 	Global.img_menu_bg = new Sprite(new Texture(
 		Gdx.files.internal("assets/data/menu/f4u.jpg")));
-	Global.img_menu_bg.setBounds(0, 0, (float) Global.current_dim.getWidth(),
+	Global.img_menu_bg.setBounds(0, 0,
+		(float) Global.current_dim.getWidth(),
 		(float) Global.current_dim.getHeight());
 	Global.control = new Controls();
 	Global.batch = new SpriteBatch();
@@ -55,6 +60,12 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
 		Gdx.app.exit();
 	    }
 	});
+	
+	// TODO: remove when possible
+	Global.player1 = new Plane(0, 0, 0, new Planetype(PlaneTypes.F35),
+		EntityType.PLAYER1);
+	Global.player2 = new Plane(0, 0, 0, new Planetype(PlaneTypes.MIG),
+		EntityType.PLAYER2);
 
     }
 
