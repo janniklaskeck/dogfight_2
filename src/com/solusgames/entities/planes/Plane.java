@@ -204,12 +204,12 @@ public class Plane extends Entity {
 	// inertia emulation
 	if (inertAngle <= angle) {
 	    if (inertAngle != angle) {
-		inertAngle += 1.5f * delta;
+		inertAngle += (type.getTurnSpeed() / 2) * delta;
 	    }
 
 	} else if (inertAngle > angle) {
 	    if (inertAngle != angle) {
-		inertAngle -= 1.5f * delta;
+		inertAngle -= (type.getTurnSpeed() / 2)* delta;
 	    }
 	}
 
