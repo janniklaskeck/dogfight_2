@@ -44,6 +44,7 @@ public class Weapon extends Entity {
 
 	if (alive) {
 	    checkCollision();
+	    checkCollision();
 	    xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle))
 		    * delta;
 	    ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle))
