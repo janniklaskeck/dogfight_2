@@ -1,13 +1,12 @@
 package com.solusgames.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity.EntityType;
 import com.solusgames.entities.planes.Plane;
 import com.solusgames.entities.planes.Planetype;
+import com.solusgames.entities.planes.Planetype.PlaneTypes;
 import com.solusgames.map.Map;
 import com.solusgames.render.Camera;
 import com.solusgames.render.Render;
@@ -112,20 +111,15 @@ public class GameScreen implements Screen {
 
 	Global.player1 = new Plane(300,
 		(Global.currentMap.getMap_columns() * Global.currentMap
-			.getMap_tileHeight()) / 2, 0, new Planetype(100, 6, 1,
-			2, true, true, true, true,
-			new Texture(Gdx.files
-				.internal("assets/data/planes/gen5/f35.png"))),
-		EntityType.PLAYER1);
+			.getMap_tileHeight()) / 2, 0, new Planetype(
+			PlaneTypes.F35), EntityType.PLAYER1);
 
 	Global.player2 = new Plane(
 		(Global.currentMap.getMap_rows() * Global.currentMap
 			.getMap_tileWidth()) - 300,
 		(Global.currentMap.getMap_columns() * Global.currentMap
-			.getMap_tileHeight()) / 2, 0, new Planetype(100, 6, 1,
-			2, true, true, true, true, new Texture(Gdx.files
-				.internal("assets/data/planes/plane1.png"))),
-		EntityType.PLAYER2);
+			.getMap_tileHeight()) / 2, 0, new Planetype(
+			PlaneTypes.MIG), EntityType.PLAYER2);
     }
 
     /**
