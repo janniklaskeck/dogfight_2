@@ -111,11 +111,12 @@ public class Button {
     }
 
     public ButtonHandler getHandler() {
-        return handler;
+	return handler;
     }
 
     public static interface ButtonHandler {
 	public void onClick();
+
 	public void onRelease();
     }
 

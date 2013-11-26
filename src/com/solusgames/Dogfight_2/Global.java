@@ -30,7 +30,7 @@ public class Global {
     public static Plane player1;
     public static Plane player2;
     public static Vector2 player1_respawn = new Vector2(400, 400);
-    public static Vector2 player2_respawn = new Vector2(1000, 400);
+    public static Vector2 player2_respawn = new Vector2(2000, 400);
     public static Camera camera_player1;
     public static Camera camera_player2;
     public static OrthographicCamera camera_ui;
@@ -39,7 +39,7 @@ public class Global {
     public static boolean paused = false;
     public static boolean fullscreen = false;
     public static boolean vsync = true;
-    public static boolean player_collision = false;
+    public static boolean plane_collision = false;
     public static boolean singlePlayer = false;
     public static boolean vertical_split = false;
     public static Dimension current_dim = new Dimension(1280, 720);

@@ -2,6 +2,8 @@ package com.solusgames.screens;
 
 import com.badlogic.gdx.Screen;
 import com.solusgames.Dogfight_2.Global;
+import com.solusgames.entities.Entity.EntityType;
+import com.solusgames.entities.planes.Plane;
 import com.solusgames.map.Map;
 import com.solusgames.render.Render;
 
@@ -91,6 +93,9 @@ public class GameScreen implements Screen {
      */
     public void OnStartUp() {
 	Global.currentMap = new Map("map2.tmx");
+	Global.player1 = new Plane(Global.player1_respawn.x, Global.player1_respawn.y, 0, Global.player1.getType(), EntityType.PLAYER1);
+	Global.player2 = new Plane(Global.player2_respawn.x, Global.player2_respawn.y, 0, Global.player2.getType(), EntityType.PLAYER2);
+
     }
 
     /**
