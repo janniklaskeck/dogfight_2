@@ -16,7 +16,7 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
     private BitmapFont font = null;
     private Label headingLabel = null;
     private int lineHeight = 0;
-    
+
     @Override
     public void render(float delta) {
 	Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
@@ -26,7 +26,7 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 	headingLabel.draw(Global.batch);
 	backButton.draw(Global.batch, camera);
 	Global.batch.end();
-	
+
     }
 
     @Override
@@ -39,8 +39,8 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 	headingLabel.setX(centerX - headingLabel.getWidth() / 2);
 	headingLabel.setY(centerY + 2 * lineHeight);
 	backButton.setX(centerX - backButton.getWidth() / 2);
-	backButton.setY(centerY - lineHeight*2);
-	
+	backButton.setY(centerY - lineHeight * 2);
+
     }
 
     @Override
@@ -50,31 +50,29 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 	headingLabel = new Label("Options", font);
 	backButton = new Button("Back", font, new ScreenSwitchHandler(
 		Screen.MAIN_MENU));
-	
+
     }
 
     @Override
     public void hide() {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void pause() {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void resume() {
 	// TODO Auto-generated method stub
-	
+
     }
 
     @Override
     public void dispose() {
 	font.dispose();
     }
-
-    
 }

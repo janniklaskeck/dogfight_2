@@ -2,7 +2,6 @@ package com.solusgames.entities.planes;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
@@ -83,10 +82,8 @@ public class Plane extends Entity {
 	    getSprite().flip(false, true);
 
 	}
-	getSprite().getTexture().setFilter(TextureFilter.Linear,
-		TextureFilter.Linear);
-	// getSprite().scale(Global.box2dmult);
-	// TEST
+
+	// TODO: Remove when no longer needed
 	if (EType == EntityType.PLAYER1) {
 	    Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
 	    setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t,
@@ -209,7 +206,7 @@ public class Plane extends Entity {
 
 	} else if (inertAngle > angle) {
 	    if (inertAngle != angle) {
-		inertAngle -= (type.getTurnSpeed() / 2)* delta;
+		inertAngle -= (type.getTurnSpeed() / 2) * delta;
 	    }
 	}
 

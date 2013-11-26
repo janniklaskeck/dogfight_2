@@ -98,6 +98,8 @@ public class Button {
 	font.setColor(originalColor);
 	if (isIntersect && Gdx.input.isButtonPressed(Buttons.LEFT)) {
 	    handler.onClick();
+	} else if (!Gdx.input.isButtonPressed(Buttons.LEFT)) {
+	    handler.onRelease();
 	}
     }
 
@@ -114,6 +116,7 @@ public class Button {
 
     public static interface ButtonHandler {
 	public void onClick();
+	public void onRelease();
     }
 
 }

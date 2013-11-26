@@ -13,6 +13,7 @@ import com.solusgames.entities.Entity.EntityType;
 import com.solusgames.entities.planes.Plane;
 import com.solusgames.entities.planes.Planetype;
 import com.solusgames.entities.planes.Planetype.PlaneTypes;
+import com.solusgames.render.Camera;
 import com.solusgames.screens.handler.ScreenSwitchHandler;
 import com.solusgames.screens.parts.Button;
 import com.solusgames.screens.parts.Button.ButtonHandler;
@@ -46,6 +47,14 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
 	font = new BitmapFont();
 	lineHeight = Math.round(2.5f * font.getCapHeight());
 	headingLabel = new Label("Dogfight 2", font);
+	createButtons();
+	createPlayers();
+    }
+
+    /**
+     * Creates all Buttons used on this Screen
+     */
+    private void createButtons() {
 	playButton = new Button("Play", font, new ScreenSwitchHandler(
 		Screen.GAME));
 	planeButton_p1 = new Button("Player 1", font, new ScreenSwitchHandler(
@@ -59,16 +68,31 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
 	    public void onClick() {
 		Gdx.app.exit();
 	    }
-	});
-	
-	// TODO: remove when possible
-	Global.player1 = new Plane(0, 0, 0, new Planetype(PlaneTypes.F35),
-		EntityType.PLAYER1);
-	Global.player2 = new Plane(0, 0, 0, new Planetype(PlaneTypes.MIG),
-		EntityType.PLAYER2);
 
+	    @Override
+	    public void onRelease() {
+		// TODO Auto-generated method stub
+		
+	    }
+	});
     }
 
+    /**
+     * Creates players and cameras
+     */
+    private void createPlayers() {
+	Global.camera_player1 = new Camera(new OrthographicCamera());
+	Global.camera_player2 = new Camera(new OrthographicCamera());
+	Global.camera_ui = new OrthographicCamera();
+	Global.player1 = new Plane(Global.player1_respawn.x,
+		Global.player1_respawn.y, 0, new Planetype(PlaneTypes.F35),
+		EntityType.PLAYER1);
+	Global.player2 = new Plane(Global.player2_respawn.x,
+		Global.player2_respawn.y, 0, new Planetype(PlaneTypes.F35),
+		EntityType.PLAYER2);
+    }
+
+    @Override
     public void render(float delta) {
 	Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1f);
 	Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
@@ -92,6 +116,15 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
 	int centerY = height / 2;
 	headingLabel.setX(centerX - headingLabel.getWidth() / 2);
 	headingLabel.setY(centerY + 3 * lineHeight);
+	setButtons(width, height);
+    }
+    
+    /**
+     * Sets the correct positions of all Buttons in this Screen
+     */
+    private void setButtons(int width, int height) {
+	int centerX = width / 2;
+	int centerY = height / 2;
 	playButton.setX(centerX - playButton.getWidth() / 2);
 	playButton.setY(centerY + 2 * lineHeight);
 	planeButton_p1.setX(centerX - planeButton_p1.getWidth() / 2);
@@ -107,7 +140,6 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
     @Override
     public void dispose() {
 	font.dispose();
-
     }
 
     @Override

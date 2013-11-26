@@ -29,6 +29,8 @@ public class Global {
     // Players
     public static Plane player1;
     public static Plane player2;
+    public static Vector2 player1_respawn = new Vector2(400, 400);
+    public static Vector2 player2_respawn = new Vector2(1000, 400);
     public static Camera camera_player1;
     public static Camera camera_player2;
     public static OrthographicCamera camera_ui;

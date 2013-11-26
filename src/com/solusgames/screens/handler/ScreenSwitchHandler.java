@@ -9,6 +9,7 @@ import com.solusgames.screens.parts.Button.ButtonHandler;
 public class ScreenSwitchHandler implements ButtonHandler {
 
     private Screen screen = null;
+    private boolean changed = false;
 
     public ScreenSwitchHandler(Screen screen) {
 	this.screen = screen;
@@ -16,13 +17,21 @@ public class ScreenSwitchHandler implements ButtonHandler {
 
     @Override
     public void onClick() {
-	/* easily implemented screen switching thanks to singleton pattern */
-	ScreenManager.getInstance().show(screen);
-	//remove if possible
-	if (screen == Screen.GAME) {
-	    Global.paused = false;
-	    Gdx.input.setInputProcessor(Global.control);
+	if (!changed) {
+	    /* easily implemented screen switching thanks to singleton pattern */
+	    ScreenManager.getInstance().show(screen);
+	    // remove if possible
+	    if (screen == Screen.GAME) {
+		Global.paused = false;
+		Gdx.input.setInputProcessor(Global.control);
+	    }
+	    changed = true;
 	}
+    }
+
+    @Override
+    public void onRelease() {
+	changed = false;
     }
 
 }
