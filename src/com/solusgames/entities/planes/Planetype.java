@@ -75,7 +75,7 @@ public class Planetype {
 	    this.slot_4 = true;
 	    this.setTexture(new Texture(Gdx.files
 		    .internal("assets/data/planes/gen5/f35.png")));
-	} else if (type == PlaneTypes.MIG) {
+	} else if (type == PlaneTypes.MIG_35) {
 	    this.setType(type);
 	    this.setName("MIG");
 	    this.hitpoints = 100;
@@ -243,8 +243,66 @@ public class Planetype {
 	this.type = type;
     }
 
+    /**
+     * All available Planes
+     * 
+     * @author Jan-Niklas
+     * 
+     */
     public enum PlaneTypes {
-	F35, MIG;
+	/**
+	 * WW1 Gen 1
+	 */
+	// British
+	SE5, SOPWITH_TRI, DH2, SOPWITH_PUP, SOPWITH_F1, SOPWITH_7F1,
+	// German
+	FOKKER_EIII, PFALZ_E1, SIEMENS_SCHUCKERT_D1, ALBATROSS_DII, ALBATROSS_DV, FOKKER_DR1, FOKKER_DVII, FOKKER_DVIII,
+	// French
+	MORANE_TYPN, NIEUPORT_11, NIEUPORT_17,
+	/**
+	 * WW2 Gen 2
+	 */
+	// British
+	HURRICANE_MKI, HURRICANE_MKIIC, SPITFIRE_MKIB, SPITFIRE_MKIX, TYPHOON_MKIB, TEMPEST_MKV, SWORDFISH_MKII,
+	// German
+	BF_109_E4, BF_109_E4B, BF_109_F4, BF_109_G6, BF_109_K4, BF_100C_4, BF_100C_4B, BF_100G_6, FW_190_A4, FW_190_A9, FW_190_D9, TA_152_H1, DO_335_A, DO_335_B, ME_262A_1A, ME_262A_1A_U4, ME_262A_2, HE_162, GO_229A_D, ME_163, JU_87D, JU_87G,
+	// Russian
+	I_16, I_153, LAGG_3, LAGG_3IT, LA_5FN, LA_7, MIG_3, MIG_3U, JAK_1, JAK_9U, JAK_9K, PE_2, PE_3BIS, IL_2_3M,
+	// American
+	F_2A, F4F, F4F_4, F6F, F6F5, F_8F, F_4U, F_4U1C, F2G_2, P_38N_1, P_63C_5, P_40, P_47B, P_47D, P_51D, TBF,
+	// Japan
+	A6M2, A6M5, KI_43_IIB, N1K1, KI_84, KI_45, J7W1,
+
+	/**
+	 * Vietnam Gen 3
+	 */
+	// American
+	F_86, F_100A, F_9F, F_8U, F_4, A_7, UH_1, AH_1,
+	// Russian
+	MIG_9, MIG_15, MIG_17, MIG_19, MIG_21, SU_17, SU_15, TU_28P, MI_8,
+	// German
+	F_104G,
+
+	/**
+	 * Modern 1 Gen 4
+	 */
+	// American
+	F_5A, F_20, F_14A, F_14D, F_15C, F_15E, F_16, FA_18E, A_10, F_19, F_117A, AH_1W, AH_64A,
+	// German
+	MIG_29G, F_4F, TORNADO,
+	// Russian
+	MIG_23, MIG_25, MIG_27, MIG_29, MIG_31, SU_24, SU_25, SU_27, MI_24, MI_28,
+	// British
+	TORNADO_ADV,
+	/**
+	 * Modern 2 Gen 5
+	 */
+	// German
+	EUROFIGHTER, UH_TIGER,
+	// American
+	F_22, F35, AH_64D, AH_66,
+	// Russian
+	MIG_35, SU_32, SU_33, SU_37, SU47, SU_25T, KA_50;
     }
 
 }

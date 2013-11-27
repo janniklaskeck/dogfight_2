@@ -72,7 +72,7 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
 	    @Override
 	    public void onRelease() {
 		// TODO Auto-generated method stub
-		
+
 	    }
 	});
     }
@@ -118,7 +118,7 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
 	headingLabel.setY(centerY + 3 * lineHeight);
 	setButtons(width, height);
     }
-    
+
     /**
      * Sets the correct positions of all Buttons in this Screen
      */
