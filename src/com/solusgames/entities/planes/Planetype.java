@@ -88,6 +88,20 @@ public class Planetype {
 	    this.slot_4 = true;
 	    this.setTexture(new Texture(Gdx.files
 		    .internal("assets/data/planes/plane1.png")));
+	} else {
+	    //standard plane
+	    this.setType(type);
+	    this.setName("MIG");
+	    this.hitpoints = 100;
+	    this.maxSpeed = 7;
+	    this.minSpeed = 1;
+	    this.turnSpeed = 2;
+	    this.slot_1 = true;
+	    this.slot_2 = true;
+	    this.slot_3 = true;
+	    this.slot_4 = true;
+	    this.setTexture(new Texture(Gdx.files
+		    .internal("assets/data/planes/plane1.png")));
 	}
 
     }

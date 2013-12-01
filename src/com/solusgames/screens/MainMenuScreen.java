@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.controls.Controls;
 import com.solusgames.entities.Entity.EntityType;
@@ -55,8 +56,12 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
      * Creates all Buttons used on this Screen
      */
     private void createButtons() {
-	playButton = new Button("Play", font, new ScreenSwitchHandler(
-		Screen.GAME));
+	Texture t = new Texture(
+		Gdx.files.internal("assets/data/menu/menu_start.png"));
+
+	playButton = new Button(0, 0, new ScreenSwitchHandler(Screen.GAME),
+		new TextureRegion(t, 0, 0, 161, 20), new TextureRegion(t, 0, 0,
+			161, 20));
 	planeButton_p1 = new Button("Player 1", font, new ScreenSwitchHandler(
 		Screen.PLANE_P1));
 	planeButton_p2 = new Button("Player 2", font, new ScreenSwitchHandler(
@@ -125,16 +130,16 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
     private void setButtons(int width, int height) {
 	int centerX = width / 2;
 	int centerY = height / 2;
-	playButton.setX(centerX - playButton.getWidth() / 2);
-	playButton.setY(centerY + 2 * lineHeight);
-	planeButton_p1.setX(centerX - planeButton_p1.getWidth() / 2);
-	planeButton_p1.setY(centerY + 1 * lineHeight);
-	planeButton_p2.setX(centerX - planeButton_p2.getWidth() / 2);
-	planeButton_p2.setY(centerY + 0 * lineHeight);
-	optionsButton.setX(centerX - optionsButton.getWidth() / 2);
-	optionsButton.setY(centerY - 1 * lineHeight);
-	exitButton.setX(centerX - exitButton.getWidth() / 2);
-	exitButton.setY(centerY - 5 * lineHeight);
+	playButton.setPos(centerX - playButton.getWidth() / 2, centerY + 2
+		* lineHeight);
+	planeButton_p1.setPos(centerX - planeButton_p1.getWidth() / 2, centerY
+		+ 1 * lineHeight);
+	planeButton_p2.setPos(centerX - planeButton_p2.getWidth() / 2, centerY
+		+ 0 * lineHeight);
+	optionsButton.setPos(centerX - optionsButton.getWidth() / 2, centerY
+		- 1 * lineHeight);
+	exitButton.setPos(centerX - exitButton.getWidth() / 2, centerY - 5
+		* lineHeight);
     }
 
     @Override

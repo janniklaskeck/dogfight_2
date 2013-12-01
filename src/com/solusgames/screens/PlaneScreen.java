@@ -271,8 +271,8 @@ public class PlaneScreen implements com.badlogic.gdx.Screen {
 	wep4_forward.setPos(0, 0);
 	wep4_back.setPos(0, 0);
 
-	backButton.setX(centerX - backButton.getWidth() / 2);
-	backButton.setY(centerY - lineHeight * 2);
+	backButton.setPos(centerX - backButton.getWidth() / 2, centerY
+		- lineHeight * 2);
     }
 
     @Override
