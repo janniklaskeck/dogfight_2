@@ -57,10 +57,13 @@ public class Button {
      * @param reg_enabled
      * @param reg_disabled
      */
-    public Button(int x, int y, ButtonHandler handler,
-	    TextureRegion reg_enabled, TextureRegion reg_disabled) {
+    public Button(String caption, BitmapFont font, int x, int y,
+	    TextureRegion reg_enabled, TextureRegion reg_disabled,
+	    ButtonHandler handler) {
 	this.x = x;
 	this.y = y;
+	this.caption = caption;
+	this.font = font;
 	this.handler = handler;
 	this.reg_enabled = reg_enabled;
 	this.reg_disabled = reg_disabled;
@@ -125,9 +128,15 @@ public class Button {
 	if (font != null) {
 	    Color originalColor = font.getColor();
 	    font.setColor(isIntersect ? HOVER_COLOR : NORMAL_COLOR);
-	    font.draw(batch, caption, x, y);
+	    if (reg_enabled != null) {
+		font.draw(batch, caption,
+			x + reg_enabled.getRegionWidth() + 10, y);
+	    } else {
+		font.draw(batch, caption, x, y);
+	    }
 	    font.setColor(originalColor);
-	} else {
+	}
+	if (reg_enabled != null && reg_disabled != null) {
 	    if (enabled) {
 		batch.draw(reg_enabled, x, y - height, 0, 0, width, height, 1,
 			1, 0);
@@ -149,11 +158,27 @@ public class Button {
 	    width = Math.round(dimensions.width);
 	    height = Math.round(dimensions.height);
 	    bounds = new Rectangle(x, y - height, width, height);
-	} else {
+	}
+	if (reg_enabled != null && reg_disabled != null) {
 	    width = Math.round(reg_enabled.getRegionWidth());
 	    height = Math.round(reg_enabled.getRegionHeight());
 	    bounds = new Rectangle(x, y - height, width, height);
 	}
+    }
+
+    /**
+     * @return the enabled
+     */
+    public boolean isEnabled() {
+	return enabled;
+    }
+
+    /**
+     * @param enabled
+     *            the enabled to set
+     */
+    public void setEnabled(boolean enabled) {
+	this.enabled = enabled;
     }
 
     public ButtonHandler getHandler() {
@@ -161,6 +186,7 @@ public class Button {
     }
 
     public static interface ButtonHandler {
+
 	public void onClick();
 
 	public void onRelease();

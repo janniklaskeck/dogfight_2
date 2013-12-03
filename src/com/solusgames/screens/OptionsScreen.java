@@ -3,12 +3,14 @@ package com.solusgames.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.screens.handler.ScreenSwitchHandler;
 import com.solusgames.screens.parts.Button;
-import com.solusgames.screens.parts.Label;
 import com.solusgames.screens.parts.Button.ButtonHandler;
+import com.solusgames.screens.parts.Label;
 
 public class OptionsScreen implements com.badlogic.gdx.Screen {
 
@@ -31,8 +33,13 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 	headingLabel = new Label("Options", font);
 	backButton = new Button("Back", font, new ScreenSwitchHandler(
 		Screen.MAIN_MENU));
-	fullscreenButton = new Button("Fullscreen: ", font,
-		new ButtonHandler() {
+
+	Texture onOff = new Texture(
+		Gdx.files.internal("assets/data/menu/buttons.png"));
+
+	fullscreenButton = new Button("Fullscreen", font, 0, 0,
+		new TextureRegion(onOff, 32, 0, 32, 32), new TextureRegion(
+			onOff, 0, 0, 32, 32), new ButtonHandler() {
 		    boolean changed = false;
 
 		    @Override
@@ -48,29 +55,34 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 				    Gdx.graphics.getHeight(),
 				    !Global.fullscreen);
 			    Global.fullscreen = !Global.fullscreen;
+			    fullscreenButton.setEnabled(Global.fullscreen);
 			}
 			changed = true;
 		    }
 		});
-	vsyncButton = new Button("VSync: ", font, new ButtonHandler() {
-	    boolean changed = false;
-
-	    @Override
-	    public void onRelease() {
-		changed = false;
-	    }
-
-	    @Override
-	    public void onClick() {
-		if (!changed) {
-		    Gdx.graphics.setVSync(!Global.vsync);
-		    Global.vsync = !Global.vsync;
-		}
-		changed = true;
-	    }
-	});
-	planeCollissionButton = new Button("Plane Collision: ", font,
+	vsyncButton = new Button("VSync: ", font, 0, 0, new TextureRegion(
+		onOff, 32, 0, 32, 32), new TextureRegion(onOff, 0, 0, 32, 32),
 		new ButtonHandler() {
+		    boolean changed = false;
+
+		    @Override
+		    public void onRelease() {
+			changed = false;
+		    }
+
+		    @Override
+		    public void onClick() {
+			if (!changed) {
+			    Gdx.graphics.setVSync(!Global.vsync);
+			    Global.vsync = !Global.vsync;
+			    vsyncButton.setEnabled(Global.vsync);
+			}
+			changed = true;
+		    }
+		});
+	planeCollissionButton = new Button("Plane Collision: ", font, 0, 0,
+		new TextureRegion(onOff, 32, 0, 32, 32), new TextureRegion(
+			onOff, 0, 0, 32, 32), new ButtonHandler() {
 		    boolean changed = false;
 
 		    @Override
@@ -82,13 +94,15 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 		    public void onClick() {
 			if (!changed) {
 			    Global.plane_collision = !Global.plane_collision;
-
+			    planeCollissionButton
+				    .setEnabled(Global.plane_collision);
 			}
 			changed = true;
 		    }
 		});
-	singleplayerButton = new Button("SinglePlayer: ", font,
-		new ButtonHandler() {
+	singleplayerButton = new Button("SinglePlayer: ", font, 0, 0,
+		new TextureRegion(onOff, 32, 0, 32, 32), new TextureRegion(
+			onOff, 0, 0, 32, 32), new ButtonHandler() {
 		    boolean changed = false;
 
 		    @Override
@@ -100,12 +114,14 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 		    public void onClick() {
 			if (!changed) {
 			    Global.singlePlayer = !Global.singlePlayer;
+			    singleplayerButton.setEnabled(Global.singlePlayer);
 			}
 			changed = true;
 		    }
 		});
-	verticalSplitButton = new Button("Vertical Display Split: ", font,
-		new ButtonHandler() {
+	verticalSplitButton = new Button("Vertical Display Split: ", font, 0,
+		0, new TextureRegion(onOff, 32, 0, 32, 32), new TextureRegion(
+			onOff, 0, 0, 32, 32), new ButtonHandler() {
 		    boolean changed = false;
 
 		    @Override
@@ -116,11 +132,9 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
 		    @Override
 		    public void onClick() {
 			if (!changed) {
-			    if (Global.vertical_split) {
-				Global.vertical_split = true;
-			    } else {
-				Global.vertical_split = false;
-			    }
+			    Global.vertical_split = !Global.vertical_split;
+			    verticalSplitButton
+				    .setEnabled(Global.vertical_split);
 			}
 			changed = true;
 		    }
@@ -182,7 +196,7 @@ public class OptionsScreen implements com.badlogic.gdx.Screen {
     @Override
     public void show() {
 	font = new BitmapFont();
-	lineHeight = Math.round(2.5f * font.getCapHeight());
+	lineHeight = Math.round(2.5f * 16);
 	createButtons();
 
     }

@@ -56,16 +56,22 @@ public class MainMenuScreen implements com.badlogic.gdx.Screen {
      * Creates all Buttons used on this Screen
      */
     private void createButtons() {
-	Texture t = new Texture(
+	Texture startGameTex = new Texture(
 		Gdx.files.internal("assets/data/menu/menu_start.png"));
+	Texture plane_p1_tex = new Texture(
+		Gdx.files.internal("assets/data/menu/menu_player1.png"));
+	Texture plane_p2_tex = new Texture(
+		Gdx.files.internal("assets/data/menu/menu_player2.png"));
 
-	playButton = new Button(0, 0, new ScreenSwitchHandler(Screen.GAME),
-		new TextureRegion(t, 0, 0, 161, 20), new TextureRegion(t, 0, 0,
-			161, 20));
-	planeButton_p1 = new Button("Player 1", font, new ScreenSwitchHandler(
-		Screen.PLANE_P1));
-	planeButton_p2 = new Button("Player 2", font, new ScreenSwitchHandler(
-		Screen.PLANE_P2));
+	playButton = new Button("", font, 0, 0, new TextureRegion(startGameTex,
+		0, 0, 161, 20), new TextureRegion(startGameTex, 0, 0, 161, 20),
+		new ScreenSwitchHandler(Screen.GAME));
+	planeButton_p1 = new Button("", font, 0, 0, new TextureRegion(
+		plane_p1_tex, 0, 0, 161, 20), new TextureRegion(plane_p1_tex,
+		0, 0, 161, 20), new ScreenSwitchHandler(Screen.PLANE_P1));
+	planeButton_p2 = new Button("", font, 0, 0, new TextureRegion(
+		plane_p2_tex, 0, 0, 161, 20), new TextureRegion(plane_p2_tex,
+		0, 0, 161, 20), new ScreenSwitchHandler(Screen.PLANE_P2));
 	optionsButton = new Button("Options", font, new ScreenSwitchHandler(
 		Screen.OPTIONS));
 	exitButton = new Button("Exit", font, new ButtonHandler() {
