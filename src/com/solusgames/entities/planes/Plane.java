@@ -53,10 +53,16 @@ public class Plane extends Entity {
     private boolean slot4_fire;
 
     // reload timers
-    private int reload_slot1;
-    private int reload_slot2;
-    private int reload_slot3;
-    private int reload_slot4;
+    private int reload_slot1 = 0;
+    private int reload_slot2 = 0;
+    private int reload_slot3 = 0;
+    private int reload_slot4 = 0;
+
+    // firerate timers
+    private float timer_slot1 = 0;
+    private float timer_slot2 = 0;
+    private float timer_slot3 = 0;
+    private float timer_slot4 = 0;
 
     // weapon array
     public ArrayList<Weapon> weapons;
@@ -86,18 +92,19 @@ public class Plane extends Entity {
 	// TODO: Remove when no longer needed
 	if (EType == EntityType.PLAYER1) {
 	    Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
+	    Weapontype t1 = new Weapontype(WeaponTypes.AIM_9X_SIDEWINDER);
 	    setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t,
 		    EntityType.WEAPON_PLAYER1));
 	    ammo_slot1 = t.getMaxAmmo();
 	    setSlot2(new Weapon(xpos, ypos, angle, t.getTexture(), t,
 		    EntityType.WEAPON_PLAYER1));
 	    ammo_slot2 = t.getMaxAmmo();
-	    setSlot3(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+	    setSlot3(new Weapon(xpos, ypos, angle, t1.getTexture(), t1,
 		    EntityType.WEAPON_PLAYER1));
-	    ammo_slot3 = t.getMaxAmmo();
-	    setSlot4(new Weapon(xpos, ypos, angle, t.getTexture(), t,
+	    ammo_slot3 = t1.getMaxAmmo();
+	    setSlot4(new Weapon(xpos, ypos, angle, t1.getTexture(), t1,
 		    EntityType.WEAPON_PLAYER1));
-	    ammo_slot4 = t.getMaxAmmo();
+	    ammo_slot4 = t1.getMaxAmmo();
 	} else if (EType == EntityType.PLAYER2) {
 	    Weapontype t = new Weapontype(WeaponTypes.GUN_30MM);
 	    setSlot1(new Weapon(xpos, ypos, angle, t.getTexture(), t,
@@ -237,21 +244,36 @@ public class Plane extends Entity {
     private void updateWeapons(float delta) {
 	// weapons
 
-	// if slot is used
-	if (isSlot1_fire()) {
-	    shoot_slot1();
-	}
+	timer_slot1 += delta / 100;
+	timer_slot2 += delta / 100;
+	timer_slot3 += delta / 100;
+	timer_slot4 += delta / 100;
 
-	if (isSlot2_fire()) {
-	    shoot_slot2();
+	// firerate
+	if (timer_slot1 > (float) 1 / (slot1.getType().getFireRate() / 60)) {
+	    // if slot is used
+	    if (isSlot1_fire()) {
+		shoot_slot1();
+		timer_slot1 = 0;
+	    }
 	}
-
-	if (isSlot3_fire()) {
-	    shoot_slot3();
+	if (timer_slot2 > (float) 1 / (slot2.getType().getFireRate() / 60)) {
+	    if (isSlot2_fire()) {
+		shoot_slot2();
+		timer_slot2 = 0;
+	    }
 	}
-
-	if (isSlot4_fire()) {
-	    shoot_slot4();
+	if (timer_slot3 > (float) 1 / (slot3.getType().getFireRate() / 60)) {
+	    if (isSlot3_fire()) {
+		shoot_slot3();
+		timer_slot3 = 0;
+	    }
+	}
+	if (timer_slot4 > (float) 1 / (slot4.getType().getFireRate() / 60)) {
+	    if (isSlot4_fire()) {
+		shoot_slot4();
+		timer_slot4 = 0;
+	    }
 	}
 	for (int i = 0; i < weapons.size(); i++) {
 	    weapons.get(i).update(delta);
@@ -270,6 +292,7 @@ public class Plane extends Entity {
 	    reload_slot1--;
 	    if (reload_slot1 <= 0) {
 		ammo_slot1 = slot1.getType().getMaxAmmo();
+
 	    }
 	} else {
 	    reload_slot1 = slot1.getType().getReloadTime();

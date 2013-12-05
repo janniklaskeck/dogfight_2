@@ -16,6 +16,7 @@ public class Weapontype {
     private int fireRate;
     private Texture texture;
     private Sound sound;
+    private WeaponTypes type;
 
     /**
      * Only type as Parameter, weapon settings hardcoded
@@ -23,7 +24,7 @@ public class Weapontype {
      * @param type
      */
     public Weapontype(WeaponTypes type) {
-
+	this.setType(type);
 	if (type == WeaponTypes.HYDRA_M247) {
 	    this.maxSpeed = 0;
 	    this.minSpeed = 0;
@@ -490,7 +491,7 @@ public class Weapontype {
 	    this.maxAmmo = 75;
 	    this.reloadTime = 300;
 	    this.damage = 10;
-	    this.fireRate = 100;
+	    this.fireRate = 3900;
 	    this.texture = new Texture(
 		    Gdx.files.internal("assets/data/weapons/30mms.png"));
 	    this.sound = null;
@@ -604,15 +605,15 @@ public class Weapontype {
 	    this.sound = null;
 	}
 	if (type == WeaponTypes.AIM_9X_SIDEWINDER) {
-	    this.maxSpeed = 0;
-	    this.minSpeed = 0;
-	    this.turnSpeed = 0;
-	    this.homing = false;
-	    this.maxAmmo = 0;
-	    this.reloadTime = 0;
-	    this.damage = 0;
-	    this.fireRate = 0;
-	    this.texture = null;
+	    this.maxSpeed = 15;
+	    this.minSpeed = 15;
+	    this.turnSpeed = 3;
+	    this.homing = true;
+	    this.maxAmmo = 4;
+	    this.reloadTime = 300;
+	    this.damage = 40;
+	    this.fireRate = 1000;
+	    this.texture = new Texture(Gdx.files.internal("assets/data/weapons/missile1.png"));;
 	    this.sound = null;
 	}
 	if (type == WeaponTypes.AIM_9L_SIDEWINDER) {
@@ -814,6 +815,21 @@ public class Weapontype {
      */
     public void setSound(Sound sound) {
 	this.sound = sound;
+    }
+
+    /**
+     * @return the type
+     */
+    public WeaponTypes getType() {
+	return type;
+    }
+
+    /**
+     * @param type
+     *            the type to set
+     */
+    public void setType(WeaponTypes type) {
+	this.type = type;
     }
 
     public enum WeaponTypes {

@@ -45,10 +45,67 @@ public class Weapon extends Entity {
 	if (alive) {
 	    checkCollision();
 	    checkCollision();
-	    xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle))
-		    * delta;
-	    ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle))
-		    * delta;
+
+	    if (type.isHoming()) {
+		float deltaX = 0;
+		float deltaY = 0;
+
+		if (getEType() == EntityType.WEAPON_PLAYER1) {
+		    deltaX = Global.player2.getXpos() - xpos;
+		    deltaY = Global.player2.getYpos() - ypos;
+		} else if (getEType() == EntityType.WEAPON_PLAYER2) {
+		    deltaX = Global.player1.getXpos() - xpos;
+		    deltaY = Global.player1.getYpos() - ypos;
+		}
+
+		double atan2 = Math.atan2(deltaY, deltaX);
+		// change atan2 to 0-360 degrees
+		if (atan2 < 0) {
+		    atan2 = Math.abs(atan2);
+		} else {
+		    atan2 = 2 * Math.PI - atan2;
+		}
+		float angle = Math.round(Math.toDegrees(atan2));
+		if (angle >= 360) {
+		    angle = 0;
+		}
+		// with help from http://krinstudio.com/?p=523
+		angle = (360 - (int) angle) % 360;
+
+		// Keep them on the right side. (Direction is in degrees, not
+		// radians)
+		if (getAngle() < 0)
+		    addAngle(360);
+		if (angle < getAngle())
+		    angle += 360;
+
+		// Find the difference in the angle.
+		float angleDifference = angle - getAngle();
+
+		// Turn the actual direction towards the target direction.
+		if (((angleDifference < 180) && (angleDifference > 0))
+			|| ((angleDifference < -180))) {
+		    addAngle(type.getTurnSpeed());
+		} else if (angleDifference == 0) {
+		    addAngle(0);
+		} else {
+		    addAngle(-type.getTurnSpeed());
+		}
+		// speed calculation
+		float hspeed = (float) (type.getMinSpeed()
+			* Math.cos(Math.toRadians(getAngle())) * delta);
+		float vspeed = (float) (type.getMinSpeed()
+			* Math.sin(Math.toRadians(getAngle())) * delta);
+		setXpos(getXpos() + hspeed);
+		setYpos(getYpos() + vspeed);
+
+	    } else {
+		xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle))
+			* delta;
+		ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle))
+			* delta;
+	    }
+
 	} else {
 
 	}
