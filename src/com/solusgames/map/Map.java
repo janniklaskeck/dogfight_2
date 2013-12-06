@@ -6,7 +6,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * Class to combine TiledMap and OrthogonalTiledMapRenderer. Also creates an
@@ -19,7 +18,7 @@ public class Map {
 
     private OrthogonalTiledMapRenderer map_renderer;
     private TiledMap map;
-    private ArrayList<ArrayList<Vector2>> col_map;
+    private ArrayList<float[]> col_map;
     private int map_rows;
     private int map_columns;
     private float map_tileHeight;
@@ -49,50 +48,57 @@ public class Map {
 		if (l.getCell(i, e) != null) {
 		    if (l.getCell(i, e).getTile().getProperties()
 			    .containsKey("half")) {
-			ArrayList<Vector2> list = new ArrayList<>();
-			list.add(new Vector2(i * map_tileWidth + 0, e
-				* map_tileHeight + 0));
-			list.add(new Vector2(i * map_tileWidth + 0, e
-				* map_tileHeight + map_tileHeight / 2));
-			list.add(new Vector2(i * map_tileWidth + map_tileWidth,
-				e * map_tileHeight + 0));
-			list.add(new Vector2(i * map_tileWidth + map_tileWidth,
-				e * map_tileHeight + map_tileHeight / 2));
+			float[] list = new float[8];
+			list[0] = i * map_tileWidth + 0;
+			list[1] = e * map_tileHeight + 0;
+			list[2] = i * map_tileWidth + 0;
+			list[3] = e * map_tileHeight + map_tileHeight / 2;
+			list[4] = i * map_tileWidth + map_tileWidth;
+			list[5] = e * map_tileHeight + 0;
+			list[6] = i * map_tileWidth + map_tileWidth;
+			list[7] = e * map_tileHeight + map_tileHeight / 2;
 			col_map.add(list);
 		    }
 		    if (l.getCell(i, e).getTile().getProperties()
 			    .containsKey("full")) {
-			ArrayList<Vector2> list = new ArrayList<>();
-			list.add(new Vector2(i * map_tileWidth + 0, e
-				* map_tileHeight + 0));
-			list.add(new Vector2(i * map_tileWidth + 0, e
-				* map_tileHeight + map_tileHeight));
-			list.add(new Vector2(i * map_tileWidth + map_tileWidth,
-				e * map_tileHeight + 0));
-			list.add(new Vector2(i * map_tileWidth + map_tileWidth,
-				e * map_tileHeight + map_tileHeight));
+			float[] list = new float[8];
+			list[0] = i * map_tileWidth + 0;
+			list[1] = e * map_tileHeight + 0;
+			list[2] = i * map_tileWidth + 0;
+			list[3] = e * map_tileHeight + map_tileHeight;
+			list[4] = i * map_tileWidth + map_tileWidth;
+			list[5] = e * map_tileHeight + 0;
+			list[6] = i * map_tileWidth + map_tileWidth;
+			list[7] = e * map_tileHeight + map_tileHeight;
+
 			col_map.add(list);
 		    }
 		    if (l.getCell(i, e).getTile().getProperties()
 			    .containsKey("triangle_l")) {
-			ArrayList<Vector2> list = new ArrayList<>();
-			list.add(new Vector2(i * map_tileWidth + 0, e
-				* map_tileHeight + 0));
-			list.add(new Vector2(i * map_tileWidth + map_tileWidth,
-				e * map_tileHeight + 0));
-			list.add(new Vector2(i * map_tileWidth + 0, e
-				* map_tileHeight + map_tileHeight));
+			float[] list = new float[8];
+			list[0] = i * map_tileWidth + 0;
+			list[1] = e * map_tileHeight + 0;
+			list[2] = i * map_tileWidth + map_tileWidth;
+			list[3] = e * map_tileHeight + 0;
+			list[4] = i * map_tileWidth + 0;
+			list[5] = e * map_tileHeight + map_tileHeight;
+			list[6] = i * map_tileWidth + 0;
+			list[7] = e * map_tileHeight + map_tileHeight;
+
 			col_map.add(list);
 		    }
 		    if (l.getCell(i, e).getTile().getProperties()
 			    .containsKey("triangle_r")) {
-			ArrayList<Vector2> list = new ArrayList<>();
-			list.add(new Vector2(i * map_tileWidth + 0, e
-				* map_tileHeight));
-			list.add(new Vector2(i * map_tileWidth + map_tileWidth,
-				e * map_tileHeight + 0));
-			list.add(new Vector2(i * map_tileWidth + map_tileWidth,
-				e * map_tileHeight + map_tileHeight));
+			float[] list = new float[8];
+			list[0] = i * map_tileWidth + 0;
+			list[1] = e * map_tileHeight + 0;
+			list[2] = i * map_tileWidth + map_tileWidth;
+			list[3] = e * map_tileHeight + 0;
+			list[4] = i * map_tileWidth + map_tileWidth;
+			list[5] = e * map_tileHeight + map_tileHeight;
+			list[6] = i * map_tileWidth + map_tileWidth;
+			list[7] = e * map_tileHeight + map_tileHeight;
+
 			col_map.add(list);
 		    }
 		}
@@ -138,7 +144,7 @@ public class Map {
     /**
      * @return the col_map
      */
-    public ArrayList<ArrayList<Vector2>> getCol_map() {
+    public ArrayList<float[]> getCol_map() {
 	return col_map;
     }
 
@@ -146,7 +152,7 @@ public class Map {
      * @param col_map
      *            the col_map to set
      */
-    public void setCol_map(ArrayList<ArrayList<Vector2>> col_map) {
+    public void setCol_map(ArrayList<float[]> col_map) {
 	this.col_map = col_map;
     }
 

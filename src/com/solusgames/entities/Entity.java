@@ -1,8 +1,18 @@
 package com.solusgames.entities;
 
+import static com.badlogic.gdx.graphics.g2d.SpriteBatch.X1;
+import static com.badlogic.gdx.graphics.g2d.SpriteBatch.X2;
+import static com.badlogic.gdx.graphics.g2d.SpriteBatch.X3;
+import static com.badlogic.gdx.graphics.g2d.SpriteBatch.X4;
+import static com.badlogic.gdx.graphics.g2d.SpriteBatch.Y1;
+import static com.badlogic.gdx.graphics.g2d.SpriteBatch.Y2;
+import static com.badlogic.gdx.graphics.g2d.SpriteBatch.Y3;
+import static com.badlogic.gdx.graphics.g2d.SpriteBatch.Y4;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
  * Parent Entity class
@@ -227,6 +237,67 @@ public class Entity {
      */
     public void setSprite(Sprite sprite) {
 	this.sprite = sprite;
+    }
+    
+    /**
+     * Returns a array from the planes sprite corners
+     * 
+     * @return
+     */
+    public float[] returnSpriteCornerArrayF() {
+
+	float[] vertices = getSprite().getVertices();
+	float localX = -getSprite().getOriginX();
+	float localY = -getSprite().getOriginY();
+	float localX2 = localX + getSprite().getWidth();
+	float localY2 = localY + getSprite().getHeight();
+	float worldOriginX = getSprite().getX() - localX;
+	float worldOriginY = getSprite().getY() - localY;
+	if (getSprite().getScaleX() != 1 || getSprite().getScaleY() != 1) {
+	    localX *= getSprite().getScaleX();
+	    localY *= getSprite().getScaleY();
+	    localX2 *= getSprite().getScaleX();
+	    localY2 *= getSprite().getScaleY();
+	}
+	final float cos = MathUtils.cosDeg(getAngle());
+	final float sin = MathUtils.sinDeg(getAngle());
+	final float localXCos = localX * cos;
+	final float localXSin = localX * sin;
+	final float localYCos = localY * cos;
+	final float localYSin = localY * sin;
+	final float localX2Cos = localX2 * cos;
+	final float localX2Sin = localX2 * sin;
+	final float localY2Cos = localY2 * cos;
+	final float localY2Sin = localY2 * sin;
+
+	final float x1 = localXCos - localYSin + worldOriginX;
+	final float y1 = localYCos + localXSin + worldOriginY;
+	vertices[X1] = x1;
+	vertices[Y1] = y1;
+
+	final float x2 = localXCos - localY2Sin + worldOriginX;
+	final float y2 = localY2Cos + localXSin + worldOriginY;
+	vertices[X2] = x2;
+	vertices[Y2] = y2;
+
+	final float x3 = localX2Cos - localY2Sin + worldOriginX;
+	final float y3 = localY2Cos + localX2Sin + worldOriginY;
+	vertices[X3] = x3;
+	vertices[Y3] = y3;
+
+	vertices[X4] = x1 + (x3 - x2);
+	vertices[Y4] = y3 - (y2 - y1);
+
+	float[] vert = new float[8];
+	vert[0] = vertices[X1];
+	vert[1] = vertices[Y1];
+	vert[2] = vertices[X2];
+	vert[3] = vertices[Y2];
+	vert[4] = vertices[X3];
+	vert[5] = vertices[Y3];
+	vert[6] = vertices[X4];
+	vert[7] = vertices[Y4];
+	return vert;
     }
 
     public float getX_respawn() {

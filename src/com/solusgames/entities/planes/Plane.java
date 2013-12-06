@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.solusgames.Dogfight_2.Global;
@@ -151,6 +152,7 @@ public class Plane extends Entity {
 	}
 
 	batch.end();
+
 	batch.begin();
 
     }
@@ -169,24 +171,14 @@ public class Plane extends Entity {
      * Check collision of 4 corner points with map collision polygons
      */
     private void checkCollision(float delta) {
-	Vector2 minmin = new Vector2(getSprite().getVertices()[0], getSprite()
-		.getVertices()[1]);
-	Vector2 minmax = new Vector2(getSprite().getVertices()[5], getSprite()
-		.getVertices()[6]);
-	Vector2 maxmin = new Vector2(getSprite().getVertices()[15], getSprite()
-		.getVertices()[16]);
-	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
-		.getVertices()[11]);
 	// map collision
-	for (ArrayList<Vector2> r : Global.currentMap.getCol_map()) {
-	    Array<Vector2> arr = Global.toArray(r);
-	    if (Intersector.isPointInPolygon(arr, minmin)
-		    || Intersector.isPointInPolygon(arr, minmax)
-		    || Intersector.isPointInPolygon(arr, maxmin)
-		    || Intersector.isPointInPolygon(arr, maxmax)) {
+	for (float[] r : Global.currentMap.getCol_map()) {
+	    if (Intersector.overlapConvexPolygons(new Polygon(r), new Polygon(
+		    this.returnSpriteCornerArrayF()))) {
 		setAlive(false);
 		respawn();
 	    }
+
 	}
 	// bounds collision
 	if (getXpos() >= Global.currentMap.getMap_rows()
@@ -347,6 +339,7 @@ public class Plane extends Entity {
      * @return
      */
     public Array<Vector2> returnSpriteCornerArray() {
+
 	Vector2 minmin = new Vector2(getSprite().getVertices()[0], getSprite()
 		.getVertices()[1]);
 	Vector2 minmax = new Vector2(getSprite().getVertices()[5], getSprite()

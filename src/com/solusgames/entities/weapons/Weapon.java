@@ -1,12 +1,9 @@
 package com.solusgames.entities.weapons;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.Polygon;
 import com.solusgames.Dogfight_2.Global;
 import com.solusgames.entities.Entity;
 
@@ -43,8 +40,6 @@ public class Weapon extends Entity {
     public void update(float delta) {
 
 	if (alive) {
-	    checkCollision();
-	    checkCollision();
 
 	    if (type.isHoming()) {
 		float deltaX = 0;
@@ -105,6 +100,7 @@ public class Weapon extends Entity {
 		ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle))
 			* delta;
 	    }
+	    checkCollision();
 
 	} else {
 
@@ -119,24 +115,11 @@ public class Weapon extends Entity {
     }
 
     public void checkCollision() {
-	Vector2 minmin = new Vector2(getSprite().getVertices()[0], getSprite()
-		.getVertices()[1]);
-	Vector2 minmax = new Vector2(getSprite().getVertices()[5], getSprite()
-		.getVertices()[6]);
-	Vector2 maxmin = new Vector2(getSprite().getVertices()[15], getSprite()
-		.getVertices()[16]);
-	Vector2 maxmax = new Vector2(getSprite().getVertices()[10], getSprite()
-		.getVertices()[11]);
 	// map collision
-	for (ArrayList<Vector2> r : Global.currentMap.getCol_map()) {
-	    Array<Vector2> arr = Global.toArray(r);
-	    if (Intersector.isPointInPolygon(arr, minmin)) {
-		setAlive(false);
-	    } else if (Intersector.isPointInPolygon(arr, minmax)) {
-		setAlive(false);
-	    } else if (Intersector.isPointInPolygon(arr, maxmin)) {
-		setAlive(false);
-	    } else if (Intersector.isPointInPolygon(arr, maxmax)) {
+	for (float[] r : Global.currentMap.getCol_map()) {
+
+	    if (Intersector.overlapConvexPolygons(new Polygon(r), new Polygon(
+		    this.returnSpriteCornerArrayF()))) {
 		setAlive(false);
 	    }
 	}
@@ -150,33 +133,17 @@ public class Weapon extends Entity {
 	}
 
 	if (EType == EntityType.WEAPON_PLAYER1) {
-	    Array<Vector2> poly = Global.player2.returnSpriteCornerArray();
-	    if (Intersector.isPointInPolygon(poly, minmin)) {
-		Global.player2.addHitpoints(-type.getDamage());
-		setAlive(false);
-	    } else if (Intersector.isPointInPolygon(poly, minmax)) {
-		Global.player2.addHitpoints(-type.getDamage());
-		setAlive(false);
-	    } else if (Intersector.isPointInPolygon(poly, maxmin)) {
-		Global.player2.addHitpoints(-type.getDamage());
-		setAlive(false);
-	    } else if (Intersector.isPointInPolygon(poly, maxmax)) {
+	    float[] poly = Global.player2.returnSpriteCornerArrayF();
+	    if (Intersector.overlapConvexPolygons(new Polygon(poly),
+		    new Polygon(this.returnSpriteCornerArrayF()))) {
 		Global.player2.addHitpoints(-type.getDamage());
 		setAlive(false);
 	    }
 
 	} else if (EType == EntityType.WEAPON_PLAYER2) {
-	    Array<Vector2> poly = Global.player1.returnSpriteCornerArray();
-	    if (Intersector.isPointInPolygon(poly, minmin)) {
-		Global.player1.addHitpoints(-type.getDamage());
-		setAlive(false);
-	    } else if (Intersector.isPointInPolygon(poly, minmax)) {
-		Global.player1.addHitpoints(-type.getDamage());
-		setAlive(false);
-	    } else if (Intersector.isPointInPolygon(poly, maxmin)) {
-		Global.player1.addHitpoints(-type.getDamage());
-		setAlive(false);
-	    } else if (Intersector.isPointInPolygon(poly, maxmax)) {
+	    float[] poly = Global.player1.returnSpriteCornerArrayF();
+	    if (Intersector.overlapConvexPolygons(new Polygon(poly),
+		    new Polygon(this.returnSpriteCornerArrayF()))) {
 		Global.player1.addHitpoints(-type.getDamage());
 		setAlive(false);
 	    }

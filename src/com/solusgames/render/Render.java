@@ -108,8 +108,8 @@ public class Render {
 	Global.currentMap.getMap_renderer().setView(
 		Global.camera_player1.getCam());
 	Global.currentMap.getMap_renderer().render();
-
 	Global.batch.end();
+
     }
 
     /**

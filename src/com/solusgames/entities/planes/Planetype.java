@@ -67,7 +67,7 @@ public class Planetype {
 	    this.setName("F35");
 	    this.hitpoints = 100;
 	    this.maxSpeed = 7;
-	    this.minSpeed = 1;
+	    this.minSpeed = 0;
 	    this.turnSpeed = 2;
 	    this.slot_1 = true;
 	    this.slot_2 = true;
@@ -80,7 +80,7 @@ public class Planetype {
 	    this.setName("MIG");
 	    this.hitpoints = 100;
 	    this.maxSpeed = 7;
-	    this.minSpeed = 1;
+	    this.minSpeed = 0;
 	    this.turnSpeed = 2;
 	    this.slot_1 = true;
 	    this.slot_2 = true;
