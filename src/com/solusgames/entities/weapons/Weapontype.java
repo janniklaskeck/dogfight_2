@@ -17,6 +17,7 @@ public class Weapontype {
     private Texture texture;
     private Sound sound;
     private WeaponTypes type;
+    private float range;
 
     /**
      * Only type as Parameter, weapon settings hardcoded
@@ -36,6 +37,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.HYDRA_M261) {
 	    this.maxSpeed = 0;
@@ -48,6 +50,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.S_5_ROCKET) {
 	    this.maxSpeed = 0;
@@ -60,6 +63,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.S_8KOM_ROCKET) {
 	    this.maxSpeed = 0;
@@ -72,6 +76,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.ZUNI_ROCKET) {
 	    this.maxSpeed = 0;
@@ -84,6 +89,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.S_24_ROCKET) {
 	    this.maxSpeed = 0;
@@ -96,6 +102,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AGM_114K_HELLFIRE_B) {
 	    this.maxSpeed = 0;
@@ -108,6 +115,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AGM_122_SIDEARM) {
 	    this.maxSpeed = 0;
@@ -120,6 +128,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AGM_114_HELLFIRE) {
 	    this.maxSpeed = 0;
@@ -132,6 +141,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AGM_71D_TOW_2) {
 	    this.maxSpeed = 0;
@@ -144,6 +154,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AGM_84_HARPOON) {
 	    this.maxSpeed = 0;
@@ -156,6 +167,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AGM_65_MAVERICK) {
 	    this.maxSpeed = 0;
@@ -168,6 +180,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AGM_88_HARM) {
 	    this.maxSpeed = 0;
@@ -180,6 +193,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AGM_71A_TOW) {
 	    this.maxSpeed = 0;
@@ -192,6 +206,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.GBU_52) {
 	    this.maxSpeed = 0;
@@ -204,6 +219,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.BLU_109) {
 	    this.maxSpeed = 0;
@@ -216,6 +232,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.BLU_107_DURANDAL) {
 	    this.maxSpeed = 0;
@@ -228,6 +245,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R33_AA_9_AMOS) {
 	    this.maxSpeed = 0;
@@ -240,6 +258,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R77_AA_12_ADDER) {
 	    this.maxSpeed = 0;
@@ -252,6 +271,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R27TE_AA_10E_ALAMO) {
 	    this.maxSpeed = 0;
@@ -264,6 +284,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 
 	if (type == WeaponTypes.R27TE_AA_10D_ALAMO) {
@@ -277,6 +298,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R27RE_AA_10C_ALAMO) {
 	    this.maxSpeed = 0;
@@ -289,6 +311,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R27T_AA_10B_ALAMO) {
 	    this.maxSpeed = 0;
@@ -301,6 +324,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R27R_AA_10A_ALAMO) {
 	    this.maxSpeed = 0;
@@ -313,6 +337,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R73M1_AA_11_ARCHER) {
 	    this.maxSpeed = 0;
@@ -325,6 +350,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R4OT_AA_6B_ACRID) {
 	    this.maxSpeed = 0;
@@ -337,6 +363,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R4OR_AA_6A_ACRID) {
 	    this.maxSpeed = 0;
@@ -349,6 +376,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R4TM_AA_5B_ASH) {
 	    this.maxSpeed = 0;
@@ -361,6 +389,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R4RM_AA_5A_ASH) {
 	    this.maxSpeed = 0;
@@ -373,6 +402,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R8T_AA_3A_ANAB) {
 	    this.maxSpeed = 0;
@@ -385,6 +415,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R8R_AA_3B_ANAB) {
 	    this.maxSpeed = 0;
@@ -397,6 +428,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R60_AA_8_APHID) {
 	    this.maxSpeed = 0;
@@ -409,6 +441,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R3R_AA_2_ATOLL) {
 	    this.maxSpeed = 0;
@@ -421,6 +454,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.R3T_AA_2_ATOLL) {
 	    this.maxSpeed = 0;
@@ -433,6 +467,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.MK_82) {
 	    this.maxSpeed = 0;
@@ -445,6 +480,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.MK_83) {
 	    this.maxSpeed = 0;
@@ -457,6 +493,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.MK_20_ROCKEYE) {
 	    this.maxSpeed = 0;
@@ -469,6 +506,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 
 	if (type == WeaponTypes.MG_12MM) {
@@ -482,6 +520,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.GUN_30MM) {
 	    this.maxSpeed = 20;
@@ -495,6 +534,7 @@ public class Weapontype {
 	    this.texture = new Texture(
 		    Gdx.files.internal("assets/data/weapons/30mms.png"));
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.GUN_27MM) {
 	    this.maxSpeed = 0;
@@ -507,6 +547,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.GUN_23MM) {
 	    this.maxSpeed = 0;
@@ -519,6 +560,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.GATLING_7MM) {
 	    this.maxSpeed = 0;
@@ -531,6 +573,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.GATLING_20MM) {
 	    this.maxSpeed = 0;
@@ -543,6 +586,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.GATLING_30MM) {
 	    this.maxSpeed = 0;
@@ -555,6 +599,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AIM_155_AAAM) {
 	    this.maxSpeed = 0;
@@ -567,6 +612,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AIM_54C_PHOENIX) {
 	    this.maxSpeed = 0;
@@ -579,6 +625,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AIM_120B_AMRAAM) {
 	    this.maxSpeed = 0;
@@ -591,6 +638,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AIM_7C_SPARROW) {
 	    this.maxSpeed = 0;
@@ -603,6 +651,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AIM_9X_SIDEWINDER) {
 	    this.maxSpeed = 15;
@@ -613,8 +662,11 @@ public class Weapontype {
 	    this.reloadTime = 300;
 	    this.damage = 40;
 	    this.fireRate = 1000;
-	    this.texture = new Texture(Gdx.files.internal("assets/data/weapons/missile1.png"));;
+	    this.texture = new Texture(
+		    Gdx.files.internal("assets/data/weapons/missile1.png"));
+	    ;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AIM_9L_SIDEWINDER) {
 	    this.maxSpeed = 0;
@@ -627,6 +679,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AIM_9D_SIDEWINDER) {
 	    this.maxSpeed = 0;
@@ -639,6 +692,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AIM_9C_SIDEWINDER) {
 	    this.maxSpeed = 0;
@@ -651,6 +705,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 	if (type == WeaponTypes.AIM_92_STINGER) {
 	    this.maxSpeed = 0;
@@ -663,6 +718,7 @@ public class Weapontype {
 	    this.fireRate = 0;
 	    this.texture = null;
 	    this.sound = null;
+	    this.setRange(1000);
 	}
 
     }
@@ -830,6 +886,14 @@ public class Weapontype {
      */
     public void setType(WeaponTypes type) {
 	this.type = type;
+    }
+
+    public float getRange() {
+	return range;
+    }
+
+    public void setRange(float range) {
+	this.range = range;
     }
 
     public enum WeaponTypes {
