@@ -13,6 +13,7 @@ public class Weapon extends Entity {
     private boolean alive;
     private float originX;
     private float originY;
+    private float movedDistance;
 
     public Weapon(float x, float y, float angle, Texture texture,
 	    Weapontype type, EntityType EType) {
@@ -21,7 +22,7 @@ public class Weapon extends Entity {
 	this.type = type;
 	originX = getSprite().getWidth() / 2;
 	originY = getSprite().getHeight() / 2;
-
+	movedDistance = 0;
     }
 
     public void render(SpriteBatch batch) {
@@ -38,9 +39,10 @@ public class Weapon extends Entity {
     }
 
     public void update(float delta) {
-
 	if (alive) {
-
+	    if (movedDistance >= type.getRange()) {
+		setAlive(false);
+	    }
 	    if (type.isHoming()) {
 		float deltaX = 0;
 		float deltaY = 0;
@@ -86,23 +88,18 @@ public class Weapon extends Entity {
 		} else {
 		    addAngle(-type.getTurnSpeed());
 		}
-		// speed calculation
-		float hspeed = (float) (type.getMinSpeed()
-			* Math.cos(Math.toRadians(getAngle())) * delta);
-		float vspeed = (float) (type.getMinSpeed()
-			* Math.sin(Math.toRadians(getAngle())) * delta);
-		setXpos(getXpos() + hspeed);
-		setYpos(getYpos() + vspeed);
-
-	    } else {
-		xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle))
-			* delta;
-		ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle))
-			* delta;
 	    }
-	    checkCollision();
+	    float hspeed = type.getMinSpeed()
+		    * (float) Math.cos(Math.toRadians(getAngle())) * delta;
+	    float vspeed = type.getMinSpeed()
+		    * (float) Math.sin(Math.toRadians(getAngle())) * delta;
 
-	} else {
+	    xpos += hspeed;
+	    ypos += vspeed;
+	    movedDistance += Math.sqrt((hspeed) * (hspeed) + (vspeed)
+		    * (vspeed));
+
+	    checkCollision();
 
 	}
     }
