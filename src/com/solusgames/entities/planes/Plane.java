@@ -1,6 +1,7 @@
 package com.solusgames.entities.planes;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -370,13 +371,14 @@ public class Plane extends Entity {
     public void shoot_slot1() {
 	if (type.isSlot_1()) {
 	    if (ammo_slot1 > 0) {
+		Random r = new Random();
 		if (EType == EntityType.PLAYER1) {
-		    weapons.add(new Weapon(xpos, ypos, angle, slot1
-			    .getTexture(), slot1.getType(),
+		    weapons.add(new Weapon(xpos, ypos, angle + r.nextFloat()
+			    * 2 - 1, slot1.getTexture(), slot1.getType(),
 			    EntityType.WEAPON_PLAYER1));
 		} else if (EType == EntityType.PLAYER2) {
-		    weapons.add(new Weapon(xpos, ypos, angle, slot1
-			    .getTexture(), slot1.getType(),
+		    weapons.add(new Weapon(xpos, ypos, angle + r.nextFloat()
+			    * 2 - 1, slot1.getTexture(), slot1.getType(),
 			    EntityType.WEAPON_PLAYER2));
 		}
 
@@ -393,13 +395,14 @@ public class Plane extends Entity {
     public void shoot_slot2() {
 	if (type.isSlot_2()) {
 	    if (ammo_slot2 > 0) {
+		Random r = new Random();
 		if (EType == EntityType.PLAYER1) {
-		    weapons.add(new Weapon(xpos, ypos, angle, slot2
-			    .getTexture(), slot2.getType(),
+		    weapons.add(new Weapon(xpos, ypos, angle + r.nextFloat()
+			    * 2 - 1, slot2.getTexture(), slot2.getType(),
 			    EntityType.WEAPON_PLAYER1));
 		} else if (EType == EntityType.PLAYER2) {
-		    weapons.add(new Weapon(xpos, ypos, angle, slot2
-			    .getTexture(), slot2.getType(),
+		    weapons.add(new Weapon(xpos, ypos, angle + r.nextFloat()
+			    * 2 - 1, slot2.getTexture(), slot2.getType(),
 			    EntityType.WEAPON_PLAYER2));
 		}
 		ammo_slot2--;
