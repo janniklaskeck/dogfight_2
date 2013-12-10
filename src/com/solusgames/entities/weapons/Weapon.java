@@ -77,7 +77,7 @@ public class Weapon extends Entity {
 		    angle += 360;
 
 		// Find the difference in the angle.
-		float angleDifference = angle - getAngle();
+		float angleDifference = angle - Math.abs(getAngle());
 
 		// Turn the actual direction towards the target direction.
 		if (((angleDifference < 180) && (angleDifference > 0))
@@ -88,6 +88,20 @@ public class Weapon extends Entity {
 		} else {
 		    addAngle(-type.getTurnSpeed());
 		}
+<<<<<<< de9c82a1dff3febd3cca2deb9778fd4734e02bcd
+=======
+		// speed calculation
+		xpos += type.getMinSpeed()
+			* Math.cos(Math.toRadians(getAngle())) * delta;
+		ypos += type.getMinSpeed()
+			* Math.sin(Math.toRadians(getAngle())) * delta;
+
+	    } else {
+		xpos += type.getMinSpeed() * Math.cos(Math.toRadians(angle))
+			* delta;
+		ypos += type.getMinSpeed() * Math.sin(Math.toRadians(angle))
+			* delta;
+>>>>>>> e399fa58dd1095ed3e785cc8078002c195dff51c
 	    }
 	    float hspeed = type.getMinSpeed()
 		    * (float) Math.cos(Math.toRadians(getAngle())) * delta;
@@ -114,7 +128,6 @@ public class Weapon extends Entity {
     public void checkCollision() {
 	// map collision
 	for (float[] r : Global.currentMap.getCol_map()) {
-
 	    if (Intersector.overlapConvexPolygons(new Polygon(r), new Polygon(
 		    this.returnSpriteCornerArrayF()))) {
 		setAlive(false);
